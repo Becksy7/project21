@@ -1,0 +1,373 @@
+//
+// General helpers
+//
+.hide { display : none; }
+.invisible { visibility: hidden; }
+
+.clearfix {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+
+    *zoom: 1;
+}
+.clean-ul-list {
+    list-style: none;
+
+    &, li {
+        margin         : 0;
+        padding        : 0;
+        border         : 0;
+        font-size      : 100%;
+        font           : inherit;
+        vertical-align : baseline;
+    }
+}
+.stitches-sprite(@x: 0, @y: 0, @width: 0, @height: 0) {
+    background-position: @x @y;
+    width: @width;
+    height: @height;
+}
+.font(@size, @line-height:normal) {
+    font-size   : @size;
+    line-height : @line-height;
+}
+.inline-block(@valign: baseline)
+{
+    display        : inline-block;
+    vertical-align : @valign;
+}
+.wh(@w, @h: auto) {
+    width  : @w;
+    height : @h;
+}
+.tl(@top, @left) {
+    top  : @top;
+    left : @left;
+}
+.topleft(@top, @left) {
+    top  : @top;
+    left : @left;
+}
+// растянуть элемент по всему родителю
+.layer() {
+    position: absolute;
+    .tl(0, 0);
+    .wh(100%, 100%);
+}
+// накрыть элемент картинкой
+.image-layer(@url, @bgcolor:transparent) {
+    position : relative;
+    &:after
+    {
+        content: "";
+        .layer();
+        background: @bgcolor url(@url) center center no-repeat;
+    }
+}
+// Блоки в ряд
+.inline-block-nowrap(@valign:middle) {
+    white-space : nowrap;
+    font-size   : 0;
+    & > * {
+        white-space    : normal;
+        display        : inline-block;
+        vertical-align : @valign;
+        font-size      : initial;
+    }
+}
+// Ч/Б-фильтр
+.grayscale() {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%);
+}
+.grayscale-off() {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+    filter: none;
+    -webkit-filter: grayscale(0%);
+}
+// Альтернатива margin:auto, не сбивающая верхний и нижний марджины
+.margin-auto() {
+    margin-left  : auto;
+    margin-right : auto;
+}
+// Миксин чтобы сделать элемент шире узкого контента
+.wider(@left, @right) {
+    margin-left  : -@left;
+    margin-right : -@right;
+}
+.go-left(@left) {
+    margin-left : -@left;
+}
+.go-right(@right) {
+    margin-right : -@right;
+}
+.go-left(@left, @padback) {
+    margin-left  : -@left;
+    padding-left : @left;
+}
+.go-right(@right, @padback) {
+    margin-right  : -@right;
+    padding-right : @right;
+}
+
+// Less Loops
+.for(@i, @n) {.-each(@i)}
+.for(@n)     when (isnumber(@n)) {.for(1, @n)}
+.for(@i, @n) when not (@i = @n)  {
+    .for((@i + (@n - @i) / abs(@n - @i)), @n);
+}
+
+.for(@array)   when (default()) {.for-impl_(length(@array))}
+.for-impl_(@i) when (@i > 1)    {.for-impl_((@i - 1))}
+.for-impl_(@i) when (@i > 0)    {.-each(extract(@array, @i))}
+
+// Media Queries Loop
+.media-for( @prop, @val, @queries: @media_queries ) {
+    .for(length(@media_queries)); .-each(@i) {
+        @mquery : e(extract(@media_queries, @i));
+        @media @mquery {
+            @{prop} : extract(@val, @i);
+        }
+    }
+}
+
+//
+// Simple Geometry
+//
+.arrow-down(@w, @h, @color) {
+    .wh(0, 0);
+    border-left  : @w/2 solid transparent;
+    border-right : @w/2 solid transparent;
+    border-top   : @h solid @color;
+}
+.arrow-up(@w, @h, @color) {
+    .wh(0, 0);
+    border-left   : @w/2 solid transparent;
+    border-right  : @w/2 solid transparent;
+    border-bottom : @h solid @color;
+}
+.arrow-right(@w, @h, @color) {
+    .wh(0, 0);
+    border-top    : @h/2 solid transparent;
+    border-bottom : @h/2 solid transparent;
+    border-left   : @w solid @color;
+}
+.arrow-left(@w, @h, @color) {
+    .wh(0, 0);
+    border-top    : @h/2 solid transparent;
+    border-bottom : @h/2 solid transparent;
+    border-right  : @w solid @color;
+}
+.circle(@r) {
+    overflow : hidden;
+    .wh(@r, @r);
+    .border-radius(50%);
+}
+.sprite(@x, @y, @w, @h) {
+    @bg-x: -@x*@w;
+    @bg-y: -@y*@h;
+    background-position: @bg-x @bg-y;
+}
+
+//
+// Crossbrowser
+//
+.box-sizing (@type: border-box) {
+    -webkit-box-sizing : @type;
+    -moz-box-sizing    : @type;
+    box-sizing         : @type;
+}
+.box-shadow (@shadow) {
+    -webkit-box-shadow : @shadow;
+       -moz-box-shadow : @shadow;
+            box-shadow : @shadow;
+}
+.text-shadow(@args) {
+    -webkit-text-shadow : @args;
+       -moz-text-shadow : @args;
+            text-shadow : @args;
+}
+.border-radius (@radius: 5px) {
+    -webkit-border-radius : @radius;
+       -moz-border-radius : @radius;
+            border-radius : @radius;
+
+    -webkit-background-clip : padding-box;
+       -moz-background-clip : padding;
+            background-clip : padding-box;
+}
+.placeholder (@rules) {
+    &::-webkit-input-placeholder { @rules(); }
+         &:-ms-input-placeholder { @rules(); }
+             &::-moz-placeholder { @rules(); }/* Firefox 19+ */
+              &:-moz-placeholder { @rules(); }/* Firefox 18- */
+}
+.opacity(@opacity: 0.5) {
+    -webkit-opacity : @opacity;
+       -moz-opacity : @opacity;
+            opacity : @opacity;
+
+    @ie        : @opacity * 100;
+    filter     : alpha(opacity=@ie);
+    -ms-filter : ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{ie})";
+    filter     : progid:DXImageTransform.Microsoft.Alpha(Opacity=@ie);
+}
+.user-select(@arg) {
+    -webkit-user-select : @arg;
+       -moz-user-select : @arg;
+        -ms-user-select : @arg;
+            user-select : @arg;
+}
+.ellipsis() {
+    -ms-text-overflow : ellipsis;
+     -o-text-overflow : ellipsis;
+        text-overflow : ellipsis;
+}
+.background-clip(@arg) {
+    -webkit-background-clip : @arg;
+       -moz-background-clip : @arg;
+            background-clip : @arg;
+}
+.background-size(@args) {
+    -webkit-background-size : @args;
+       -moz-background-size : @args;
+         -o-background-size : @args;
+            background-size : @args;
+}
+
+.vertical-gradient(@top, @bottom) {
+    background: mix(@top, @bottom); // совсем старые браузеры
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, @bottom), color-stop(1, @top)); // старые вебкиты
+    background: -webkit-linear-gradient(top, @top 0%, @bottom 100%); // новые вебкиты
+    background: -ms-linear-gradient(bottom, @bottom, @top); // новые ИЕ
+    background: -moz-linear-gradient(center bottom, @bottom 0%, @top 100%); // фокс
+    background: -o-linear-gradient(center bottom, @bottom 0%, @top 100%); // опера
+    background: linear-gradient(to bottom, @top 0%, @bottom 100%); // стандарт
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)", @top, @bottom)); // старые ИЕ
+}
+.radial-gradient(@top, @bottom) {
+    background: -moz-radial-gradient(center, ellipse cover, @top 0%, @bottom 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, @top), color-stop(100%, @bottom));
+    /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, @top 0%, @bottom 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, @top 0%, @bottom 100%);
+    /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, @top 0%, @bottom 100%);
+    /* IE10+ */
+    background: radial-gradient(ellipse at center, @top 0%, @bottom 100%);
+    /* W3C */
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)", @top, @bottom));
+    /* IE6-9 fallback on horizontal gradient */
+}
+.horizontal-gradient(@l, @r) {
+    background: -moz-linear-gradient(left,  @r 0%, @l 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, right top, left top, color-stop(0%,@r), color-stop(100%,@l)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(right,  @r 0%,@l 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(right,  @r 0%,@l 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(right,  @r 0%,@l 100%); /* IE10+ */
+    background: linear-gradient(to left,  @r 0%,@l 100%); /* W3C */
+    filter: e("progid:DXImageTransform.Microsoft.gradient( startColorstr='@{r}', endColorstr=@{l}, GradientType=1 )"); /* IE6-9 */
+}
+.backface() {
+    -webkit-backface-visibility : hidden;
+       -moz-backface-visibility : hidden;
+        -ms-backface-visibility : hidden;
+            backface-visibility : hidden;
+}
+.preserve-3d() {
+    -webkit-transform-style : preserve-3d;
+       -moz-transform-style : preserve-3d;
+        -ms-transform-style : preserve-3d;
+            transform-style : preserve-3d;
+}
+.perspective(@perspective:300px) {
+    -webkit-perspective : @perspective;
+       -moz-perspective : @perspective;
+        -ms-perspective : @perspective;
+            perspective : @perspective;
+}
+.transform(@args, @perspective:300px) {
+    -webkit-transform : @args;
+       -moz-transform : @args;
+        -ms-transform : @args;
+            transform : @args;
+
+    // .backface();
+    // .preserve-3d();
+    // .perspective(@perspective)
+}
+.transition(@args) {
+    -webkit-transition : @args;
+       -moz-transition : @args;
+        -ms-transition : @args;
+            transition : @args;
+}
+.transition-delay(@arg) {
+    -webkit-transition-delay : @arg;
+       -moz-transition-delay : @arg;
+        -ms-transition-delay : @arg;
+            transition-delay : @arg;
+}
+.transform-origin(@args) {
+    -webkit-transform-origin : @args;
+       -moz-transform-origin : @args;
+        -ms-transform-origin : @args;
+            transform-origin : @args;
+}
+.rotate(@deg) {
+    @value: ~"@{deg}deg";
+    -webkit-transform : rotate(@value);
+       -moz-transform : rotate(@value);
+        -ms-transform : rotate(@value);
+            transform : rotate(@value);
+}
+.animation(@args) {
+    -webkit-animation : @args;
+       -moz-animation : @args;
+            animation : @args;
+}
+.animation-delay(@arg) {
+    -webkit-animation-delay : @arg;
+       -moz-animation-delay : @arg;
+            animation-delay : @arg;
+}
+.animation-fill-mode(@arg) {
+    -webkit-animation-fill-mode : @arg;
+    -moz-animation-fill-mode : @arg;
+    animation-fill-mode : @arg;
+}
+.grab() {
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+
+    &:active
+    {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+    }
+}
+.keyframes(@name; @arguments) {
+    @-moz-keyframes @name { @arguments(); }
+    @-webkit-keyframes @name { @arguments(); }
+    @keyframes @name { @arguments(); }
+}
+.flip-horizontal(){
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}

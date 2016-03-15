@@ -1,0 +1,37 @@
+//
+// general style for layouts
+//
+html {
+    color       : @black;
+
+    // to further use sizes in rem
+    //.media-for(font-size, @main_font_size); // the adaptive way
+    font-size : @main_font_size;
+
+    body {
+        background : @white;
+        min-width  : @min_width;
+
+        width      : auto;
+        overflow-x : hidden !important;
+
+        // nice fonts Safari
+        text-rendering         : optimizeLegibility;
+        -webkit-font-smoothing : antialiased;
+    }
+}
+
+// box-sizing to all
+*, *:before, *:after {
+    .box-sizing( border-box );
+}
+
+// container & wrapper
+.container {
+    width     : 100%;
+}
+.wrapper {
+    margin       : 0 auto;
+    position     : relative;
+    lost-utility : clearfix;
+}

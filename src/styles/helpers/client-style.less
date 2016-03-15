@@ -1,0 +1,82 @@
+.client-style {
+
+    * {
+        font-family : Arial, sans-serif; // general font
+    }
+
+    //
+    // Заголовки
+    //
+    h1, .h1 {
+    }
+    h2, .h2 {
+    }
+    h3, .h3 {}
+
+    //
+    // Ссылки
+    //
+    a { color : @link-color-main; }
+    a:hover { color : @link-color-main; }
+    a:visited { color : @link-color-main; }
+    a:active { color : @link-color-active; }
+
+
+    //
+    // Абзацы
+    //
+    p {
+    }
+
+    //
+    // Списки
+    //
+
+    ol, ul {}
+    // Чистый бестилевый список
+    ul.clean {
+        .clean-ul-list();
+    }
+
+    //
+    // Таблицы
+    //
+    table {}
+
+    //
+    // Цитаты
+    //
+    blockquote {}
+
+    //
+    // Сноска
+    //
+    cite {}
+
+    //
+    // Формы
+    //
+    form {}
+    .btn {}
+
+    //
+    // Typography utilities
+    //
+    .utility-text-left   { text-align : left !important; }
+    .utility-text-center { text-align : center !important;  }
+    .utility-text-right  { text-align : right !important; }
+
+    .utility-float-left   { float : left !important; }
+    .utility-float-center { float : center !important; }
+    .utility-float-right  { float : right !important; }
+
+    .utility-block { display: block !important; }
+    .utility-inline { display: inline !important; }
+    .utility-inline-block { display: inline-block !important; }
+
+    .strong { font-weight : 700 !important; }
+    .underline { text-decoration: underline !important; }
+    .semistrong, strong.semi { font-weight : 500 !important; }
+    .cursive { font-style : italic !important; }
+
+} //.typography

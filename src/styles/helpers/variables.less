@@ -1,0 +1,48 @@
+//
+// Put global variables HERE :
+//
+
+
+//
+// Path helper var
+//
+@public : '/build/';
+
+//
+// color vars
+//
+@black             : #000000;
+@white             : #FFFFFF;
+@transparent       : transparent;
+@link-color-main   : #000;
+@link-color-active : #000;
+@almostblack       : #191919;
+
+
+//
+// Main font size
+//
+@main_font_size : 14px;
+
+//
+// Adaptive configuration
+//
+
+@min_width : 1024px;
+
+// media ranges
+@media_small  : ~"screen and (max-width: @{min_width})";
+@media_medium : ~"screen and (min-width: @{min_width+1}px) and (max-width: 1799px)";
+@media_wide   : ~"screen and (min-width: 1800px)";
+
+// shortcut for @media_small + @media_medium
+@media_small_medium : ~"screen and (max-width: 1799px)";
+
+// shortcut for @media_medium + @media_wide
+@media_medium_wide : ~"screen and (min-width: @{min_width + 1})";
+
+
+// list of media ranges
+@media_queries          :   @media_small,     @media_medium,    @media_wide;
+                        //     <1024,    	    1025-1799,	       >1800
+// ... table of variables
