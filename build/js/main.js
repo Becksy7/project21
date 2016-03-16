@@ -4,11 +4,20 @@ $(function() {
 
         return {
             init : function() {
-                DummyModule.init();
+                MenuCollapse.init();
             }
         }
     })()
-
+        ,MenuCollapse = (function(){
+            return {
+                init : function() {
+                    $('#toggle-menu').on('click',function(){
+                        $(this).toggleClass('cross');
+                        $('#nav').toggleClass('open');
+                    });
+                }
+            }
+        })()
     /**
      * Dummy Module Example
      */

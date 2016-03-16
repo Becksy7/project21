@@ -17,23 +17,27 @@
 @link-color-main   : #000;
 @link-color-active : #000;
 @almostblack       : #191919;
+@text-yellow: #fdd700;
+@yellow: #ffd42d;
+@gray: #999;
 
 
 //
 // Main font size
 //
 @main_font_size : 14px;
+@main_font_family:  'PF DinDisplay Pro', arial, sans-serif;
 
 //
 // Adaptive configuration
 //
-
+@max-width: 1366px;
 @min_width : 1024px;
 
 // media ranges
 @media_small  : ~"screen and (max-width: @{min_width})";
-@media_medium : ~"screen and (min-width: @{min_width+1}px) and (max-width: 1799px)";
-@media_wide   : ~"screen and (min-width: 1800px)";
+@media_medium : ~"screen and (min-width: @{min_width+1}px) and (max-width: 1599px)";
+@media_wide   : ~"screen and (min-width: 1600px)";
 
 // shortcut for @media_small + @media_medium
 @media_small_medium : ~"screen and (max-width: 1799px)";

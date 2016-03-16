@@ -1,0 +1,26 @@
+.social-list{
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    &__i{
+        float: left;
+        margin-right: 20px;
+        .opacity(0.9);
+        .transition(.5s opacity);
+        &:hover{
+            .opacity(1);
+        }
+    }
+    &__lk{
+        color: @white;
+        height: 70px;
+        line-height: 70px;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0 5px;;
+        .icon{
+            font-size: 20px;
+        }
+    }
+}

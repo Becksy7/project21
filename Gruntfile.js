@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
 
     grunt.initConfig({
-
         // main task : watch files and do all tasks
         watch: {
             files: [

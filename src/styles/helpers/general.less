@@ -9,11 +9,11 @@ html {
     font-size : @main_font_size;
 
     body {
-        background : @white;
-        min-width  : @min_width;
-
-        width      : auto;
-        overflow-x : hidden !important;
+        background : @white url("@{public}images/bg.1366.jpg") no-repeat 50%;
+        .background-size(cover);
+        font-family: @main_font_family;
+        margin       : 0 auto;
+        max-width: @max-width;
 
         // nice fonts Safari
         text-rendering         : optimizeLegibility;
@@ -28,10 +28,32 @@ html {
 
 // container & wrapper
 .container {
-    width     : 100%;
+    padding: 0 30px;
+    @media @media_small {
+        padding: 0 20px;
+    }
+    @media (max-width: 639px) {
+        padding: 0 10px;
+    }
 }
-.wrapper {
-    margin       : 0 auto;
+.layout-wrapper {
+
     position     : relative;
-    lost-utility : clearfix;
+    //lost-utility : clearfix;
+
+    height: 100%;
+}
+//sticky-footer
+html, body{
+    height:100%;
+}
+.layout-wrapper{
+    display:table;
+    width:100%;
+}
+.layout-header, .layout-footer, .layout-main{
+    display:table-row;
+}
+.layout-header, .layout-footer{
+    height:1px;
 }

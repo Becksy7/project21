@@ -20,19 +20,64 @@
     <div class="layout-wrapper">
         <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
         <header class="layout-header">
-            <div class="header" id="header">
-            </div>
-            <div class="nav" id="nav">
+            <div class="container">
+                <ul class="logo-list">
+                    <li class="logo-list__i">
+                        <a href="#" class="logo-list__lk"><img class="logo-list__img" src="images/header/logo-ng-channel.svg"></a>
+                    </li>
+                    <li class="logo-list__i">
+                        <a href="#" class="logo-list__lk"><img class="logo-list__img logo-list__img--mag" src="images/header/logo-ng-magazine.svg"></a>
+                    </li>
+                </ul>
+                <button href="#" class="hamburger" id="toggle-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav" id="nav">
+                    <ul class="menu">
+                        <li class="menu__i">
+                            <a href="#" class="menu__lk"><i class="icon icon-homepage"></i></a>
+                        </li>
+                        <li class="menu__i">
+                            <a href="#" class="menu__lk">О проекте</a>
+                        </li>
+                        <li class="menu__i">
+                            <a href="#" class="menu__lk">НАПОМНИТЬ о выходе первой серии</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </header>
         <main class="layout-main content-page">
             <div>Other page</div>
         </main>
         <footer class="layout-footer">
-            <div class="footer" id="footer">
+            <div class="container">
+                <span class="footer__age">18+</span>
+                <ul class="social-list">
+                    <li class="social-list__i">
+                        <a href="#" class="social-list__lk"><i class="icon icon-facebook"></i></a>
+                    </li>
+                    <li class="social-list__i">
+                        <a href="#" class="social-list__lk"><i class="icon icon-vkontakte"></i></a>
+                    </li>
+                    <li class="social-list__i">
+                        <a href="#" class="social-list__lk"><i class="icon icon-youtube"></i></a>
+                    </li>
+                </ul>
+                <ul class="sponsors-list">
+                    <li class="sponsors-list__i">
+                        <a href="#" class="sponsors-list__lk">
+                            <img src="images/beeline-logo.svg" class="sponsors-list__img sponsors-list__img--beeline">
+                        </a>
+                    </li>
+                </ul>
             </div>
         </footer>
     </div>
+    <script src="vendor/jquery.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

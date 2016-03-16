@@ -1,4 +1,16 @@
 <?php // example of including a block:
      // include "src/views/blocks/block-name.phtml" ?>
 
-<div>Index page</div>
+<section class="container">
+	<div class="watch">
+		Смотри В <span class="yellow">«БиЛайн» ТВ <i class="link-icon"></i></span> National Geographic CHANNEL
+	</div>
+	<div class="caption">
+		<div class="caption__top">
+			ИСТОРИИ О
+		</div>
+		<img class="caption__img" src="<?= publicdir('images/about-god.png') ?>" alt="Боге">
+		<div class="caption__bottom">с МОРГАНОМ ФРИМАНОМ</div>
+	</div>
+	<a href="#" class="btn" id="popup-show">Напомнить о выходе первой серии</a>
+</section>

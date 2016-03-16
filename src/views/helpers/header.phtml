@@ -1,3 +1,17 @@
-<div class="header" id="header">
-	<!-- <div class="header__elem"></div> //-->
+<div class="container">
+	<ul class="logo-list">
+		<li class="logo-list__i">
+			<a href="#" class="logo-list__lk"><img class="logo-list__img" src="<?= publicdir('images/header/logo-ng-channel.svg') ?>"></a>
+		</li>
+		<li class="logo-list__i">
+			<a href="#" class="logo-list__lk"><img  class="logo-list__img logo-list__img--mag" src="<?= publicdir('images/header/logo-ng-magazine.svg') ?>"></a>
+		</li>
+	</ul>
+	<button href="#" class="hamburger" id="toggle-menu">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</button>
+	<?php include "nav.phtml" ?>
 </div>
