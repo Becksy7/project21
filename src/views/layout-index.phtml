@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title></title>
 
-<?php /* favicon by default is turned off 
-<link rel="shortcut icon" href="<?= publicdir('favicon.ico') ?>">
-<link rel="icon" type="image/png" href="<?= publicdir('favicon.png') ?>">
-*/ ?>
+
+<link rel="shortcut icon" href="<?= publicdir('favicon16x16.ico') ?>">
+
 
 <?php include "helpers/meta.phtml" ?>
 <?php include "helpers/assets-css.phtml" ?>
@@ -34,12 +33,12 @@
 
         <main class="layout-main content-index">
             <?php include "pages/index.phtml" ?>
+            <?php include "blocks/popup.phtml" ?>
         </main><!-- .layout-main -->
 
         <footer class="layout-footer">
             <?php include "helpers/footer.phtml" ?>
         </footer><!-- .layout-footer -->
-
     </div><!-- .layout-wrapper -->
 
     <?php include "helpers/assets-js.phtml" ?>

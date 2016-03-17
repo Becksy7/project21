@@ -9,6 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
+    <link rel="shortcut icon" href="favicon16x16.ico">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="css/styles.css">
@@ -38,7 +39,7 @@
                 <div class="nav" id="nav">
                     <ul class="menu">
                         <li class="menu__i">
-                            <a href="#" class="menu__lk"><i class="icon icon-homepage"></i></a>
+                            <a href="#popup-reminder" class="menu__lk popup__caller"><i class="icon icon-homepage"></i></a>
                         </li>
                         <li class="menu__i">
                             <a href="#" class="menu__lk">О проекте</a>
@@ -62,8 +63,28 @@
                     <img class="caption__img" src="images/about-god.png" alt="Боге">
                     <div class="caption__bottom">с МОРГАНОМ ФРИМАНОМ</div>
                 </div>
-                <a href="#" class="btn" id="popup-show">Напомнить о выходе первой серии</a>
+                <a href="#popup-reminder" class="btn popup__caller" id="popup-show">Напомнить о выходе первой серии</a>
             </section>
+            <div class="popup" id="popup-reminder">
+                <a href="#" class="popup__closer" popup-closer>×</a>
+                <div class="popup__body">
+                    <div class="reminder">
+                        <div class="h1">Напомнить о выходе ПЕРВОЙ СЕРИИ</div>
+                        <p>Сериал «Морган Фриман. Истории о Боге» стартует 4 апреля на телеканале National Geographic. Не пропустите ни одной серии этого поистине потрясающего зрелища! Подпишитесь на рассылку, и мы напомним вам о выходе серии заранее.</p>
+                        <form class="reminder-form" js-validate action="test.php" method="post" autocomplete="off">
+                            <button type="submit" class="reminder-form__submit">Отправить</button>
+                            <div class="reminder-form__group">
+                                <input class="reminder-form__ctrl" name="email" placeholder="e-mail" required data-rule-email="true" data-msg-required="Заполните поле" data-msg-email="Email введен с ошибкой">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="done">
+                        <div class="h1">Спасибо</div>
+                        <p>Вы подписались на уведомление о выходе сериала «Морган Фриман. Истории о Боге». Уведомление будет отправлено на адрес <span id="done-email"></span></p>
+                    </div>
+                    <a href="#" class="btn" popup-closer>Закрыть</a>
+                </div>
+            </div>
         </main>
         <footer class="layout-footer">
             <div class="container">
@@ -90,6 +111,7 @@
         </footer>
     </div>
     <script src="vendor/jquery.min.js"></script>
+    <script src="vendor/jquery.validate.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
