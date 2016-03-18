@@ -61,7 +61,9 @@ $(function() {
                                 // сюда процесс сабмита вставляем
                                 // $(form).ajaxSubmit();
                                 var data = $(form).serialize(),
-                                    email = $(form).find('[name=email]').val();
+                                    email = $(form).find('[name=email]').val(),
+                                    errorMsg = 'Произошла ошибка. Пожалуйста, попробуйте еще раз.',
+                                    btn = '<button class="btn visible" id="show-again">Попробовать еще раз</button>';
                                 $.ajax({
                                     url : $(form).attr('action'),
                                     method : $(form).attr('method'),
@@ -70,19 +72,30 @@ $(function() {
 
                                         if ( data.error ) {
                                             $('.reminder').fadeOut(500, function(){
-                                                $(this).parents('.popup__body').append(data.errorMessage)
+                                                $(this).parents('.popup__body')
+                                                    .append('<div class="err">'+errorMsg + (data.errorMessage ? data.errorMessage : '' ) + '</div>')
+                                                    .append(btn);
+
+
                                             });
 
                                         } else {
+                                            //$('.reminder').fadeOut(500, function(){
+                                            //    $('#done-email').text(email);
+                                            //    $('.done').fadeIn(500)
+                                            //});
                                             $('.reminder').fadeOut(500, function(){
-                                                $('#done-email').text(email);
-                                                $('.done').fadeIn(500)
+                                                $(this).parents('.popup__body').append('<div class="err">'+errorMsg + (data.errorMessage ? data.errorMessage : '' ) + '</div>')
+                                                    .append(btn);
+
                                             });
                                         }
                                     },
                                     error : function(data) {
                                         $('.reminder').fadeOut(500, function(){
-                                            $(this).parents('.popup__body').append(data.errorMessage)
+                                            $(this).parents('.popup__body').append('<div class="err">'+errorMsg + data.errorMessage+'</div>')
+                                                .append(btn);
+
                                         } );
                                     },
                                     always: function(){
@@ -94,6 +107,13 @@ $(function() {
                             }
                         });
 
+                    });
+                    $(document).on('click', '#show-again', function(e){
+                        e.preventDefault();
+                        console.log('ok');
+                        $('.popup__body').find('.err, #show-again').fadeOut(500,function(){
+                            $('.reminder').fadeIn(500);
+                        });
                     });
                 }
             }

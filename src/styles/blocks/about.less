@@ -1,0 +1,127 @@
+.about{
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    background-color: fade(@black,70%);
+    padding: 25px 30px 0;
+    color: @white;
+    h1, .h1{
+        font-size: 23px;
+        font-weight: 500;
+        padding: 0 10px;
+        margin: 0 0 25px;
+        text-transform: uppercase;
+    }
+    @media @media_small {
+
+        padding: 25px 20px 0;
+        position: static;
+        background-color: @darkgrey;
+    }
+    @media (max-width: 639px) {
+
+        padding: 10px 0;
+    }
+    &-img{
+        width: 100%;
+        max-width: 100%;
+        @media (min-width: 768px) {
+            display: none;
+        }
+        &-sm{
+            width: 100%;
+            max-width: 100%;
+            display: none;
+
+            @media (min-width: 768px) and (max-width: 1023px) {
+                display: block;
+            }
+        }
+    }
+    &__caption{
+        display: table-cell;
+        vertical-align: middle;
+        @media @media_small {
+            vertical-align: top;
+            width: 200px;
+            text-align: center;
+        }
+        @media (max-width: 639px) {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .caption{
+            width: 450px;
+            margin: 0;
+
+            &__img{
+                height: 150px;
+            }
+            &__top{
+                font-size: 24px;
+            }
+            &__bottom{
+                font-size: 20px;
+            }
+            @media @media_small {
+                width: 140px;
+                margin: 0 auto;
+                &__img{
+                    height: 73px;
+                    margin-bottom: -19px;
+                }
+                &__top{
+                    font-size: 12px;
+                    padding-right: 0;
+                }
+                &__bottom{
+                    font-size: 11px;
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+    &__body{
+        display: table-cell;
+        vertical-align: top;
+        @media (max-width: 639px) {
+            display: block;
+            width: 100%;
+        }
+    }
+    &__col {
+        width: 50%;
+        padding: 0 10px;
+        float: left;
+        @media @media_small {
+            float: none;
+            width: auto;
+        }
+    }
+    &-logo{
+        height: 74px;
+        position: absolute;
+        top: 45px+70px;
+        right: 50px;
+        @media @media_small {
+            top: 23px + 70px;
+            right: 20px;
+            height: 45px;
+        }
+        @media (max-width: 639px) {
+            top: 10px + 70px;
+            right: 10px;
+            height: 30px;
+        }
+    }
+}
+.about-img-wrap, .about{
+    @media @media_small {
+        margin: 0 -20px;
+    }
+    @media (max-width: 639px) {
+
+        margin: 0 -10px;
+    }
+}

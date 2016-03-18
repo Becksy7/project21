@@ -1,7 +1,7 @@
 //
 // Pages custom styles
 //
-body.index{
+body.page-index{
     background: @black url("@{public}images/bg.1366.jpg") no-repeat 50%;
     @media (max-width: 767px) {
         background: @black url("@{public}images/bg.768.jpg") no-repeat 50%;
@@ -19,6 +19,14 @@ body.page-404{
     @media (max-width: 360px) {
         background: @black url("@{public}images/bg-404.320.jpg") no-repeat 50%;
         .background-size(cover);
+    }
+}
+body.page-about{
+    background: @black url("@{public}images/about-bg.1366.jpg") no-repeat 50%;
+    .background-size(cover);
+
+    @media @media_small {
+        background: @black;
     }
 }
 .link-icon{
@@ -85,6 +93,7 @@ section.container{
 .btn{
     border: 4px solid @yellow;
     color: @white;
+    background-color: @transparent;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 500;

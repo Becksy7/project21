@@ -10,7 +10,7 @@
     display: none;
     .transition(.5s opacity);
     .opacity(0);
-    background-color: #2f2e31;
+    background-color: @darkgrey;
     .box-shadow(0 0 60px @black);
     @media (max-width: 767px) {
         width: 100%;
@@ -43,7 +43,10 @@
             max-width: 100%;
             margin-top: 28px;
             @media (min-width: 768px) {
-                display: none;
+                &:not(.visible) {
+                    display: none;
+                }
+
             }
         }
     }
