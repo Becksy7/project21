@@ -75,19 +75,12 @@ $(function() {
                                                 $(this).parents('.popup__body')
                                                     .append('<div class="err">'+errorMsg + (data.errorMessage ? data.errorMessage : '' ) + '</div>')
                                                     .append(btn);
-
-
                                             });
 
                                         } else {
-                                            //$('.reminder').fadeOut(500, function(){
-                                            //    $('#done-email').text(email);
-                                            //    $('.done').fadeIn(500)
-                                            //});
                                             $('.reminder').fadeOut(500, function(){
-                                                $(this).parents('.popup__body').append('<div class="err">'+errorMsg + (data.errorMessage ? data.errorMessage : '' ) + '</div>')
-                                                    .append(btn);
-
+                                                $('#done-email').text(email);
+                                                $('.done').fadeIn(500)
                                             });
                                         }
                                     },
@@ -95,7 +88,6 @@ $(function() {
                                         $('.reminder').fadeOut(500, function(){
                                             $(this).parents('.popup__body').append('<div class="err">'+errorMsg + data.errorMessage+'</div>')
                                                 .append(btn);
-
                                         } );
                                     },
                                     always: function(){
