@@ -7,6 +7,7 @@ $(function() {
                 MenuCollapse.init();
                 Popups.init();
                 PopupForm.init();
+                Player.init();
             }
         }
     })()
@@ -111,6 +112,32 @@ $(function() {
                             $('.reminder').fadeIn(500);
                         });
                     });
+                }
+            }
+        })()
+        ,Player = (function(){
+            var fitContainerHeight = function(){
+                var $mainContent = $('.layout-main.content-index');
+                if ($mainContent.length){
+                    var ch = $mainContent.height(),
+                        cnth = $mainContent.find('.container').outerHeight();
+                    if (ch > cnth){
+                        $mainContent.find('.container').css('height',ch);
+                    } else {
+                        $mainContent.find('.container').css('height','auto');
+                    }
+                }
+            };
+            return {
+                init : function() {
+
+                    $(window).on('resize load',fitContainerHeight);
+                    if (typeof $.fn.mb_YTPlayer != "undefined"){
+                        $(".player").mb_YTPlayer();
+                        $(".player").on("YTPEnd",function(e){
+                            $(this).fadeOut(500);
+                        });
+                    }
                 }
             }
         })()

@@ -12,6 +12,7 @@
     <link rel="shortcut icon" href="favicon16x16.ico">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="vendor/ytp/jquery.mb.YTPlayer.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/after.css">
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -53,6 +54,8 @@
         </header>
         <main class="layout-main content-index">
             <section class="container">
+                <div id="bgndVideo" class="player bg-player" data-property="{videoURL:'https://youtu.be/mmf0KAHWlnk',containment:'.layout-main .container', autoPlay:true, mute:true, startAt:0, showControls: false, opacity:1}">
+                </div>
                 <div class="watch">
                     Смотри В <span class="yellow">«БиЛайн» ТВ <i class="link-icon"></i></span> National Geographic CHANNEL
                 </div>
@@ -114,6 +117,7 @@
     </div>
     <script src="vendor/jquery.min.js"></script>
     <script src="vendor/jquery.validate.js"></script>
+    <script src="vendor/ytp/jquery.mb.YTPlayer.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
