@@ -141,27 +141,41 @@ $(function() {
                 init : function() {
 
                     $(window).on('resize load',fitContainerHeight);
-                    if (typeof $.fn.mb_YTPlayer != "undefined"){
-                        $(".player").mb_YTPlayer();
-                        $(".player").on("YTPEnd",function(e){
-                            $(this).YTPPlay();
-                        });
-                        $(".player").on("YTPReady",function(e){
-                            if ($('.about-img-wrap').length){
-                                $('.about-img-wrap').addClass('transparent');
-                            }
-                        });
-                        window.setTimeout(function(){
-                            if (!$(".player").YTPGetPlayer()){
-                                $('body').addClass('no-video');
-                                if ($('.about-img-wrap').length){
-                                    $('.about-img-wrap').removeClass('transparent');
+                    if (!isMobile.any) {//not mobile
+                        if (typeof $.fn.mb_YTPlayer != "undefined") {
+                            $(".player").mb_YTPlayer({
+                                onError: function(){
+                                    $('body').addClass('no-video');
+                                    if ($('.about-img-wrap').length) {
+                                        $('.about-img-wrap').removeClass('transparent');
+                                    }
                                 }
+                            });
+                            $(".player").on("YTPEnd", function(e) {
+                                $(this).YTPPlay();
+                            });
+                            $(".player").on("YTPReady", function(e) {
+                                if ($('.about-img-wrap').length) {
+                                    $('.about-img-wrap').addClass('transparent');
+                                }
+                            });
+                            window.setTimeout(function() {
+                                if (!$(".player").YTPGetPlayer()) {
+                                    $('body').addClass('no-video');
+                                    if ($('.about-img-wrap').length) {
+                                        $('.about-img-wrap').removeClass('transparent');
+                                    }
+                                }
+                            }, 3000);
+                        } else {
+                            $('body').addClass('no-video');
+                            if ($('.about-img-wrap').length) {
+                                $('.about-img-wrap').removeClass('transparent');
                             }
-                        }, 1000);
-                    } else {
+                        }
+                    } else { //mobile phone detect
                         $('body').addClass('no-video');
-                        if ($('.about-img-wrap').length){
+                        if ($('.about-img-wrap').length) {
                             $('.about-img-wrap').removeClass('transparent');
                         }
                     }

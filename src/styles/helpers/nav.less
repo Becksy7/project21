@@ -49,6 +49,7 @@
         text-decoration: none;
         text-transform: uppercase;
         font-weight: bold;
+        white-space: nowrap;
         display: block;
         padding: 0 10px;
         height: 70px;
@@ -58,6 +59,10 @@
         &.active, &:hover{
             color: @text-yellow;
             border-color: @yellow;
+        }
+        @media (max-width: 767px) {
+            white-space: normal;
+            line-height: normal;
         }
     }
 }
