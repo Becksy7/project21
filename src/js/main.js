@@ -118,6 +118,7 @@ $(function() {
         ,Player = (function(){
             var fitContainerHeight = function(){
                 var $mainContent = $('.layout-main');
+                $mainContent.find('.container').css('height','auto');
                 if ($mainContent.length){
                     var ch = $mainContent.height(),
                         cnth = $mainContent.find('.container').outerHeight();
@@ -143,16 +144,26 @@ $(function() {
                     if (typeof $.fn.mb_YTPlayer != "undefined"){
                         $(".player").mb_YTPlayer();
                         $(".player").on("YTPEnd",function(e){
-                            $(this).fadeOut(500);
-                            if ($('.about-img-wrap').length){
-                                $('.about-img-wrap').removeClass('transparent');
-                            }
+                            $(this).YTPPlay();
                         });
                         $(".player").on("YTPReady",function(e){
                             if ($('.about-img-wrap').length){
                                 $('.about-img-wrap').addClass('transparent');
                             }
                         });
+                        window.setTimeout(function(){
+                            if (!$(".player").YTPGetPlayer()){
+                                $('body').addClass('no-video');
+                                if ($('.about-img-wrap').length){
+                                    $('.about-img-wrap').removeClass('transparent');
+                                }
+                            }
+                        }, 1000);
+                    } else {
+                        $('body').addClass('no-video');
+                        if ($('.about-img-wrap').length){
+                            $('.about-img-wrap').removeClass('transparent');
+                        }
                     }
                 }
             }
