@@ -159,14 +159,6 @@ $(function() {
                                     $('.about-img-wrap').addClass('transparent');
                                 }
                             });
-                            window.setTimeout(function() {
-                                if (!$(".player").YTPGetPlayer()) {
-                                    $('body').addClass('no-video');
-                                    if ($('.about-img-wrap').length) {
-                                        $('.about-img-wrap').removeClass('transparent');
-                                    }
-                                }
-                            }, 3000);
                         } else {
                             $('body').addClass('no-video');
                             if ($('.about-img-wrap').length) {

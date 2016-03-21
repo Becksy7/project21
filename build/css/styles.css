@@ -89,7 +89,7 @@ body,html{height:100%}
 .client-style .utility-inline-block{display:inline-block!important}
 .client-style .strong{font-weight:700!important}
 .client-style .underline{text-decoration:underline!important}
-.btn,.menu__lk,.page-404 h2 a,.popup__closer{text-decoration:none}
+.btn,.menu__lk,.page-404 h2 a,.popup__closer,.social-list__lk{text-decoration:none}
 .client-style .semistrong,.client-style strong.semi{font-weight:500!important}
 .client-style .cursive{font-style:italic!important}
 .layout-header .container{height:70px;background-color:#000;color:#FFF}
