@@ -5,6 +5,9 @@
     background-color: fade(@black,70%);
     padding: 25px 30px 0;
     color: @white;
+    @media (min-width: 1366px) {
+        width: 100%;
+    }
     h1, .h1{
         font-size: 23px;
         font-weight: 500;
@@ -114,6 +117,10 @@
             right: 10px;
             height: 30px;
         }
+    }
+    &__inn{
+        max-width: @max-width;
+        margin: 0 auto;
     }
 }
 .about-img-wrap, .about{

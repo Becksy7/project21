@@ -13,7 +13,6 @@ html {
         .background-size(cover);
         font-family: @main_font_family;
         margin       : 0 auto;
-        max-width: @max-width;
 
         // nice fonts Safari
         text-rendering         : optimizeLegibility;
@@ -29,6 +28,8 @@ html {
 // container & wrapper
 .container {
     padding: 0 30px;
+    max-width: @max-width;
+    margin: 0 auto;
     &>*{
         position: relative;
         z-index: 1;
@@ -60,4 +61,7 @@ html, body{
 }
 .layout-header, .layout-footer{
     height:1px;
+}
+.layout-main{
+    position: relative;
 }

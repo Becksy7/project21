@@ -117,7 +117,7 @@ $(function() {
         })()
         ,Player = (function(){
             var fitContainerHeight = function(){
-                var $mainContent = $('.layout-main.content-index');
+                var $mainContent = $('.layout-main');
                 if ($mainContent.length){
                     var ch = $mainContent.height(),
                         cnth = $mainContent.find('.container').outerHeight();
@@ -125,6 +125,14 @@ $(function() {
                         $mainContent.find('.container').css('height',ch);
                     } else {
                         $mainContent.find('.container').css('height','auto');
+                    }
+                }
+                if ($mainContent.hasClass('.page-about')){
+                    if ($('.about-img-wrap').css('display') == "block"){
+                        var h = $('.about-img-wrap').css('height') + 70;
+                        $(".player").css('height', h);
+                    } else {
+                        $(".player").css('height', "100%");
                     }
                 }
             };
@@ -136,6 +144,14 @@ $(function() {
                         $(".player").mb_YTPlayer();
                         $(".player").on("YTPEnd",function(e){
                             $(this).fadeOut(500);
+                            if ($('.about-img-wrap').length){
+                                $('.about-img-wrap').removeClass('transparent');
+                            }
+                        });
+                        $(".player").on("YTPReady",function(e){
+                            if ($('.about-img-wrap').length){
+                                $('.about-img-wrap').addClass('transparent');
+                            }
                         });
                     }
                 }
