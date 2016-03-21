@@ -114,13 +114,13 @@ body.page-index.no-video{background:url(../images/bg.1366.jpg) 50% no-repeat #00
 }
 @media (max-width:360px){body.page-index.no-video{background:url(../images/bg.320.jpg) 50% no-repeat #000;background-size:cover}
 }
-body.page-404.no-video{background:url(../images/bg-404.1366.jpg) 50% no-repeat #000;background-size:cover}
-@media (max-width:767px){body.page-404.no-video{background:url(../images/bg-404.768.jpg) 50% no-repeat #000;background-size:cover}
+body.page-404{background:url(../images/bg-404.1366.jpg) 50% no-repeat #000;background-size:cover}
+@media (max-width:767px){body.page-404{background:url(../images/bg-404.768.jpg) 50% no-repeat #000;background-size:cover}
 }
-@media (max-width:360px){body.page-404.no-video{background:url(../images/bg-404.320.jpg) 50% no-repeat #000;background-size:cover}
+@media (max-width:360px){body.page-404{background:url(../images/bg-404.320.jpg) 50% no-repeat #000;background-size:cover}
 }
-body.page-about{background:url(../images/about-bg.1366.jpg) 50% no-repeat #000;background-size:cover}
-@media screen and (max-width:1024px){body.page-about{background:#000}
+body.page-about.no-video{background:url(../images/about-bg.1366.jpg) 50% no-repeat #000;background-size:cover}
+@media screen and (max-width:1024px){body.page-about.no-video{background:#000}
 }
 .link-icon{width:12px;height:12px;background:url(../images/link-icon.png) no-repeat;display:inline-block}
 .yellow{color:#fdd700}
