@@ -18,10 +18,10 @@
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script>window.html5 || document.write('<script src="vendor/html5shiv.min.js"><\/script>')</script><![endif]-->
 </head>
-<body class="page page-index">
+<body class="page page-map">
     <div class="video-container"></div>
     <div class="layout-wrapper">
-        <!--[if lt IE 8]><p class="browserupgrade">Вы используете <strong>устаревший</strong> браузер. Пожалуйста <a href="http://browsehappy.com/">обновите ваш браузер</a> для лучшей навигации по интернету.</p><![endif]-->
+        <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
         <header class="layout-header">
             <div class="container">
                 <ul class="logo-list">
@@ -71,24 +71,23 @@
                 </div>
             </div>
         </header>
-        <main class="layout-main content-index">
-            <section class="container">
-                <div id="bgndVideo" class="player bg-player" data-property="{videoURL:'https://youtu.be/mmf0KAHWlnk',containment:'.video-container', autoPlay:true, mute:true, startAt:0, showControls: false, opacity:1}">
-                </div>
-                <div class="watch">
-                    Смотри В <span class="yellow">«БиЛайн» ТВ <i class="link-icon"></i></span> National Geographic CHANNEL
-                </div>
-                <div class="caption">
-                    <div class="caption__top">
-                        ИСТОРИИ О
+        <main class="layout-main content-map">
+            <div class="container">
+                <aside class="map-aside">
+                    <h1>Выберите точку на карте</h1>
+                    <div class="btn-filter">
+                        <a href="#" class="btn">Все серии</a>
+                        <a href="#" class="btn">1 серия<span class="btn-date">4 апреля</span></a>
+                        <a href="#" class="btn">2 серия<span class="btn-date">11 апреля</span></a>
+                        <a href="#" class="btn inactive">3 серия<span class="btn-date">20 апреля</span></a>
+                        <a href="#" class="btn inactive">4 серия<span class="btn-date">24 апреля</span></a>
                     </div>
-                    <img class="caption__img" src="images/about-god.png" alt="Боге">
-                    <div class="caption__bottom">с
-                        <br>МОРГАНОМ
-                        <br>ФРИМАНОМ</div>
-                </div>
-                <a href="#popup-reminder" class="btn btn-main popup__caller" id="popup-show">Напомнить о выходе первой серии</a>
-            </section>
+                </aside>
+                <main class="map-pointers">
+                    <a href="#q1" class="pointer" style="top: 200px; right:200px"><span>Иерусалим, Израиль</span></a>
+                    <a href="#q2" class="pointer" style="top: 320px; right:260px"><span>Иерусалим, Израиль</span></a>
+                </main>
+            </div>
             <div class="popup popup-authorise" id="popup-authorise">
                 <a href="#" class="popup__closer" popup-closer>×</a>
                 <div class="popup__body">

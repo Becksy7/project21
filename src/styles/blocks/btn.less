@@ -1,0 +1,66 @@
+.btn{
+    border: 4px solid @yellow;
+    color: @white;
+    background-color: @transparent;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 18px;
+    text-decoration: none;
+    display: block;
+    .opacity(0.9);
+    .transition(.5s opacity ease);
+    max-width: 296px;
+    text-align: center;
+    &:hover, &:hover:active{
+        .opacity(1);
+    }
+    @media @media_small {
+        max-width: 280px;
+
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+    &.btn-main, .page-index .btn{
+        margin-left: 211px;
+        @media @media_small {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+.btn-filter{
+    .btn{
+        height: 32px;
+        max-width: 140px;
+        font-weight: 600;
+        line-height: 24px;
+        color: @black;
+        border-color: @yellow;
+        margin-bottom: 10px;
+        padding: 0 4px;
+        text-align: left;
+        .transition(.5s background-color ease);
+        &:hover{
+            border-color: @yellow;
+            background-color: @yellow;
+        }
+        &-date{
+            text-transform: none;
+            font-weight: 500;
+            color: @text-grey;
+            display: inline-block;
+            margin-left: 5px;
+        }
+        &.inactive{
+            pointer-events: none;
+            cursor: default;
+            color: @text-grey-light;
+            border-color: @text-grey;
+            &:hover{
+              border-color: @text-grey;
+                background-color: @transparent;
+            }
+        }
+    }
+}
