@@ -1,0 +1,87 @@
+.user-entered{
+    &__social{
+        display: inline-block;
+        margin-right: 4px;
+        .icon{
+            display: block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: @white;
+            &:before{
+                line-height: 40px;
+                color: @white;
+            }
+            &.icon-vkontakte{
+                background-color: @vkcolor;
+
+            }
+            &.icon-facebook{
+                background-color: @fbcolor;
+            }
+        }
+    }
+    &__info{
+        width: 232px;
+        display: inline-block;
+        line-height: normal;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+    &__name{
+        font-size: 14px;
+        font-weight: bold;
+        overflow: hidden;
+        max-width: 232px;
+        height: 20px;
+        text-transform: uppercase;
+        text-overflow: ellipsis;
+    }
+    &__state{
+        span.yellow{
+            font-weight: 600;
+        }
+    }
+    &__exit{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    &__exit-tl{
+        display: none;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: @text-yellow;
+        margin-right: 4px;
+    }
+    .icon-exit{
+        display: inline-block;
+        width: 19px;
+        height: 14px;
+        background: url("@{public}images/exit-icon.png") no-repeat;
+        .background-size(100%);
+    }
+    @media @media_small2 {
+        &__social{
+            display: block;
+            i{
+                margin: 0 auto;
+            }
+        }
+        &__info{
+            display: block;
+            margin: 10px auto;
+        }
+        &__state{
+            margin-top: 10px;
+        }
+        &__exit-tl{
+            display: inline-block;
+        }
+        &__exit{
+            display: block;
+            margin: 0 auto;
+        }
+    }
+}

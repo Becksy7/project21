@@ -1,7 +1,13 @@
-.user-enter{
+.user{
     padding: 15px 0;
     float: right;
-
+    @media @media_small2 {
+        float: none;
+        padding: 15px;
+        text-align: center;
+    }
+}
+.user-enter{
     &__head{
         text-transform: uppercase;
         line-height: 40px;
@@ -53,10 +59,5 @@
             }
 
         }
-    }
-    @media @media_small2 {
-        float: none;
-        padding: 15px;
-        text-align: center;
     }
 }
