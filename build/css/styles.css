@@ -93,8 +93,8 @@ body,html{height:100%}
 .client-style .semistrong,.client-style strong.semi{font-weight:500!important}
 .client-style .cursive{font-style:italic!important}
 .layout-header .container{height:70px;background-color:#000;color:#FFF}
-.nav{float:left;z-index:1000}
-@media screen and (max-width:1199px){.menu-outer{position:fixed;top:0;right:0;margin-right:-320px;max-width:320px;width:100%;height:100vh;padding-top:5px;background-color:rgba(0,0,0,.8);-webkit-transition:.5s margin-right ease;transition:.5s margin-right ease}
+.nav{float:left}
+@media screen and (max-width:1199px){.menu-outer{position:fixed;top:0;right:0;margin-right:-320px;max-width:320px;width:100%;height:100vh;padding-top:5px;background-color:rgba(0,0,0,.8);z-index:1000;-webkit-transition:.5s margin-right ease;transition:.5s margin-right ease}
 .menu-outer.open{margin-right:0}
 .nav{float:none}
 .nav .menu{margin-top:8px}
@@ -179,35 +179,47 @@ section.container{padding-top:20px}
 @media (max-width:767px){.popup{width:100%;height:auto;top:0;left:0;margin:0}
 }
 .popup.active{display:block;-webkit-opacity:1;-moz-opacity:1;opacity:1;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);filter:alpha(Opacity=100)}
-.about-img-sm,.done{display:none}
 .popup__body{padding:18px 17px;color:#FFF}
 .popup__body .h1,.popup__body h1{font-size:23px;text-transform:uppercase;margin-bottom:22px}
 .popup__body p{font-size:16px;line-height:20px;margin-bottom:25px}
 @media (max-width:768px){.popup__body{padding:60px 10px 20px}
 }
 .popup__body .btn{max-width:100%;margin-top:28px}
+@media (min-width:768px){.popup__body .btn:not(.visible){display:none}
+}
 .popup__fader{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.5);z-index:1012}
+.popup-authorise .user-enter-lst__i:not(.active) .icon,.popup-authorise .user-enter-lst__i:not(.active) a:hover .icon,.reminder-form__ctrl{background-color:transparent}
 .popup__closer{font-size:49px;width:24px;height:24px;line-height:19px;color:#fdd700;position:absolute;right:-30px;top:-2px;font-weight:200}
-.reminder-form__ctrl,.reminder-form__submit{border:4px solid #ffd42d;font-size:14px;padding:12px 18px}
-.user-enter-lst__i .icon,.user-enter-lst__i .icon:before{line-height:40px;color:#FFF}
 @media (max-width:767px){.popup__closer{right:10px;top:23px}
 }
 body.noscroll{overflow:hidden}
+.done{display:none}
 .done .h1,.done h1{text-align:center}
+.popup-authorise{top:70px;margin-top:0}
+.popup-authorise .user-enter{float:none;text-align:center}
+.popup-authorise .user-enter__head{display:block;font-weight:500;font-size:23px;line-height:normal;margin-bottom:20px}
+.popup-authorise .user-enter-lst__i .icon{width:80px;height:80px;line-height:80px}
+.popup-authorise .user-enter-lst__i .icon:before{line-height:80px;font-size:38px}
+.user-enter-lst__i .icon,.user-enter-lst__i .icon:before{line-height:40px;color:#FFF}
+@media (max-width:767px){.popup-authorise.popup .popup__closer{right:15px;top:-48px;font-size:55px}
+.popup-authorise.popup .popup__body{padding:10px 10px 0}
+}
+.reminder-form__ctrl,.reminder-form__submit{border:4px solid #ffd42d;font-size:14px;padding:12px 18px;font-weight:500}
 .reminder-form__group{margin-right:153px}
-.reminder-form__ctrl{color:#FFF;font-weight:500;width:100%;background-color:transparent}
+.reminder-form__ctrl{color:#FFF;width:100%}
 .reminder-form__ctrl::-webkit-input-placeholder{color:#FFF;text-transform:uppercase}
 .reminder-form__ctrl:-ms-input-placeholder{color:#FFF;text-transform:uppercase}
 .reminder-form__ctrl::-moz-placeholder{color:#FFF;text-transform:uppercase}
 .reminder-form__ctrl:-moz-placeholder{color:#FFF;text-transform:uppercase}
-.reminder-form__submit{background-color:#ffd42d;float:right;color:#000;font-weight:500;width:153px}
+.reminder-form__submit{background-color:#ffd42d;float:right;color:#000;width:153px}
 .about-img,.about-img-sm{width:100%;max-width:100%}
 .about{position:absolute;bottom:70px;left:0;background-color:rgba(0,0,0,.7);padding:25px 30px 0;color:#FFF}
 @media (min-width:1366px){.about{width:100%}
 }
 .about .h1,.about h1{font-size:23px;font-weight:500;padding:0 10px;margin:0 0 25px}
-@media (min-width:768px){.about-img,.popup__body .btn:not(.visible){display:none}
+@media (min-width:768px){.about-img{display:none}
 }
+.about-img-sm{display:none}
 @media (min-width:768px) and (max-width:1023px){.about-img-sm{display:block}
 }
 .about__caption{display:table-cell;vertical-align:middle}

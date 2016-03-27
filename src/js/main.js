@@ -30,10 +30,16 @@ $(function() {
                     $callers.on('click',function(e){
                         e.preventDefault();
                         var popup = $(this).attr('href'),
-                            fader = '<div class="popup__fader"></div>';
+                            fader = '<div class="popup__fader"></div>',
+                            $caller = $(this);
 
                         $(popup).fadeIn(500,function(){
                             $(this).addClass('active');
+                            if ($caller.attr('data-active')){ // for social authorise popup only
+                                var item = $caller.attr('data-active');
+                                $(popup).find('.active').removeClass('active');
+                                $(popup).find(item).addClass('active');
+                            }
                         });
 
                         $('body').addClass('noscroll').append(fader);

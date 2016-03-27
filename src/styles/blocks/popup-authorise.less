@@ -1,0 +1,46 @@
+.popup-authorise{
+    top: 70px;
+    margin-top: 0;
+   .user-enter{
+       float: none;
+       text-align: center;
+       &__head{
+           display: block;
+           font-weight: 500;
+           font-size: 23px;
+           line-height: normal;
+           margin-bottom: 20px;
+       }
+       &-lst{
+
+           &__i{
+               .icon{
+                   width: 80px;
+                   height: 80px;
+                   line-height: 80px;
+                   &:before{
+                       line-height: 80px;
+                       font-size: 38px;
+                   }
+               }
+               &:not(.active){
+                   .icon, a:hover .icon{
+                       background-color: @transparent;
+                   }
+               }
+           }
+       }
+   }
+    &.popup .popup__closer{
+        @media (max-width: 767px) {
+            right: 15px;
+            top: -48px;
+            font-size: 55px;
+        }
+    }
+    &.popup .popup__body{
+        @media (max-width: 767px) {
+            padding: 10px 10px 0;
+        }
+    }
+}
