@@ -1,8 +1,6 @@
-.nav {
-    float: left;
-    z-index: 1000;
-    @media @media_small {
-        float: none;
+.menu-outer{
+    @media @media_small2 {
+
         position: fixed;
         top: 0;
         right: 0;
@@ -16,6 +14,14 @@
         &.open{
             margin-right: 0;
         }
+
+    }
+}
+.nav {
+    float: left;
+    z-index: 1000;
+    @media @media_small2 {
+        float: none;
         .menu{
             margin-top: 8px;
             &__i{

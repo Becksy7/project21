@@ -21,6 +21,8 @@
 @yellow: #ffd42d;
 @gray: #999;
 @darkgrey: #2f2e31;
+@vkcolor: #6996c7;
+@fbcolor: #496194;
 
 
 //
@@ -45,7 +47,7 @@
 
 // shortcut for @media_medium + @media_wide
 @media_medium_wide : ~"screen and (min-width: @{min_width + 1})";
-
+@media_small2 : ~"screen and (max-width: 1199px)";
 
 // list of media ranges
 @media_queries          :   @media_small,     @media_medium,    @media_wide;
