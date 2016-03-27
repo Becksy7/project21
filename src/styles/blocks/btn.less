@@ -28,6 +28,14 @@
             margin-right: auto;
         }
     }
+    &.btn-sm{
+        max-width: 158px;
+        width: 158px;
+        @media @media_small {
+            max-width: 158px;
+            width: 158px;
+        }
+    }
 }
 .btn-filter{
     .btn{
@@ -69,6 +77,16 @@
                     color: fade(@white, 90%);
                 }
             }
+        }
+    }
+}
+.popup .popup__body .btn-container-center{
+    text-align: center;
+    .btn{
+        margin-top: 10px;
+        display: inline-block;
+        @media (min-width: 768px) {
+            display: inline-block;
         }
     }
 }

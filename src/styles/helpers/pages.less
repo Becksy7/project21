@@ -34,7 +34,7 @@ body.page-about.no-video{
     }
 }
 body.page-map{
-    background: @black url("@{public}images/map.1366.jpg") no-repeat 50%;
+    background: @black url("@{public}images/map.1366.jpg") no-repeat left top;
     .background-size(cover);
 
 }
@@ -156,6 +156,9 @@ span.yellow {
         width: 100%;
         position: relative;
         z-index: 2;
+        padding-top: 1px;
+        margin-top: -1px;
+        .clearfix();
         @media (max-width: 767px){
             max-width: 100%;
             h1, .h1{
