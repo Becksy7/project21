@@ -76,16 +76,34 @@
                 <aside class="map-aside">
                     <h1>Выберите точку на карте</h1>
                     <div class="btn-filter">
-                        <a href="#" class="btn">Все серии</a>
-                        <a href="#" class="btn">1 серия<span class="btn-date">4 апреля</span></a>
-                        <a href="#" class="btn">2 серия<span class="btn-date">11 апреля</span></a>
-                        <a href="#" class="btn inactive">3 серия<span class="btn-date">20 апреля</span></a>
-                        <a href="#" class="btn inactive">4 серия<span class="btn-date">24 апреля</span></a>
+                        <a href="#" class="btn" id="all">Все серии</a>
+                        <ul class="points-lst" data-id="all">
+                            <li><a href="#q1">Иерусалим, Израиль</a></li>
+                            <li><a href="#q2">Матхура, Индия</a></li>
+                            <li><a href="#q3">Иерусалим, Израиль</a></li>
+                            <li><a href="#q4">Матхура, Индия</a></li>
+                            <li><a href="#q5">Иерусалим, Израиль</a></li>
+                        </ul>
+                        <a href="#" class="btn" id="e1">1 серия<span class="btn-date">4 апреля</span></a>
+                        <ul class="points-lst" data-id="e1">
+                            <li><a href="#q1">Иерусалим, Израиль</a></li>
+                            <li><a href="#q2">Матхура, Индия</a></li>
+                        </ul>
+                        <a href="#" class="btn" id="e2">2 серия<span class="btn-date">11 апреля</span></a>
+                        <ul class="points-lst" data-id="e2">
+                            <li><a href="#q3">Иерусалим, Израиль</a></li>
+                            <li><a href="#q4">Матхура, Индия</a></li>
+                        </ul>
+                        <a href="#" class="btn inactive" id="e3">3 серия<span class="btn-date">20 апреля</span></a>
+                        <a href="#" class="btn inactive" id="e4">4 серия<span class="btn-date">24 апреля</span></a>
                     </div>
                 </aside>
                 <main class="map-pointers">
-                    <a href="#q1" class="pointer" style="top: 200px; right:200px"><span>Иерусалим, Израиль</span></a>
-                    <a href="#q2" class="pointer" style="top: 320px; right:260px"><span>Иерусалим, Израиль</span></a>
+                    <a href="#q1" data-episode="e1" class="pointer" style="top: 200px; right:200px"><span>Иерусалим, Израиль</span></a>
+                    <a href="#q2" data-episode="e1" class="pointer" style="top: 200px; right:300px"><span>Иерусалим, Израиль</span></a>
+                    <a href="#q3" data-episode="e2" class="pointer" style="top: 300px; right:240px"><span>Иерусалим, Израиль</span></a>
+                    <a href="#q4" data-episode="e2" class="pointer" style="top: 400px; right:450px"><span>Иерусалим, Израиль</span></a>
+                    <a href="#q5" data-episode="e3" class="pointer" style="top: 320px; right:260px"><span>Матхура, Индия</span></a>
                 </main>
             </div>
             <div class="popup popup-authorise" id="popup-authorise">

@@ -41,7 +41,7 @@
         padding: 0 4px;
         text-align: left;
         .transition(.5s background-color ease);
-        &:hover{
+        &:hover, &.active{
             border-color: @yellow;
             background-color: @yellow;
         }
@@ -60,6 +60,14 @@
             &:hover{
               border-color: @text-grey;
                 background-color: @transparent;
+            }
+        }
+        @media (max-width: 767px) {
+            &:not(.inactive){
+                color: @white;
+                &-date{
+                    color: fade(@white, 90%);
+                }
             }
         }
     }

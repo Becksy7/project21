@@ -8,6 +8,7 @@ $(function() {
                 Popups.init();
                 PopupForm.init();
                 Player.init();
+                BtnFilter.init();
             }
         }
     })()
@@ -177,6 +178,31 @@ $(function() {
                             $('.about-img-wrap').removeClass('transparent');
                         }
                     }
+                }
+            }
+        })()
+        ,BtnFilter = (function(){
+            return {
+                init : function() {
+                    $btns = $('.btn-filter .btn:not(.inactive)');
+
+                    $btns.on('click',function(e){
+                        e.preventDefault();
+                        $btns.removeClass('active');
+                        $(this).addClass('active');
+
+                        var id = $(this).attr('id');
+
+                        if (id == 'all'){
+                            $('[data-episode]').fadeIn();
+
+                        } else {
+                            $('[data-episode]').fadeOut();
+                            $('[data-episode="' + id + '"]').fadeIn(500);
+                        }
+                        $('[data-id]').fadeOut();
+                        $('[data-id="' + id + '"]').fadeIn(500);
+                    });
                 }
             }
         })()
