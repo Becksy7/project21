@@ -3,7 +3,7 @@
 	<div class="popup__body">
 		<!-- start -->
 <!--		<div class="question question--start">-->
-<!--			<div class="guestion__img">-->
+<!--			<div class="question__img">-->
 <!--				<img  src="--><?//= publicdir("images/q/q1.jpg")?><!--">-->
 <!--			</div>-->
 <!--			<div class="question__top">-->
@@ -24,9 +24,12 @@
 <!--			</div>-->
 <!--		</div>-->
 		<!-- ./end start -->
+		
 		<!-- question template -->
-		<div class="question">
-			<div class="guestion__img">
+		<!--<div class="question">  before answer state-->
+		<div class="question question--answered"><!-- for right answer-->
+			<!--<div class="question question--answered question--answered-wrong">  for wrong answer-->
+			<div class="question__img">
 				<img  src="<?= publicdir("images/q/q1.jpg")?>">
 			</div>
 			<div class="question__top">
@@ -51,9 +54,9 @@
 							<span class="yellow">ВОПРОС</span> Какое событие свершится<br>на холме Мегиддо, согласно Библии?
 						</div>
 						<div class="question__opts">
-							<input type="radio" name="opt" id="option1"><label for="option1">Армагеддон</label>
+							<input type="radio" name="opt" id="option1"><label class="answer-ok" for="option1">Армагеддон</label>
 							<input type="radio" name="opt" id="option2"><label for="option2">Другое событие</label>
-							<input type="radio" name="opt" id="option3"><label for="option3">Ничего не случается</label>
+							<input type="radio" name="opt" id="option3"><label class="answer-wrong" for="option3">Ничего не случается</label>
 						</div>
 					</div>
 					<div class="question__add">

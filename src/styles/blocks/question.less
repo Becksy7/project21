@@ -3,6 +3,9 @@
         .question__body{
             padding: 0 45px;
         }
+        .question__top{
+            padding: 20px 10px 0;
+        }
         .question__time{
             float: right;
         }
@@ -10,6 +13,56 @@
             margin-bottom: 15px;
         }
 
+    }
+    &--answered{
+        .question__opts {
+            label {
+                color: @gray;
+                &:before {
+                    visibility: hidden;
+                }
+            }
+            label.answer-ok {
+                color: @white;
+                &:before {
+                    visibility: visible;
+                    color: @yellow;
+                    background: @transparent;
+                    &:after{
+                        content: "ПРАВИЛЬНО";
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-left: 4px;
+                    }
+                }
+                .icon;
+                .icon-tick;
+
+            }
+            label.answer-wrong {
+                &:before {
+                    visibility: visible;
+                    color: @error;
+                    background: @transparent;
+                }
+                color: @error;
+                .icon;
+                .icon-cross;
+                &:after{
+                    content: "НЕПРАВИЛЬНО";
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 4px;
+                }
+            }
+        }
+    }
+    &--answered-wrong{
+        .question__opts {
+            label.answer-ok {
+
+            }
+        }
     }
     &__left{
         float: left;
@@ -38,7 +91,7 @@
         }
     }
     &__top{
-        padding: 20px 10px 0;
+        padding: 20px 0 0;
     }
     &__tl{
         text-transform: uppercase;
@@ -62,7 +115,6 @@
     }
     &__body{
         lost-utility: clearfix;
-        padding: 0 10px;
     }
     &__state{
         list-style: none;
