@@ -1,0 +1,195 @@
+.question{
+    &&--start{
+        .question__body{
+            padding: 0 45px;
+        }
+        .question__time{
+            float: right;
+        }
+        .question__var, .question__time{
+            margin-bottom: 15px;
+        }
+
+    }
+    &__left{
+        float: left;
+        width: 360px;
+        padding: 10px;
+    }
+    &__right{
+        float: left;
+        width: 220px;
+        padding: 10px;
+    }
+    &__img{
+        position: relative;
+        img{
+            max-width: 100%;
+        }
+        &:after{
+            content: "";
+            width: 115px;
+            height: 42px;
+            background: url("@{public}images/header/logo-ng-channel.svg");
+            .background-size(cover);
+            position: absolute;
+            top:10px;
+            right: 10px;
+        }
+    }
+    &__top{
+        padding: 20px 10px 0;
+    }
+    &__tl{
+        text-transform: uppercase;
+        font-size: 18px;
+        margin-bottom: 10px;
+
+        padding: 5px 100px 0 10px;
+    }
+    &__var, &__time{
+        color: @gray;
+        font-size: 20px;
+        font-weight: 500;
+        display: inline-block;
+        text-align: center;
+        span{
+            display: block;
+
+            font-size: 72px;
+            text-align: center;
+        }
+    }
+    &__body{
+        lost-utility: clearfix;
+        padding: 0 10px;
+    }
+    &__state{
+        list-style: none;
+        padding: 0 10px 0 0;
+        margin: 0;
+        float: right;
+        li{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin-right: 4px;
+            color: @white;
+            text-align: center;
+            line-height: 24px;
+            .box-sizing(border-box);
+            border: 3px solid @yellow;
+            &.active{
+                background-color: @yellow;
+                color: @black;
+            }
+        }
+    }
+    &-author{
+        display: table;
+        font-weight: 500;
+
+        &__img{
+            display: table-cell;
+            vertical-align: middle;
+            padding-right: 10px;
+        }
+        &__info{
+            display: table-cell;
+            vertical-align: middle;
+        }
+        &__name{
+            display: inline-block;
+            text-transform: uppercase;
+        }
+        &__points{
+            display: inline-block;
+            color: @gray;
+            text-transform: uppercase;
+            margin-left: 4px;
+        }
+    }
+    &__item{
+        float: left;
+        width: 60%;
+        margin-top: 15px;
+        padding-right: 10px;
+        @media (max-width: 767px) {
+            float: none;
+            padding-right: 0;
+            width: auto;
+        }
+    }
+    &__add{
+        float: left;
+        width: 40%;
+        @media (min-width: 768px) {
+            .question__time{
+                margin-top: -20px;
+            }
+        }
+        @media (max-width: 767px) {
+            float: none;
+            width: auto;
+        }
+    }
+    &__submit.btn{
+        margin-top: 10px;
+        width: 160px;
+    }
+    &__opts{
+        input{
+            display: none;
+        }
+        input:checked+label{
+            &:before{
+                color: @yellow;
+            }
+        }
+        label{
+            margin: 0 0 10px;
+            display: block;
+            &:before{
+                content: "⚫";
+                width: 18px;
+                height: 18px;
+                color: @white;
+                text-align: center;
+                line-height: 18px;
+                background: @white;
+                .border-radius(50%);
+                display: inline-block;
+                margin-right: 8px;
+                vertical-align: top;
+            }
+        }
+    }
+    &__txt{
+        .yellow{
+            text-transform: uppercase;
+        }
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+    @media (max-width: 767px) {
+        &__var, &__time{
+            display: block;
+            float: none;
+        }
+        &__tl{
+            padding: 0;
+            margin-top: 10px;
+        }
+        &__img{
+            margin: 0px -10px;
+        }
+        &__body{
+            padding: 0;
+        }
+        &__state{
+            float: none;
+        }
+    }
+
+
+}

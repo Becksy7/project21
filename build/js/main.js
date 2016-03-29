@@ -9,6 +9,7 @@ $(function() {
                 PopupForm.init();
                 Player.init();
                 BtnFilter.init();
+                $('.popup-question').nicescroll({"cursorcolor":"#000"});
             }
         }
     })()

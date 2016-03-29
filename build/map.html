@@ -109,26 +109,48 @@
             <div class="popup popup-question" id="q1">
                 <a href="#" class="popup__closer" popup-closer>×</a>
                 <div class="popup__body">
-                    <div class="question">
-                        <div class="guestion__img">
-                            <img src="images/q/q1.jpg">
+                    <?//= publicdir("images/q/q1.jpg")?>
+                        <div class="question">
+                            <div class="guestion__img">
+                                <img src="images/q/q1.jpg">
+                            </div>
+                            <div class="question__top">
+                                <ul class="question__state">
+                                    <li class="active">1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                </ul>
+                                <div class="question-author">
+                                    <div class="question-author__img"><img src="images/q/freeman.png"></div>
+                                    <div class="question-author__info">
+                                        <div class="question-author__name">Морган Фриман</div>
+                                        <div class="question-author__points">1 балл</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="question__body">
+                                <form>
+                                    <div class="question__item">
+                                        <div class="question__txt">
+                                            <span class="yellow">ВОПРОС</span> Какое событие свершится
+                                            <br>на холме Мегиддо, согласно Библии?
+                                        </div>
+                                        <div class="question__opts">
+                                            <input type="radio" name="opt" id="option1">
+                                            <label for="option1">Армагеддон</label>
+                                            <input type="radio" name="opt" id="option2">
+                                            <label for="option2">Другое событие</label>
+                                            <input type="radio" name="opt" id="option3">
+                                            <label for="option3">Ничего не случается</label>
+                                        </div>
+                                    </div>
+                                    <div class="question__add">
+                                        <div class="question__time"><span>20</span>секунд времени</div>
+                                        <button type="submit" href="#" class="btn btn-sm question__submit visible">Ответить</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="question__top">
-                            <ul class="question__state">
-                                <li class="active">1</li>
-                                <li>2</li>
-                                <li>3</li>
-                            </ul>
-                            <div class="question__tl">Вам нужно ответить на три вопроса</div>
-                        </div>
-                        <div class="question__body">
-                            <div class="question__var"><span>3</span>варианта ответа</div>
-                            <div class="question__time"><span>20</span>секунд времени</div>
-                        </div>
-                        <div class="btn-container-center">
-                            <a href="#" class="btn btn-sm">Начать</a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="popup popup-share" id="popup-share">
@@ -179,6 +201,7 @@
     <script src="vendor/jquery.validate.js"></script>
     <script src="vendor/ytp/jquery.mb.YTPlayer.min.js"></script>
     <script src="vendor/isMobile.min.js"></script>
+    <script src="vendor/jquery.nicescroll.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
