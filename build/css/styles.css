@@ -172,7 +172,7 @@ span.yellow{color:#fdd700}
 .done .h1,.done h1,.popup .popup__body .btn-container-center{text-align:center}
 .btn-filter .btn.active,.btn-filter .btn:hover{border-color:#ffd42d;background-color:#ffd42d}
 .btn-filter .btn-date{text-transform:none;font-weight:500;color:#666;display:inline-block;margin-left:5px}
-.about .h1,.about h1,.question__tl,.reminder-form__submit,.user-enter__head,.user-entered__exit-tl,.user-entered__name{text-transform:uppercase}
+.about .h1,.about h1,.popup__body .h1,.popup__body h1,.question-author__name,.question-author__points,.question__tl,.question__txt .yellow,.reminder-form__submit,.user-enter__head,.user-entered__exit-tl{text-transform:uppercase}
 .btn-filter .btn.inactive{pointer-events:none;cursor:default;color:#999;border-color:#666}
 .btn-filter .btn.inactive:hover{border-color:#666;background-color:transparent}
 @media (max-width:767px){.btn-filter .btn:not(.inactive){color:#FFF}
@@ -206,7 +206,7 @@ span.yellow{color:#fdd700}
 }
 .popup.active{display:block;opacity:1;filter:alpha(Opacity=100)}
 .popup__body{padding:18px 17px;color:#FFF}
-.popup__body .h1,.popup__body h1{font-size:23px;text-transform:uppercase;margin-bottom:22px}
+.popup__body .h1,.popup__body h1{font-size:23px;margin-bottom:22px}
 .popup__body p{font-size:16px;line-height:20px;margin-bottom:25px}
 @media (max-width:768px){.popup__body{padding:60px 10px 20px}
 }
@@ -312,7 +312,7 @@ body.noscroll{overflow:hidden}
 .user-entered__social .icon.icon-vkontakte{background-color:#6996c7}
 .user-entered__social .icon.icon-facebook{background-color:#496194}
 .user-entered__info{width:232px;line-height:normal;margin-right:5px}
-.user-entered__name{font-size:14px;font-weight:700;overflow:hidden;max-width:232px;height:20px;text-overflow:ellipsis}
+.user-entered__name{font-size:14px;font-weight:700;overflow:hidden;max-width:232px;height:20px;text-transform:uppercase;text-overflow:ellipsis}
 .user-entered__state span.yellow{font-weight:600}
 .user-entered__exit-tl{display:none;font-size:14px;font-weight:600;color:#fdd700;margin-right:4px}
 .user-entered .icon-exit{display:inline-block;width:19px;height:14px;background:url(../images/exit-icon.png) no-repeat;background-size:100%}
@@ -354,14 +354,14 @@ body.noscroll{overflow:hidden}
 .question__time span,.question__var span{display:block;font-size:72px;text-align:center}
 .question__body:after,.question__body:before{content:'';display:table}
 .question__body{padding:0 10px}
-.question__state{list-style:none;padding:0 10px 0 0;margin:0;float:right}
+.question__state{list-style:none;padding:0 10px 0 0;margin:0 0 15px;float:right}
 .question-author__img,.question__item{padding-right:10px}
 .question__state li{display:inline-block;width:30px;height:30px;margin-right:4px;color:#FFF;text-align:center;line-height:24px;border:3px solid #ffd42d}
 .question__state li.active{background-color:#ffd42d;color:#000}
 .question-author{display:table;font-weight:500}
 .question-author__img,.question-author__info{display:table-cell;vertical-align:middle}
-.question-author__name,.question-author__points{display:inline-block;text-transform:uppercase}
-.question-author__points{color:#999;margin-left:4px}
+.question-author__name{display:inline-block}
+.question-author__points{display:inline-block;color:#999;margin-left:4px}
 .question__item{float:left;width:60%;margin-top:15px}
 @media (max-width:767px){.question__item{float:none;padding-right:0;width:auto}
 }
@@ -370,16 +370,16 @@ body.noscroll{overflow:hidden}
 }
 @media (max-width:767px){.question__add{float:none;width:auto}
 }
-.question__submit.btn{margin-top:10px;width:160px}
+.question__submit.btn{margin-top:10px;width:160px;display:inline-block}
 .question__opts input{display:none}
 .question__opts input:checked+label:before{color:#ffd42d}
 .question__opts label{margin:0 0 10px;display:block}
 .question__opts label:before{content:"⚫";width:18px;height:18px;color:#FFF;text-align:center;line-height:18px;background:#FFF;border-radius:50%;background-clip:padding-box;display:inline-block;margin-right:8px;vertical-align:top}
 .question__txt{font-weight:500;margin-bottom:15px}
-.question__txt .yellow{text-transform:uppercase}
 @media (max-width:767px){.question__time,.question__var{display:block;float:none}
+.question__add{text-align:center}
 .question__tl{padding:0;margin-top:10px}
 .question__img{margin:0 -10px}
-.question__body{padding:0}
+.question__body{padding:0 0 40px}
 .question__state{float:none}
 }
