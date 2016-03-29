@@ -1,5 +1,6 @@
 .popup-question{
-    height: 618px;
+    height: auto;
+    max-height: 618px;
     margin-top: 0;
     top: 70px;
     .opacity(1);
@@ -11,6 +12,8 @@
     }
     @media (max-width: 767px) {
         height: auto;
+        max-height: 100%;
+        overflow-x: auto;
     }
     &.popup .popup__closer{
         @media (max-width: 767px) {
@@ -22,7 +25,7 @@
     &.popup .popup__body{
         padding: 20px;
         @media (max-width: 767px) {
-            padding: 0 10px 0;
+            padding: 0 10px 10px;
         }
     }
 }
