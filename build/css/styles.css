@@ -61,8 +61,8 @@ table{border-collapse:collapse;border-spacing:0}
 .btn,.caption__top,.menu__lk,.page-404 h2,.watch{text-transform:uppercase}
 .icon-facebook:before{content:'\e800'}
 .icon-vkontakte:before{content:'\e801'}
-.icon-youtube:before{content:'\e802'}
-.icon-homepage:before{content:'\e803'}
+.icon-homepage:before{content:'\e802'}
+.icon-youtube:before{content:'\e803'}
 .icon-cross:before{content:'\e804'}
 .icon-tick:before{content:'\e805'}
 .icon-twitter:before{content:'\e806'}
@@ -241,8 +241,8 @@ span.yellow{color:#fdd700}
 @media (min-width:768px) and (max-height:700px){.popup-question{top:24px}
 }
 .popup-question.popup .popup__body{padding:20px}
-@media (max-width:767px){.popup-question{height:auto;max-height:100%;overflow-x:auto}
-.popup-question.popup .popup__closer{right:15px;top:-48px;font-size:55px}
+@media (max-width:767px){.popup-question{height:auto;max-height:90%;overflow-x:auto}
+.popup-question.popup .popup__closer{right:15px;top:-45px;font-size:55px}
 .popup-question.popup .popup__body{padding:0 10px 10px}
 }
 .popup-share{height:437px;margin-top:0;top:70px}
