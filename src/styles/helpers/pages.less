@@ -34,8 +34,8 @@ body.page-about.no-video{
     }
 }
 body.page-map{
-    background: @black url("@{public}images/map.1366.jpg") no-repeat left top;
-    .background-size(cover);
+    background: url("@{public}images/200x200.jpg") repeat;
+
 
 }
 .link-icon{
@@ -133,10 +133,16 @@ section.container{
 span.yellow {
     color: @text-yellow;
 }
+.content-map{
+    .container {
+        background: url("@{public}images/map.1366.jpg") no-repeat 50%;
+    }
+}
+
 .page-map{
     .container{
         position: relative;
-        @media (max-width: 767px){
+        @media (max-width: 1365px){
             &:before{
                 content: "";
                 position: absolute;
