@@ -136,12 +136,6 @@ span.yellow {
 .content-map{
     .container {
         background: url("@{public}images/map.1366.jpg") no-repeat 50%;
-    }
-}
-
-.page-map{
-    .container{
-        position: relative;
         @media (max-width: 1365px){
             &:before{
                 content: "";
@@ -150,9 +144,15 @@ span.yellow {
                 height: 100%;
                 top: 0;
                 left: 0;
-                background-color: fade(@black,50%);
+                background-color: fade(@white,50%);
             }
         }
+    }
+}
+
+.page-map{
+    .container{
+        position: relative;
     }
     h1, .h1{
         font-size: 32px;
