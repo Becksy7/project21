@@ -1,0 +1,253 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang=""><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang=""><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <link rel="shortcut icon" href="favicon16x16.ico">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="vendor/ytp/jquery.mb.YTPlayer.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/after.css">
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script>window.html5 || document.write('<script src="vendor/html5shiv.min.js"><\/script>')</script><![endif]-->
+</head>
+<body class="page page-rating">
+    <div class="video-container"></div>
+    <div class="layout-wrapper">
+        <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+        <header class="layout-header">
+            <div class="container">
+                <ul class="logo-list">
+                    <li class="logo-list__i">
+                        <a href="#" class="logo-list__lk"><img class="logo-list__img" src="images/header/logo-ng-channel.svg"></a>
+                    </li>
+                    <li class="logo-list__i">
+                        <a href="#" class="logo-list__lk"><img class="logo-list__img logo-list__img--mag" src="images/header/logo-ng-magazine.svg"></a>
+                    </li>
+                </ul>
+                <button href="#" class="hamburger" id="toggle-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="menu-outer" id="nav">
+                    <div class="nav">
+                        <ul class="menu">
+                            <li class="menu__i">
+                                <a href="#" class="menu__lk"><i class="icon icon-homepage"></i></a>
+                            </li>
+                            <li class="menu__i">
+                                <a href="#" class="menu__lk">О проекте</a>
+                            </li>
+                            <li class="menu__i">
+                                <a href="#" class="menu__lk">Правила</a>
+                            </li>
+                            <li class="menu__i">
+                                <a href="#" class="menu__lk">Рейтинг</a>
+                            </li>
+                            <li class="menu__i">
+                                <a href="#" class="menu__lk">Призы</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="user">
+                        <div class="user-entered">
+                            <div class="user-entered__social"><i class="icon icon-facebook"></i></div>
+                            <div class="user-entered__info">
+                                <div class="user-entered__name">Александр Александров</div>
+                                <div class="user-entered__state"><span class="yellow">12</span> баллов / <span class="yellow">5000</span> место</div>
+                            </div>
+                            <a href="#" class="user-entered__exit" title="Выйти"><span class="user-entered__exit-tl">Выйти</span><i class="icon-exit"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="layout-main content-rating">
+            <div class="container">
+                <h1>Рейтинг</h1>
+                <div class="rating">
+                    <div class="content-table">
+                        <div class="content-table__row hidden-mb">
+                            <div class="content-table__head">Место</div>
+                            <div class="content-table__head">Имя</div>
+                            <div class="content-table__head">Верные ответы</div>
+                            <div class="content-table__head">Баллы</div>
+                        </div>
+                        <div class="content-table__row on-top">
+                            <div class="content-table__cell">1</div>
+                            <div class="content-table__cell">
+                                <img src="images/face.jpg">
+                                <span>Сергей Дудоров</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row on-top">
+                            <div class="content-table__cell">2</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Алексей Ростов</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row on-top">
+                            <div class="content-table__cell">3</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Женя Пшенин</span></div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row">
+                            <div class="content-table__cell">4</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Иванов Иван</span></div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row">
+                            <div class="content-table__cell">5</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                </div>
+                                <span>Петрова Анна</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row">
+                            <div class="content-table__cell">6</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Иванов Иван</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row">
+                            <div class="content-table__cell">7</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Иванов Иван</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row">
+                            <div class="content-table__cell">8</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Петрова Анна</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row">
+                            <div class="content-table__cell">9</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Иванов Иван</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                        <div class="content-table__row">
+                            <div class="content-table__cell">10</div>
+                            <div class="content-table__cell">
+                                <div class="content-table__img">
+                                    <img src="images/face.jpg">
+                                </div>
+                                <span>Иванов Иван</span>
+                            </div>
+                            <div class="content-table__cell"><span class="hidden-dt answers">Верных ответов</span><b>17/20</b> ср. время 18 сек.</div>
+                            <div class="content-table__cell"><span class="hidden-dt points">Баллов</span>30</div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="paging">
+                    <span class="paging__lbl">В начало</span>
+                    <a href="#" class="paging__ctrl paging__ctrl--prev disabled"></a>
+                    <ul class="paging__list">
+                        <li class="paging__item active">1</li>
+                        <li class="paging__item"><a href="#">2</a></li>
+                        <li class="paging__item"><a href="#">3</a></li>
+                        <li class="paging__item"><a href="#">4</a></li>
+                        <li class="paging__divider">...</li>
+                        <li class="paging__item"><a href="#">12</a></li>
+                    </ul>
+                    <a href="#" class="paging__ctrl paging__ctrl--next"></a>
+                    <span class="paging__lbl">В конец</span>
+                </footer>
+            </div>
+            <div class="popup popup-authorise" id="popup-authorise">
+                <a href="#" class="popup__closer" popup-closer>×</a>
+                <div class="popup__body">
+                    <div class="user-enter">
+                        <div class="user-enter">
+                            <span class="user-enter__head">Войти через соцсеть</span>
+                            <ul class="user-enter-lst">
+                                <li class="user-enter-lst__i fb active"><a href="#"><i class="icon icon-facebook"></i></a></li>
+                                <li class="user-enter-lst__i vk"><a href="#"><i class="icon icon-vkontakte"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="layout-footer">
+            <div class="container">
+                <span class="footer__age">18+</span>
+                <ul class="social-list">
+                    <li class="social-list__i">
+                        <a href="#" class="social-list__lk"><i class="icon icon-facebook"></i></a>
+                    </li>
+                    <li class="social-list__i">
+                        <a href="#" class="social-list__lk"><i class="icon icon-vkontakte"></i></a>
+                    </li>
+                    <li class="social-list__i">
+                        <a href="#" class="social-list__lk"><i class="icon icon-youtube"></i></a>
+                    </li>
+                </ul>
+                <ul class="sponsors-list">
+                    <li class="sponsors-list__i">
+                        <a href="#" class="sponsors-list__lk">
+                            <img src="images/beeline-logo.svg" class="sponsors-list__img sponsors-list__img--beeline">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <script src="vendor/jquery.min.js"></script>
+    <script src="vendor/jquery.validate.js"></script>
+    <script src="vendor/ytp/jquery.mb.YTPlayer.min.js"></script>
+    <script src="vendor/isMobile.min.js"></script>
+    <script src="vendor/jquery.nicescroll.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
