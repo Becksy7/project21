@@ -493,6 +493,7 @@ span.yellow{color:#fdd700}
 .question--beeline,.question--natgeo,.question--share{margin:-20px;border:20px solid #ffd42d}
 .question--beeline .question__img:after,.question--natgeo .question__img:after,.question--share .question__img:after{top:auto;bottom:18px}
 .question--beeline{background-color:#000}
+.question--beeline .question-author__img img,.question--natgeo .question-author__img img{height:60px}
 @media (max-width:767px){.question--beeline,.question--natgeo,.question--share{margin:0 -10px -10px;border-width:10px}
 .question--beeline .question__img,.question--natgeo .question__img,.question--share .question__img{margin:0}
 .question--beeline,.question--natgeo{margin:0 -10px}

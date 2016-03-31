@@ -102,6 +102,7 @@ $(function() {
                 author_name : PP.questionTypeHelper(qe.questions[q].type).author,
                 author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
                 points   : qe.questions[q].points,
+                points_l : PP.pointsLabelHelper( qe.questions[q].points ),
                 question : qe.questions[q].title,
                 answer1  : qe.questions[q].answers[0],
                 answer2  : qe.questions[q].answers[1],
@@ -111,6 +112,15 @@ $(function() {
             var tmpl = PP.$.template.html();
             PP.$.popup_q.html( _.template(tmpl)(tmplData) );
             PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
+
+            // Change question style by its type
+            PP.$.popup_q.removeClass('question--beeline question--natgeo');
+            if (qe.questions[q].type == 'fromBeeline') {
+                PP.$.popup_q.addClass('question--beeline');
+            }
+            if (qe.questions[q].type == 'fromNatgeo') {
+                PP.$.popup_q.addClass('question--natgeo');
+            }
 
             Timer.start();
         };
@@ -124,12 +134,33 @@ $(function() {
             PP.$.btnStart = $("#popup_btn_start");
         };
 
+        PP.pointsLabelHelper = function(points) {
+            // тут больше 10 баллов наврядли будет за вопрос
+            // поэтому делаем очень просто
+            if (points == 0 ) {
+                return 'баллов';
+            } else if (points == 1){
+                return 'балл';
+            } else if (points <= 4){
+                return 'балла';
+            } else {
+                return 'баллов';
+            }
+        }
+
         PP.questionTypeHelper = function(type) {
             var R = {};
+            R.pic = '#';
+            R.author = '';
+
             if (type == 'fromMorgan') {
                 R.pic = 'images/q/freeman.png';
                 R.author = 'Морган Фриман'
-            };
+            } else if ( type == 'fromBeeline' ) {
+                R.pic = 'images/q/beeline.svg';
+            } else if ( type == 'fromNatgeo' ) {
+                R.pic = 'images/q/natgeo.svg';
+            }
 
             return R;
         };
@@ -379,7 +410,7 @@ $(function() {
             }
         }
     })(),
-    
+
     DefaultPopups = (function(){
         return {
             init: function(){
