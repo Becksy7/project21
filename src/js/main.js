@@ -57,8 +57,8 @@ $(function() {
             T.cacheElems(); // one more time (template was redrawn)
             T.timer = window.setInterval(function(){
                 T.set(--T.amount);
-                if (!T.amount) {
-                    console.log ('game fucking over');
+                if (T.amount <= 0) {
+                    Popups.timeout();                    
                     T.stop();
                 }
             }, 1000);
@@ -103,6 +103,11 @@ $(function() {
             PP.showQuestion();
         };
 
+        PP.timeout = function() {
+            PP.$.submit.removeClass('visible');
+            PP.$.timeout_label.addClass('visible');
+        }
+
         PP.showQuestion = function() {
             var q = PP.q;
             var qe = PP.qe;
@@ -132,6 +137,11 @@ $(function() {
             }
 
             Timer.start();
+
+            // recache elems
+            PP.cacheElems();
+            console.log('recached');
+            console.log ( $("#question_btn_answer") );
         };
 
         PP.cacheElems = function() {
@@ -141,6 +151,8 @@ $(function() {
             PP.$.callers = $('.popup__caller');
             PP.$.template = $("#question_popup_tmpl");
             PP.$.btnStart = $("#popup_btn_start");
+            PP.$.submit = $("#question_btn_answer");
+            PP.$.timeout_label = $(".question__timeout-label");
         };
 
         PP.pointsLabelHelper = function(points) {
@@ -216,8 +228,8 @@ $(function() {
                 });
             });
 
-            // btn answer (is always redrawn, so do not used cached item)
-            $(document).on('click', "#question_btn_answer", function(){
+           
+            $(document).on('click', '#question_btn_answer', function(){
                 Timer.stop();
 
                 if (PP.q < 2 ) {

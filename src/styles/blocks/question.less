@@ -1,4 +1,16 @@
 .question{
+
+    &__timeout-label {
+        font-weight : 500;
+        text-transform: uppercase;
+        padding-top : 30px;
+        display : none;
+
+        &.visible {
+            display : block;
+        }
+    }
+
     &&--start{
         .question__body{
             padding: 0 45px;

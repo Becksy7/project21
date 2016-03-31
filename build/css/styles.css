@@ -435,6 +435,8 @@ span.yellow{color:#fdd700}
 }
 @media (max-width:1365px){.points-lst.active{display:block}
 }
+.question__timeout-label{font-weight:500;text-transform:uppercase;padding-top:30px;display:none}
+.question__timeout-label.visible{display:block}
 .question.question--start .question__body{padding:0 45px}
 .question.question--start .question__top{padding:20px 10px 0}
 .question.question--start .question__time{float:right}
