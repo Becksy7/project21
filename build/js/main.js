@@ -64,8 +64,12 @@ $(function() {
             }, 1000);
         }
 
-        T.stop = function() {
+        T.pause = function(){
             clearTimeout(T.timer);
+        }
+        T.stop = function() {
+            T.pause();
+            T.amount = 20;
         }
 
         T.init = function() {
