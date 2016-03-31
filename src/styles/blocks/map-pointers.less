@@ -1,15 +1,22 @@
 .map-pointers{
     position: absolute;
     overflow: hidden;
-    width: 100%;
+    width: 1086px;
     height: 100%;
-    padding-left: 280px;
+    margin-left: 280px;
     .box-sizing(border-box);
     top: 0;
-    left: 0;
+    right: 0;
+    background: url("@{public}images/map.1366.jpg") no-repeat top center;
+    .background-size(1086px auto);
     @media (max-width: 1365px) {
 
-       display: none;
+       z-index: 0;
+        right: 50%;
+        margin-right: -543px;
+        .pointer{
+            display: none!important;
+        }
     }
 
     .pointer{
