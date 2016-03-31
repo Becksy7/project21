@@ -379,43 +379,44 @@ $(function() {
             }
         }
     })(),
-        DefaultPopups = (function(){
-            return {
-                init: function(){
-                    var $callers = $('.popup__caller');
+    
+    DefaultPopups = (function(){
+        return {
+            init: function(){
+                var $callers = $('.popup__caller');
 
-                    $callers.on('click',function(e){
-                        e.preventDefault();
-                        var popup = $(this).attr('href'),
-                            fader = '<div class="popup__fader"></div>',
-                            $caller = $(this);
+                $callers.on('click',function(e){
+                    e.preventDefault();
+                    var popup = $(this).attr('href'),
+                        fader = '<div class="popup__fader"></div>',
+                        $caller = $(this);
 
-                        $(popup).fadeIn(500,function(){
-                            $(this).addClass('active');
-                            if ($caller.attr('data-active')){ // for social authorise popup only
-                                var item = $caller.attr('data-active');
-                                $(popup).find('.active').removeClass('active');
-                                $(popup).find(item).addClass('active');
-                            }
-                        });
-
-                        $('body').addClass('noscroll').append(fader);
+                    $(popup).fadeIn(500,function(){
+                        $(this).addClass('active');
+                        if ($caller.attr('data-active')){ // for social authorise popup only
+                            var item = $caller.attr('data-active');
+                            $(popup).find('.active').removeClass('active');
+                            $(popup).find(item).addClass('active');
+                        }
                     });
-                    $(document).on('click', "[popup-closer], .popup__fader", function(e){
-                        e.preventDefault();
 
-                        $('.popup.active').fadeOut(500,function(){
-                            $(this).removeClass('active');
-                            $('body').removeClass('noscroll');
-                            if ($('.popup__fader').length){
-                                $('.popup__fader').remove();
-                            }
-                        });
+                    $('body').addClass('noscroll').append(fader);
+                });
+                $(document).on('click', "[popup-closer], .popup__fader", function(e){
+                    e.preventDefault();
 
+                    $('.popup.active').fadeOut(500,function(){
+                        $(this).removeClass('active');
+                        $('body').removeClass('noscroll');
+                        if ($('.popup__fader').length){
+                            $('.popup__fader').remove();
+                        }
                     });
-                }
+
+                });
             }
-        })()
+        }
+    })()
 
     /**
      * Dummy Module Example
