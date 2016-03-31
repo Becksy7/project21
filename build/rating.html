@@ -21,7 +21,6 @@
 <![endif]-->
 </head>
 <body class="page page-rating">
-    <div class="video-container"></div>
     <div class="layout-wrapper">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -193,19 +192,21 @@
                         </div>
                     </div>
                 </div>
-                <footer class="paging">
-                    <span class="paging__lbl">В начало</span>
-                    <a href="#" class="paging__ctrl paging__ctrl--prev disabled"></a>
-                    <ul class="paging__list">
-                        <li class="paging__item active">1</li>
-                        <li class="paging__item"><a href="#">2</a></li>
-                        <li class="paging__item"><a href="#">3</a></li>
-                        <li class="paging__item"><a href="#">4</a></li>
-                        <li class="paging__divider">...</li>
-                        <li class="paging__item"><a href="#">12</a></li>
-                    </ul>
-                    <a href="#" class="paging__ctrl paging__ctrl--next"></a>
-                    <span class="paging__lbl">В конец</span>
+                <footer class="paging" xmlns="http://www.w3.org/1999/html">
+                    <span class="paging__lbl paging__lbl--before">В начало</span>
+                    <div class="paging-wrap">
+                        <a href="#" class="paging__ctrl paging__ctrl--prev disabled"></a>
+                        <ul class="paging__list">
+                            <li class="paging__item active">1</li>
+                            <li class="paging__item"><a href="#">2</a></li>
+                            <li class="paging__item"><a href="#">3</a></li>
+                            <li class="paging__item"><a href="#">4</a></li>
+                            <li class="paging__divider">...</li>
+                            <li class="paging__item"><a href="#">12</a></li>
+                        </ul>
+                        <a href="#" class="paging__ctrl paging__ctrl--next"></a>
+                    </div>
+                    <span class="paging__lbl paging__lbl--after">В конец</span>
                 </footer>
             </div>
             <div class="popup popup-authorise" id="popup-authorise">

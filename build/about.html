@@ -21,7 +21,6 @@
 <![endif]-->
 </head>
 <body class="page page-about">
-    <div class="video-container"></div>
     <div class="layout-wrapper">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -77,37 +76,153 @@
         </header>
         <main class="layout-main content-about">
             <div class="container">
-                <div id="bgndVideo" class="player bg-player" data-property="{videoURL:'https://youtu.be/mmf0KAHWlnk',containment:'.video-container', autoPlay:true, mute:true, startAt:0, showControls: false, opacity:1}">
-                </div>
-                <img class="about-logo" src="images/header/logo-ng-channel.svg">
-                <div class="about-img-wrap">
-                    <img class="about-img" src="images/about-bg.1366.jpg">
-                    <img class="about-img about-img-sm" src="images/about-bg.768.jpg">
-                </div>
-                <div class="about">
-                    <div class="about__inn">
-                        <div class="about__caption">
-                            <div class="caption">
-                                <div class="caption__top">
-                                    ИСТОРИИ О
+                <section class="fullscreen-section flex-wrap" id="video-bg">
+                    <div id="bgndVideo" class="player bg-player" data-property="{videoURL:'https://youtu.be/mmf0KAHWlnk',containment:'#video-bg', autoPlay:true, mute:true, startAt:0, showControls: false, opacity:1}">
+                    </div>
+                    <img class="about-logo" src="images/header/logo-ng-channel.svg">
+                    <div class="about-img-wrap">
+                        <img class="about-img" src="images/about-bg.1366.jpg">
+                        <img class="about-img about-img-sm" src="images/about-bg.768.jpg">
+                    </div>
+                    <div class="about">
+                        <div class="about__inn">
+                            <div class="about__caption">
+                                <div class="caption">
+                                    <div class="caption__top">
+                                        ИСТОРИИ О
+                                    </div>
+                                    <img class="caption__img" src="images/about-god.png" alt="Боге">
+                                    <div class="caption__bottom">с
+                                        <br>МОРГАНОМ
+                                        <br>ФРИМАНОМ</div>
                                 </div>
-                                <img class="caption__img" src="images/about-god.png" alt="Боге">
-                                <div class="caption__bottom">с
-                                    <br>МОРГАНОМ
-                                    <br>ФРИМАНОМ</div>
+                            </div>
+                            <div class="about__body">
+                                <h1>О проекте</h1>
+                                <div class="about__col">
+                                    <p>«Морган Фриман. Истории о Боге» — цикл познавательных передач на телеканале National Geographic. Вместе с ведущим зрители отправятся в захватывающее путешествие по культурным местам, знаковым событиям, научным исследованиям.</p>
+                                    <p>Вместе с Морганом Фриманом мы отправляемся в увлекательное путешествие по миру в поисках ответов на вечные вопросы. Каждая серия будет рассказывать об одной важной проблеме, бесконечной и неизведанной тайне, которая влияет на жизни каждого человека, независимо от веры и религии.</p>
+                                </div>
+                                <div class="about__col">
+                                    <p>Предложить зрителям совершить своё собственное виртуальное путешествие по знаковым местам, изучить и понять для себя природу непознанных явлений.</p>
+                                    <p>Путешествуя, люди всегда стараются больше увидеть, разглядеть, получить новые эмоции. В нашем виртуальном туре мы также сделаем упор на визуальную составляющую проекта и дадим участникам пищу для размышлений. Тем более, что путешествовать пользователь будет не один, а в компании Моргана Фримана, Nat Geo и Билайн.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="about__body">
-                            <h1>О проекте</h1>
-                            <div class="about__col">
-                                <p>«Морган Фриман. Истории о Боге» — цикл познавательных передач на телеканале National Geographic. Вместе с ведущим зрители отправятся в захватывающее путешествие по культурным местам, знаковым событиям, научным исследованиям.</p>
-                                <p>Вместе с Морганом Фриманом мы отправляемся в увлекательное путешествие по миру в поисках ответов на вечные вопросы. Каждая серия будет рассказывать об одной важной проблеме, бесконечной и неизведанной тайне, которая влияет на жизни каждого человека, независимо от веры и религии.</p>
+                    </div>
+                </section>
+                <section class="fullscreen-section fullscreen-section--prize custom-height">
+                    <div class="fullscreen-container">
+                        <h1>Призы</h1>
+                        <h2>Главный приз - поездка на Камчатку</h2>
+                        <div class="prizes">
+                            <div class="prizes__i">
+                                <div class="prizes__tl">Свежий номер журнала National&nbsp;Geographic Россия</div>
+                                <div class="prizes__img"><img src="images/prizes/fresh-magazine.png"></div>
                             </div>
-                            <div class="about__col">
-                                <p>Предложить зрителям совершить своё собственное виртуальное путешествие по знаковым местам, изучить и понять для себя природу непознанных явлений.</p>
-                                <p>Путешествуя, люди всегда стараются больше увидеть, разглядеть, получить новые эмоции. В нашем виртуальном туре мы также сделаем упор на визуальную составляющую проекта и дадим участникам пищу для размышлений. Тем более, что путешествовать пользователь будет не один, а в компании Моргана Фримана, Nat Geo и Билайн.</p>
+                            <div class="prizes__i prize-magazines">
+                                <div class="prizes__tl">Годовая подписка на&nbsp;журнал National&nbsp;Geographic Россия</div>
+                                <div class="prizes__img"><img src="images/prizes/magazines.png"></div>
+                            </div>
+                            <div class="prizes__i prize-beeline">
+                                <div class="prizes__tl">Годовая подписка
+                                    <br>на&nbsp;Домашнее ТВ Билайн</div>
+                                <div class="prizes__img"><img src="images/beeline-logo.svg"></div>
                             </div>
                         </div>
+                    </div>
+                </section>
+                <section class="fullscreen-section fullscreen-section--partners custom-height">
+                    <div class="fullscreen-container">
+                        <h1>Партнеры</h1>
+                        <div class="partners">
+                            <div class="partners__col nat-geo">
+                                <div class="partners__img"><img src="images/header/logo-ng-magazine.svg"></div>
+                                <p>Журнал National Geographic — это официальный журнал Национального географического общества. Издается с 1888 года, мировая аудитория — более 38 млн. читателей! Публикуемые материалы — результат новаторских исследований, экспедиций, путешествий, археологических раскопок и т. д. В подготовке журнала принимают участие самые известные журналисты, фотографы, путешественники и ученые. Только самые значимые результаты их работы попадают на страницы журнала.</p>
+                            </div>
+                            <div class="partners__col">
+                                <div class="partners__img"><img src="images/beeline-logo.svg"></div>
+                                <p>Услуги «Билайн» ежедневно обеспечивают надежную связь между людьми. Но мы уверены, что можем сделать больше. Современные технологии могут и должны помогать решению острых социальных проблем. Стратегия корпоративной социальной ответственности ПАО «ВымпелКом» определяет философию, основные принципы и критерии выбора проектов, реализуемых компанией на благо всех заинтересованных сторон — клиентов, сотрудников, акционеров, государства, общества в целом. ПАО «ВымпелКом» входит в группу компаний «ВымпелКом Лтд», которая является одним из крупнейших мировых интегрированных операторов связи, в который входят компании, предоставляющие услуги голосовой связи и передачи данных.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="fullscreen-section fullscreen-section--series">
+                    <div class="fullscreen-container">
+                        <h1>Серии</h1>
+                        <div class="episodes">
+                            <a href="#popup-video1" class="popup__caller">
+                                <div class="episodes__i">
+                                    <img class="episodes__img" src="images/episodes/episode1.jpg">
+                                    <div class="episodes__text">
+                                        <div class="episodes__tl">Тайна создания
+                                            <span>4 апреля в 21:45 МСК</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="popup__caller">
+                                <div class="episodes__i">
+                                    <img class="episodes__img" src="images/episodes/episode2.jpg">
+                                    <div class="episodes__text">
+                                        <div class="episodes__tl">Тайна создания
+                                            <span>4 апреля в 21:45 МСК</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="popup__caller">
+                                <div class="episodes__i">
+                                    <img class="episodes__img" src="images/episodes/episode3.jpg">
+                                    <div class="episodes__text">
+                                        <div class="episodes__tl">Тайна создания
+                                            <span>4 апреля в 21:45 МСК</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="popup__caller">
+                                <div class="episodes__i">
+                                    <img class="episodes__img" src="images/episodes/episode4.jpg">
+                                    <div class="episodes__text">
+                                        <div class="episodes__tl">Тайна создания
+                                            <span>4 апреля в 21:45 МСК</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="popup__caller">
+                                <div class="episodes__i">
+                                    <img class="episodes__img" src="images/episodes/episode5.jpg">
+                                    <div class="episodes__text">
+                                        <div class="episodes__tl">Тайна создания
+                                            <span>4 апреля в 21:45 МСК</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="popup__caller">
+                                <div class="episodes__i">
+                                    <img class="episodes__img" src="images/episodes/episode6.jpg">
+                                    <div class="episodes__text">
+                                        <div class="episodes__tl">Тайна создания
+                                            <span>4 апреля в 21:45 МСК</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="popup popup-video" id="popup-video1">
+                <a href="#" class="popup__closer" popup-closer>×</a>
+                <div class="popup__body">
+                    <iframe width="420" height="315" class="popup-video__iframe" src="http://www.youtube.com/embed/XGSy3_Czz8k">
+                    </iframe>
+                    <div class="popup-video__txt">
+                        <div class="h2">Тайна создания</div>
+                        <p>Как все началось? Это самая главная загадка человечества. У каждой религии есть своя версия, и все они удивительно похожи. Евреи в Книге Бытия, Индусы в Ригведе, древние майя в Книге Советов, — все говорят о том, как после божественной темноты настал… свет. Похожая картина у ученых — из-за Большого Взрыва темная пустота преобразовалась во вспышку энергии, которая положила начало Вселенной. Морган пройдет по священным местам и побывает в научных лабораториях, пытаясь найти разгадку к величайшей тайне мироздания. Быть может, истории создания бытия, как полагают многие психологи, появились из-за стремления человека все объяснить научно? Действительно ли Божественное, что так интересует ученых, управляет процессами во Вселенной? А может, Бог есть в каждом повторяющемся образе жизни и природы — фрактале? А разветвленный фрактал это и есть форма Бога?</p>
                     </div>
                 </div>
             </div>

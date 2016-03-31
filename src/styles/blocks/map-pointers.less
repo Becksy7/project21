@@ -32,7 +32,15 @@
             line-height: 30px;
             .transition(.5s width);
         }
-        &:hover{
+        &.inactive{
+            span{
+                background-color: @gray;
+            }
+            &:after{
+                border-color: @gray;
+            }
+        }
+        &:not(.inactive):hover{
             @media (min-width: 1366px) {
                 span{
                     width: 150px;
