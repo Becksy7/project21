@@ -201,7 +201,7 @@ $(function() {
             init : function() {
                 $btns = $('.btn-filter .btn:not(.inactive)');
                 if (!$btns.length) return false;
-                
+
                 $btns.on('click',function(e){
                     e.preventDefault();
                     $btns.removeClass('active');
