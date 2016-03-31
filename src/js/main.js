@@ -9,8 +9,70 @@ $(function() {
                 PopupForm.init();
                 Player.init();
                 BtnFilter.init();
+                Timer.init();
             }
         }
+    })()
+
+    ,Timer = (function(){
+        var T = {};
+        T.timer = null;
+        T.amount = 20;
+        T.cacheElems = function() {
+            T.$ = {};
+            T.$.instance = $(".question__time");
+            T.$.label = $("#timer_label");
+            T.$.value = $("#timer_val");
+        };
+
+        T.bindEvents = function() {};
+
+        T.set = function(amount) {
+            // на будущее данная функция работает 
+            // с числами больше 20
+            T.$.value.text(amount);
+
+            var lastDigit = (amount % 10);
+            var label = '';
+            if (lastDigit <= 0) {
+                label = 'секунд';
+            } else if (lastDigit <= 1) {
+                label = 'секунда';
+            } else if ( lastDigit <= 4 ) {
+                label = 'секунды';
+            } else {
+                label = 'секунд';
+            }
+
+            // исключение (11-14) секунд а не секунда/секунды
+            if ( ( amount>=11 ) && (amount<=14) ) {
+                label = 'секунд';
+            }
+
+            T.$.label.text(label);
+        }
+
+        T.start = function() {
+            T.cacheElems(); // one more time (template was redrawn)
+            T.timer = window.setInterval(function(){
+                T.set(--T.amount);
+                if (!T.amount) {
+                    console.log ('game fucking over');
+                    T.stop();
+                }
+            }, 1000);
+        }
+
+        T.stop = function() {
+            clearTimeout(T.timer);
+        }
+
+        T.init = function() {
+            T.cacheElems();
+            T.bindEvents();
+        };
+
+        return T;
     })()
 
     ,MenuCollapse = (function(){
@@ -28,8 +90,28 @@ $(function() {
 
         var PP = {};
 
-        PP.fillUpPopup = function() {
+        PP.q = 0;
+        PP.qe = null;
 
+        PP.showQuestion = function() {
+            var q = PP.q;
+            var qe = PP.qe;
+            var tmplData = {
+                pic : qe.episodePic,
+                author_name : PP.questionTypeHelper(qe.questions[q].type).author,
+                author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
+                points   : qe.questions[q].points,
+                question : qe.questions[q].title,
+                answer1  : qe.questions[q].answers[0],
+                answer2  : qe.questions[q].answers[1],
+                answer3  : qe.questions[q].answers[2],
+            };
+
+            var tmpl = PP.$.template.html();
+            PP.$.popup_q.html( _.template(tmpl)(tmplData) );
+            PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
+
+            Timer.start();
         };
 
         PP.cacheElems = function() {
@@ -38,6 +120,7 @@ $(function() {
             PP.$.popup_q = PP.$.popup.find('.question.question--go');
             PP.$.callers = $('.popup__caller');
             PP.$.template = $("#question_popup_tmpl");
+            PP.$.btnStart = $("#popup_btn_start");
         };
 
         PP.questionTypeHelper = function(type) {
@@ -48,7 +131,14 @@ $(function() {
             };
 
             return R;
-        }
+        };
+
+        PP.showFinalScreen = function() {
+            PP.$.popup
+                .removeClass('popup-question--go')
+                .removeClass('popup-question--start')
+                .addClass('popup-question--share');
+        };
 
         PP.bindEvents = function() {
 
@@ -59,20 +149,7 @@ $(function() {
                 var fader = '<div class="popup__fader"></div>',
                     $caller = $(this);
 
-                var qe = QUESTIONS[$caller.data('episode')]; // вопросы данного эпизода
-                var q = 0; // по умолчанию - первый вопрос из 3
-                var tmplData = {
-                    pic : qe.episodePic,
-                    author_name : PP.questionTypeHelper(qe.questions[q].type).author,
-                    author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
-                    points   : qe.questions[q].points,
-                    question : qe.questions[q].title,
-                    answer1  : qe.questions[q].answers[0],
-                    answer2  : qe.questions[q].answers[1],
-                    answer3  : qe.questions[q].answers[2],
-                };
-                var tmpl = PP.$.template.html();
-                PP.$.popup_q.html( _.template(tmpl)(tmplData) );
+                PP.qe = QUESTIONS[$caller.data('episode')]; // берем данные из хранилища
 
                 PP.$.popup.fadeIn(250, function(){
                     $(this).addClass('active');
@@ -96,6 +173,30 @@ $(function() {
                         $('.popup__fader').remove();
                     }
                 });
+            });
+
+            // btn answer (is always redrawn, so do not used cached item)
+            $(document).on('click', "#question_btn_answer", function(){
+                Timer.stop();
+                PP.q++;
+                if (PP.q < 3 ) {
+                    PP.showQuestion();
+                } else {
+                    PP.showFinalScreen();
+                }
+
+                return false;
+            });
+
+            PP.$.btnStart.on('click', function() {
+                $(this).parents('.popup-question--start')
+                       .removeClass('popup-question--start')
+                       .addClass('popup-question--go');
+
+                // 1-ый вопрос по умолчанию при старте
+                PP.q = 0;
+                PP.showQuestion();
+                return false;
             });
         };
 
