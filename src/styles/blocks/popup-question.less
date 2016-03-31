@@ -1,8 +1,8 @@
-.popup-question{
+.popup-question {
     height: auto;
-
     margin-top: 0;
     top: 70px;
+
     @media (min-width: 768px){
         max-height: 618px;
     }
@@ -34,6 +34,32 @@
             right: 15px;
             top: -45px;
             font-size: 55px;
+        }
+    }
+
+    // Logic
+    &--start {
+        .question {
+            display : none;
+        }
+        .question.question--start {
+            display : block;
+        }
+    }
+    &--go {
+        .question {
+            display : none;
+        }
+        .question.question--go {
+            display : block;
+        }
+    }
+    &--share {
+        .question {
+            display : none;
+        }
+        .question.question--share {
+            display : block;
         }
     }
 }
