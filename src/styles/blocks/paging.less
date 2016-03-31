@@ -73,9 +73,26 @@
             .icon-right-open-big;
         } //.paging__ctrl--next
     } //.paging__ctrl
+    &-wrap{
+        float: left;
+        @media (max-width: 400px) {
+            float: none;
+            text-align: center;
+        }
+    }
     &__lbl{
         display: inline-block;
         vertical-align: middle;
         color: @white;
+        float: left;
+        &--before{
+            margin-top: 50px;
+            margin-right: -50px;
+        }
+        &--after{
+            @media (max-width: 400px) {
+                float: right;
+            }
+        }
     }
 }
