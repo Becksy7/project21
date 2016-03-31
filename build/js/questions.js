@@ -1,7 +1,9 @@
-window.QUESTIONS = [
+window.QUESTIONS = {
 '123' : {
   locationId: 123,
   episodeVideo: 'https://youtu.be/QH2-TGUlwu4',
+  episodePic : 'images/q/q1.jpg',
+
   questions: [
      {
         title: 'Какое событие свершится на холме Мегиддо согласно Библии?',
@@ -38,4 +40,4 @@ window.QUESTIONS = [
      }
   ],
 }
-];
+};

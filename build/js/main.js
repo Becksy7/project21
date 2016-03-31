@@ -27,11 +27,28 @@ $(function() {
     ,Popups = (function(){
 
         var PP = {};
+
+        PP.fillUpPopup = function() {
+
+        };
+
         PP.cacheElems = function() {
             PP.$ = {};
             PP.$.popup = $("#question_popup");
+            PP.$.popup_q = PP.$.popup.find('.question.question--go');
             PP.$.callers = $('.popup__caller');
+            PP.$.template = $("#question_popup_tmpl");
         };
+
+        PP.questionTypeHelper = function(type) {
+            var R = {};
+            if (type == 'fromMorgan') {
+                R.pic = 'images/q/freeman.png';
+                R.author = 'Морган Фриман'
+            };
+
+            return R;
+        }
 
         PP.bindEvents = function() {
 
@@ -41,6 +58,21 @@ $(function() {
 
                 var fader = '<div class="popup__fader"></div>',
                     $caller = $(this);
+
+                var qe = QUESTIONS[$caller.data('episode')]; // вопросы данного эпизода
+                var q = 0; // по умолчанию - первый вопрос из 3
+                var tmplData = {
+                    pic : qe.episodePic,
+                    author_name : PP.questionTypeHelper(qe.questions[q].type).author,
+                    author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
+                    points   : qe.questions[q].points,
+                    question : qe.questions[q].title,
+                    answer1  : qe.questions[q].answers[0],
+                    answer2  : qe.questions[q].answers[1],
+                    answer3  : qe.questions[q].answers[2],
+                };
+                var tmpl = PP.$.template.html();
+                PP.$.popup_q.html( _.template(tmpl)(tmplData) );
 
                 PP.$.popup.fadeIn(250, function(){
                     $(this).addClass('active');
