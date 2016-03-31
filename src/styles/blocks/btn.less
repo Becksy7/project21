@@ -70,7 +70,11 @@
                 background-color: @transparent;
             }
         }
-        @media (max-width: 767px) {
+        @media (max-width: 1365px) {
+            &.inactive{
+                border-color: @lightgray;
+                color: @lightgray;
+            }
             &:not(.inactive){
                 color: @white;
                 &-date{
