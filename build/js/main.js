@@ -28,7 +28,9 @@ $(function() {
 
         return {
             init : function() {
+
                 var $callers = $('.popup__caller');
+                if (!$callers.length) return;
 
                 $callers.on('click',function(e){
                     e.preventDefault();
@@ -48,6 +50,8 @@ $(function() {
                         $('body').addClass('noscroll').append(fader);
                     }
                 });
+
+                // Close popup
                 $(document).on('click', "[popup-closer], .popup__fader", function(e){
                     e.preventDefault();
 
@@ -58,77 +62,81 @@ $(function() {
                             $('.popup__fader').remove();
                         }
                     });
-
                 });
             }
         }
     })()
 
     ,PopupForm = (function(){
-        return {
-            init : function() {
-                $('[js-validate]').each(function(i,form){
-                    $(form).validate({
-                        submitHandler: function(form) {
-                            // сюда процесс сабмита вставляем
-                            // $(form).ajaxSubmit();
-                            var data = $(form).serialize(),
-                                email = $(form).find('[name=email]').val(),
-                                errorMsg = 'Произошла ошибка. Пожалуйста, попробуйте еще раз.',
-                                err = '<div class="err"><div class="h1">Произошла ошибка</div></div>',
-                                btn = '<button class="btn visible" id="show-again">Попробовать еще раз</button>';
-                            $.ajax({
-                                url : $(form).attr('action'),
-                                method : $(form).attr('method'),
-                                data : data,
-                                success : function(data) {
+        var PF = {};
 
-                                    if ( data.error ) {
-                                        var error = $(err).append('<p>'+(data.errorMessage ? data.errorMessage : errorMsg) + '</p>');
-                                        $('.reminder').fadeOut(500, function(){
-                                            $(this).parents('.popup__body')
-                                                .append(error)
-                                                .append(btn);
-                                        });
+        PF.email = '';
+        PF.HTML = {
+            err : '<div class="err"><div class="h1">Произошла ошибка</div></div>',
+            btn : '<button class="btn visible" id="show-again">Попробовать еще раз</button>'
+        }
+        PF.errorMessage = 'Произошла ошибка. Пожалуйста, попробуйте еще раз.';
 
-                                    } else {
-                                        $('.reminder').fadeOut(500, function(){
-                                            $('#done-email').text(email);
-                                            $('.done').fadeIn(500)
-                                        });
-                                    }
-                                },
-                                error : function(data) {
-                                    var error = $(err).append('<p>'+(data.errorMessage ? data.errorMessage : errorMsg) + '</p>');
-                                    $('.reminder').fadeOut(500, function(){
-                                        $(this).parents('.popup__body')
-                                            .append(error)
-                                            .append(btn);
-                                    });
-                                },
-                                always: function(){
-
-                                }
-                            });
-
-                            return false;
-                        }
-                    });
-
+        PF.success = function(data){
+            if ( data.error ) {
+                var errorHTML = '<p>'+(data.errorMessage ? data.errorMessage : errorMsg) + '</p>';
+                $('.reminder').fadeOut(500, function(){
+                    $(this).parents('.popup__body')
+                        .append( $(PF.HTML.err).append(errorHTML) )
+                        .append( PF.HTML.btn );
                 });
-                $(document).on('click', '#show-again', function(e){
-                    e.preventDefault();
-
-                    $('.popup__body').find('.err, #show-again').fadeOut(500,function(){
-                        $('.reminder').fadeIn(500);
-                    });
+            } else {
+                $('.reminder').fadeOut(500, function(){
+                    $('#done-email').text(PF.email);
+                    $('.done').fadeIn(500)
                 });
             }
+        };
+        PF.error = function(data) {
+            var errorHTML = '<p>'+(data.errorMessage ? data.errorMessage : errorMsg) + '</p>';
+            $('.reminder').fadeOut(500, function(){
+                $(this).parents('.popup__body')
+                    .append( $(PF.HTML.err).append(errorHTML) )
+                    .append( PF.HTML.btn );
+            });
         }
+
+        PF.init = function() {
+
+            $('[js-validate]').each(function(i,form){
+                $(form).validate({
+                    submitHandler: function(form) {
+                        PF.email = $(form).find('[name=email]').val();
+                        var data = $(form).serialize();
+
+                        $.ajax({
+                            url     : $(form).attr('action'),
+                            method  : $(form).attr('method'),
+                            data    : data,
+                            success : PF.success,
+                            error   : PF.error
+                        });
+
+                        return false;
+                    }
+                });
+            });
+
+            $(document).on('click', '#show-again', function(e){
+                e.preventDefault();
+
+                $('.popup__body').find('.err, #show-again').fadeOut(500,function(){
+                    $('.reminder').fadeIn(500);
+                });
+            });
+        }
+
+        return PF;
     })()
 
     ,Player = (function(){
-        var fitContainerHeight = function(){
+        var PL = {};
+        PL.fitContainerHeight = function(){
             var $mainContent = $('.layout-main');
             $mainContent.find('.container').css('height','auto');
             if ($mainContent.length){
@@ -149,49 +157,51 @@ $(function() {
                 }
             }
         };
-        return {
-            init : function() {
+        PL.init = function() {
 
-                $(window).on('resize load',fitContainerHeight);
-                if (!isMobile.any) {//not mobile
-                    if (typeof $.fn.mb_YTPlayer != "undefined") {
-                        $(".player").mb_YTPlayer({
-                            onError: function(){
-                                $('body').addClass('no-video');
-                                if ($('.about-img-wrap').length) {
-                                    $('.about-img-wrap').removeClass('transparent');
-                                }
-                            }
-                        });
-                        $(".player").on("YTPEnd", function(e) {
-                            $(this).YTPPlay();
-                        });
-                        $(".player").on("YTPReady", function(e) {
+            $(window).on('resize load',PL.fitContainerHeight);
+
+            if (!isMobile.any) {
+                if (typeof $.fn.mb_YTPlayer != "undefined") {
+                    $(".player").mb_YTPlayer({
+                        onError: function(){
+                            $('body').addClass('no-video');
                             if ($('.about-img-wrap').length) {
-                                $('.about-img-wrap').addClass('transparent');
+                                $('.about-img-wrap').removeClass('transparent');
                             }
-                        });
-                    } else {
-                        $('body').addClass('no-video');
-                        if ($('.about-img-wrap').length) {
-                            $('.about-img-wrap').removeClass('transparent');
                         }
-                    }
-                } else { //mobile phone detect
+                    });
+                    $(".player").on("YTPEnd", function(e) {
+                        $(this).YTPPlay();
+                    });
+                    $(".player").on("YTPReady", function(e) {
+                        if ($('.about-img-wrap').length) {
+                            $('.about-img-wrap').addClass('transparent');
+                        }
+                    });
+                } else {
                     $('body').addClass('no-video');
                     if ($('.about-img-wrap').length) {
                         $('.about-img-wrap').removeClass('transparent');
                     }
                 }
+            } else { //mobile phone detect
+                $('body').addClass('no-video');
+                if ($('.about-img-wrap').length) {
+                    $('.about-img-wrap').removeClass('transparent');
+                }
             }
         }
+
+        return PL;
     })()
 
     ,BtnFilter = (function(){
         return {
             init : function() {
                 $btns = $('.btn-filter .btn:not(.inactive)');
-
+                if (!$btns.length) return false;
+                
                 $btns.on('click',function(e){
                     e.preventDefault();
                     $btns.removeClass('active');
