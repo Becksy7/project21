@@ -98,6 +98,11 @@ $(function() {
         PP.q = 0;
         PP.qe = null;
 
+        PP.next = function(){
+            PP.q++;
+            PP.showQuestion();
+        };
+
         PP.showQuestion = function() {
             var q = PP.q;
             var qe = PP.qe;
@@ -214,9 +219,9 @@ $(function() {
             // btn answer (is always redrawn, so do not used cached item)
             $(document).on('click', "#question_btn_answer", function(){
                 Timer.stop();
-                PP.q++;
-                if (PP.q < 3 ) {
-                    PP.showQuestion();
+
+                if (PP.q < 2 ) {
+                    PP.next();
                 } else {
                     PP.showFinalScreen();
                 }
