@@ -94,7 +94,7 @@
         }
     }
     &__top{
-        padding: 20px 0 0;
+        padding: 20px 10px 0;
     }
     &__tl{
         text-transform: uppercase;
@@ -118,6 +118,7 @@
     }
     &__body{
         lost-utility: clearfix;
+        padding: 0 10px 10px;
     }
     &__state{
         list-style: none;
@@ -187,10 +188,18 @@
             float: none;
             width: auto;
         }
+        .question__var{
+            font-size: 36px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
     }
     &__submit.btn{
         margin-top: 10px;
-        width: 160px;
+        width: auto;
+        padding-left: 20px;
+        padding-right: 20px;
         display: inline-block;
     }
     &__opts{
@@ -243,13 +252,14 @@
             margin: 0px -10px;
         }
         &__body{
-            padding: 0 0 40px;
+            padding: 0 10px 10px;
         }
         &__state{
             float: none;
         }
     }
-    &--share{
+
+    &--share, &--beeline, &--natgeo{
         margin: -20px;
         border: 20px solid @yellow;
         .question__img{
@@ -264,6 +274,14 @@
             .question__img{
                 margin: 0;
             }
+        }
+    }
+    &--beeline{
+        background-color: @black;
+    }
+    &--beeline, &--natgeo{
+        @media (max-width: 767px) {
+            margin: 0 -10px 0;
         }
     }
     &-sharings{
