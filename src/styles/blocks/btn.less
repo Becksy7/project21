@@ -61,19 +61,23 @@
             margin-left: 5px;
         }
         &.inactive{
-            pointer-events: none;
-            cursor: default;
             color: @text-grey-light;
             border-color: @text-grey;
             &:hover{
               border-color: @text-grey;
-                background-color: @transparent;
+                background-color: @text-grey;
+                color: @black;
             }
         }
         @media (max-width: 1365px) {
             &.inactive{
                 border-color: @lightgray;
                 color: @lightgray;
+                &:hover{
+                    border-color: @lightgray;
+                    background-color: @lightgray;
+                    color: @black;
+                }
             }
             &:not(.inactive){
                 color: @white;
