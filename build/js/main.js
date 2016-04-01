@@ -57,15 +57,19 @@ $(function() {
             T.cacheElems(); // one more time (template was redrawn)
             T.timer = window.setInterval(function(){
                 T.set(--T.amount);
-                if (!T.amount) {
-                    console.log ('game fucking over');
+                if (T.amount <= 0) {
+                    Popups.timeout();                    
                     T.stop();
                 }
             }, 1000);
         }
 
-        T.stop = function() {
+        T.pause = function(){
             clearTimeout(T.timer);
+        }
+        T.stop = function() {
+            T.pause();
+            T.amount = 20;
         }
 
         T.init = function() {
@@ -94,6 +98,63 @@ $(function() {
         PP.q = 0;
         PP.qe = null;
 
+        PP.next = function(){
+            PP.q++;
+            PP.showQuestion();
+        };
+
+        PP.timeout = function() {
+            PP.$.submit.removeClass('visible');
+            PP.$.timeout_label.addClass('visible');
+
+            PP.$.popup_q.find('.question__opts input[name=opt]').prop('disabled', true);
+        }
+
+        PP.checkAnswer = function() {
+            // тут будет аякс вместо deferred-объекта
+            // пока вместо аякс-эффекта - простой таймаут на 400мс
+            var dd = $.Deferred();
+            var answer = PP.$.popup_q.find('.question__opts input[name=opt]:checked').val();
+
+            if (answer == 1 ) { // hard-code проверка на правильность
+                window.setTimeout(function(){
+                    dd.resolve({  // имитируем ответ от аякса
+                        success:true, 
+                        userAnswer : answer, 
+                        points : PP.qe.questions[PP.q].points 
+                    }); 
+                }, 400); 
+            } else {
+                window.setTimeout(function(){
+                    dd.reject({success:false, userAnswer : answer, correctAnswer : 1});
+                }, 400); 
+            }
+            return dd.promise();
+        }
+
+        PP.answerWasCorrect = function(data) {
+            PP.$.popup.removeClass('question--answered-wrong')
+                      .addClass('question--answered');
+
+            PP.$.popup_q.find('.question__opts label')
+                .eq(data.userAnswer-1).addClass('answer-ok');
+
+            PP.$.after_answer.find('.question__var').text('+' + data.points + ' ' +PP.pointsLabelHelper(data.points));
+            PP.$.before_answer.removeClass('visible');
+            PP.$.after_answer.addClass('visible');
+        }
+        PP.answerWasInCorrect = function(data) {
+            PP.$.popup.addClass('question--answered question--answered-wrong');
+            PP.$.popup_q.find('.question__opts label')
+                .eq(data.correctAnswer-1).addClass('answer-ok');
+            PP.$.popup_q.find('.question__opts label')
+                .eq(data.userAnswer-1).addClass('answer-wrong');
+
+            PP.$.after_answer.find('.question__var').text('0 баллов');
+            PP.$.before_answer.removeClass('visible');
+            PP.$.after_answer.addClass('visible');
+        }
+
         PP.showQuestion = function() {
             var q = PP.q;
             var qe = PP.qe;
@@ -102,6 +163,7 @@ $(function() {
                 author_name : PP.questionTypeHelper(qe.questions[q].type).author,
                 author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
                 points   : qe.questions[q].points,
+                points_l : PP.pointsLabelHelper( qe.questions[q].points ),
                 question : qe.questions[q].title,
                 answer1  : qe.questions[q].answers[0],
                 answer2  : qe.questions[q].answers[1],
@@ -112,7 +174,23 @@ $(function() {
             PP.$.popup_q.html( _.template(tmpl)(tmplData) );
             PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
 
+            // reset answered style
+            PP.$.popup.removeClass('question--answered-wrong')
+                      .removeClass('question--answered');
+
+            // Change question style by its type
+            PP.$.popup_q.removeClass('question--beeline question--natgeo');
+            if (qe.questions[q].type == 'fromBeeline') {
+                PP.$.popup_q.addClass('question--beeline');
+            }
+            if (qe.questions[q].type == 'fromNatgeo') {
+                PP.$.popup_q.addClass('question--natgeo');
+            }
+
             Timer.start();
+
+            // recache elems
+            PP.cacheElems();
         };
 
         PP.cacheElems = function() {
@@ -122,14 +200,40 @@ $(function() {
             PP.$.callers = $('.popup__caller');
             PP.$.template = $("#question_popup_tmpl");
             PP.$.btnStart = $("#popup_btn_start");
+            PP.$.submit = $("#question_btn_answer");
+            PP.$.timeout_label = $(".question__timeout-label");
+            PP.$.before_answer = $(".question__before-answer");
+            PP.$.after_answer = $(".question__after-answer");
+            PP.$.btnNext = $("#question_btn_next");
         };
+
+        PP.pointsLabelHelper = function(points) {
+            // тут больше 10 баллов наврядли будет за вопрос
+            // поэтому делаем очень просто
+            if (points == 0 ) {
+                return 'баллов';
+            } else if (points == 1){
+                return 'балл';
+            } else if (points <= 4){
+                return 'балла';
+            } else {
+                return 'баллов';
+            }
+        }
 
         PP.questionTypeHelper = function(type) {
             var R = {};
+            R.pic = '#';
+            R.author = '';
+
             if (type == 'fromMorgan') {
                 R.pic = 'images/q/freeman.png';
                 R.author = 'Морган Фриман'
-            };
+            } else if ( type == 'fromBeeline' ) {
+                R.pic = 'images/q/beeline.svg';
+            } else if ( type == 'fromNatgeo' ) {
+                R.pic = 'images/q/natgeo.svg';
+            }
 
             return R;
         };
@@ -176,17 +280,29 @@ $(function() {
                 });
             });
 
-            // btn answer (is always redrawn, so do not used cached item)
-            $(document).on('click', "#question_btn_answer", function(){
+           
+            $(document).on('click', '#question_btn_answer', function(){
                 Timer.stop();
-                PP.q++;
-                if (PP.q < 3 ) {
-                    PP.showQuestion();
+
+                $.when(PP.checkAnswer())
+                    .done(PP.answerWasCorrect)
+                    .fail(PP.answerWasInCorrect);
+
+                return false;
+            });
+
+            $(document).on("click", "#question_btn_next", function(){
+                if (PP.q < 2) {
+                    PP.next();
                 } else {
                     PP.showFinalScreen();
                 }
-
                 return false;
+            });
+
+            // enable button when click on radio button
+            $(document).on('click', '.question__opts input', function(){
+                PP.$.submit.prop('disabled', false);
             });
 
             PP.$.btnStart.on('click', function() {
@@ -379,48 +495,49 @@ $(function() {
             }
         }
     })(),
-        DefaultPopups = (function(){
-            return {
-                init: function(){
-                    var $callers = $('.popup__caller');
 
-                    $callers.on('click',function(e){
-                        e.preventDefault();
-                        var popup = $(this).attr('href'),
-                            fader = '<div class="popup__fader"></div>',
-                            $caller = $(this);
+    DefaultPopups = (function(){
+        return {
+            init: function(){
+                var $callers = $('.popup__caller');
 
-                        $(popup).fadeIn(500,function(){
-                            $(this).addClass('active');
-                            if ($caller.attr('data-active')){ // for social authorise popup only
-                                var item = $caller.attr('data-active');
-                                $(popup).find('.active').removeClass('active');
-                                $(popup).find(item).addClass('active');
-                            }
-                        });
+                $callers.on('click',function(e){
+                    e.preventDefault();
+                    var popup = $(this).attr('href'),
+                        fader = '<div class="popup__fader"></div>',
+                        $caller = $(this);
 
-                        $('body').addClass('noscroll').append(fader);
+                    $(popup).fadeIn(500,function(){
+                        $(this).addClass('active');
+                        if ($caller.attr('data-active')){ // for social authorise popup only
+                            var item = $caller.attr('data-active');
+                            $(popup).find('.active').removeClass('active');
+                            $(popup).find(item).addClass('active');
+                        }
                     });
-                    $(document).on('click', "[popup-closer], .popup__fader", function(e){
-                        e.preventDefault();
 
-                        $('.popup.active').fadeOut(500,function(){
-                            $(this).removeClass('active');
-                            var $videoplayer = $(this).find('.popup-video__iframe');
-                            if ( $videoplayer.length ){
-                                //stop video when close
-                                $videoplayer[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
-                            }
-                            $('body').removeClass('noscroll');
-                            if ($('.popup__fader').length){
-                                $('.popup__fader').remove();
-                            }
-                        });
+                    $('body').addClass('noscroll').append(fader);
+                });
+                $(document).on('click', "[popup-closer], .popup__fader", function(e){
+                    e.preventDefault();
 
+                    $('.popup.active').fadeOut(500,function(){
+                        $(this).removeClass('active');
+                        var $videoplayer = $(this).find('.popup-video__iframe');
+                        if ( $videoplayer.length ){
+                            //stop video when close
+                            $videoplayer[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+                        }
+                        $('body').removeClass('noscroll');
+                        if ($('.popup__fader').length){
+                            $('.popup__fader').remove();
+                        }
                     });
-                }
+
+                });
             }
-        })()
+        }
+    })()
 
     /**
      * Dummy Module Example

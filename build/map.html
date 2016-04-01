@@ -147,7 +147,7 @@
                                         <%= author_name %>
                                     </div>
                                     <div class="question-author__points">
-                                        <%= points %>
+                                        <%= points + ' ' + points_l %>
                                     </div>
                                 </div>
                             </div>
@@ -160,27 +160,30 @@
                                         <%= question %>
                                     </div>
                                     <div class="question__opts">
-                                        <input type="radio" name="opt" id="option1">
+                                        <input type="radio" name="opt" id="option1" value="1">
                                         <label for="option1">
                                             <%= answer1 %>
                                         </label>
-                                        <input type="radio" name="opt" id="option2">
+                                        <input type="radio" name="opt" id="option2" value="2">
                                         <label for="option2">
                                             <%= answer2 %>
                                         </label>
-                                        <input type="radio" name="opt" id="option3">
+                                        <input type="radio" name="opt" id="option3" value="3">
                                         <label for="option3">
                                             <%= answer3 %>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="question__add">
-                                    <div class="question__time"><span id="timer_val" class="question__time-sec-value">20</span><span class="question__time-sec-label" id="timer_label">секунд</span> времени</div>
-                                    <button type="submit" href="#" id="question_btn_answer" class="btn btn-sm question__submit visible">Ответить</button>
-                                    <!--
-				<div class="question__var">0 баллов</div>
-				<button type="submit" href="#" class="btn btn-sm question__submit visible">Следующий вопрос</button>
-				-->
+                                    <div class="question__before-answer visible">
+                                        <div class="question__time"><span id="timer_val" class="question__time-sec-value">20</span><span class="question__time-sec-label" id="timer_label">секунд</span> времени</div>
+                                        <button type="submit" href="#" id="question_btn_answer" class="btn btn-sm question__submit visible" disabled>Ответить</button>
+                                    </div>
+                                    <div class="question__timeout-label">Время вышло</div>
+                                    <div class="question__after-answer">
+                                        <div class="question__var" id="question_result_ball"></div>
+                                        <button id="question_btn_next" type="submit" href="#" class="btn btn-sm question__submit visible">Следующий вопрос</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
