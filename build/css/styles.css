@@ -172,9 +172,9 @@ span.yellow{color:#fdd700}
 }
 .btn{border:4px solid #ffd42d;color:#FFF;background-color:transparent;text-transform:uppercase;font-size:14px;padding:12px 18px;display:block;-webkit-opacity:.9;-moz-opacity:.9;opacity:.9;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=90);filter:alpha(Opacity=90);-webkit-transition:.5s opacity ease;transition:.5s opacity ease;max-width:296px}
 .btn:hover,.btn:hover:active{-webkit-opacity:1;-moz-opacity:1;opacity:1;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);filter:alpha(Opacity=100)}
-.btn .page-index .btn,.btn.btn-main{margin-left:211px}
+.btn.btn-main,.page-index .btn{margin-left:211px}
 @media screen and (max-width:1024px){.btn{max-width:280px;padding-left:11px;padding-right:11px}
-.btn .page-index .btn,.btn.btn-main{margin-left:auto;margin-right:auto}
+.btn.btn-main,.page-index .btn{margin-left:auto;margin-right:auto}
 .btn.btn-sm{max-width:158px;width:158px}
 }
 .btn.btn-sm{max-width:158px;width:158px}

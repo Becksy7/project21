@@ -194,12 +194,12 @@ $(function() {
                       .removeClass('question--answered');
 
             // Change question style by its type
-            PP.$.popup_q.removeClass('question--beeline question--natgeo');
+            PP.$.popup_q.parent().removeClass('beeline natgeo');
             if (qe.questions[q].type == 'fromBeeline') {
-                PP.$.popup_q.addClass('question--beeline');
+                PP.$.popup_q.parent().addClass('beeline');
             }
             if (qe.questions[q].type == 'fromNatgeo') {
-                PP.$.popup_q.addClass('question--natgeo');
+                PP.$.popup_q.parent().addClass('natgeo');
             }
 
             Timer.start();
@@ -261,7 +261,8 @@ $(function() {
             PP.$.popup
                 .removeClass('popup-question--go')
                 .removeClass('popup-question--start')
-                .addClass('popup-question--share');
+                .addClass('popup-question--share')
+                .parent().addClass('share');
                 
             PP.$.popup.find('.share-text').show();
         };
