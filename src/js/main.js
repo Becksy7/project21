@@ -108,6 +108,39 @@ $(function() {
             PP.$.timeout_label.addClass('visible');
         }
 
+        PP.checkAnswer = function() {
+            // тут будет аякс вместо deferred-объекта
+            // пока вместо аякс-эффекта - простой таймаут на 400мс
+            var dd = $.Deferred();
+            var answer = PP.$.popup_q.find('.question__opts input[name=opt]:checked').val();
+
+            if (answer == 1 ) { // hard-code проверка на правильность
+                window.setTimeout(function(){
+                    dd.resolve({success:true, userAnswer : answer});
+                }, 400); 
+            } else {
+                window.setTimeout(function(){
+                    dd.reject({success:false, userAnswer : answer, correctAnswer : 1});
+                }, 400); 
+            }
+            return dd.promise();
+        }
+
+        PP.answerWasCorrect = function(data) {
+            PP.$.popup.removeClass('question--answered-wrong')
+                      .addClass('question--answered');
+
+            PP.$.popup_q.find('.question__opts label')
+                .eq(data.userAnswer-1).addClass('answer-ok');
+        }
+        PP.answerWasInCorrect = function(data) {
+            PP.$.popup.addClass('question--answered question--answered-wrong');
+            PP.$.popup_q.find('.question__opts label')
+                .eq(data.correctAnswer-1).addClass('answer-ok');
+            PP.$.popup_q.find('.question__opts label')
+                .eq(data.userAnswer-1).addClass('answer-wrong');
+        }
+
         PP.showQuestion = function() {
             var q = PP.q;
             var qe = PP.qe;
@@ -140,8 +173,6 @@ $(function() {
 
             // recache elems
             PP.cacheElems();
-            console.log('recached');
-            console.log ( $("#question_btn_answer") );
         };
 
         PP.cacheElems = function() {
@@ -232,11 +263,9 @@ $(function() {
             $(document).on('click', '#question_btn_answer', function(){
                 Timer.stop();
 
-                if (PP.q < 2 ) {
-                    PP.next();
-                } else {
-                    PP.showFinalScreen();
-                }
+                $.when(PP.checkAnswer())
+                    .done(PP.answerWasCorrect)
+                    .fail(PP.answerWasInCorrect);
 
                 return false;
             });
