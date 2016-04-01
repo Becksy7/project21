@@ -1,6 +1,11 @@
-<div class="question question--start">
+<div class="question question--start"></div>
+<script type="text/template" id="start_popup_tmpl">
 	<div class="question__img">
-		<img  src="<?= publicdir("images/q/q1.jpg")?>">
+		<% if (video !== "") { %>
+		<iframe width="420" height="315" class="popup-video__iframe" src="<%= video %>?enablejsapi=1"></iframe>
+		<% } else { %>
+		<img src=<?=publicdir("<%= pic %>") ?>>
+		<% } %>
 	</div>
 	<div class="question__top">
 		<ul class="question__state">
@@ -18,4 +23,4 @@
 	<div class="btn-container-center">
 		<a href="#" class="btn btn-sm" id="popup_btn_start">Начать</a>
 	</div>
-</div>
+</script>

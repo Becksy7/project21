@@ -1,6 +1,5 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 .hamburger,.hamburger:focus,:active,a:active,a:hover{outline:0}
-body.noscroll,svg:not(:root){overflow:hidden}
 .content-table,table{border-collapse:collapse}
 .icon:before,button,select{text-transform:none}
 .container>*,.layout-main,.layout-wrapper,sub,sup{position:relative}
@@ -24,6 +23,7 @@ sub,sup{font-size:75%;line-height:0;vertical-align:baseline}
 sup{top:-.5em}
 sub{bottom:-.25em}
 img{border:0}
+svg:not(:root){overflow:hidden}
 figure{margin:1em 40px}
 hr{box-sizing:content-box;height:0}
 pre,textarea{overflow:auto}
@@ -155,7 +155,7 @@ section.container{padding-top:20px}
 span.yellow{color:#fdd700}
 @media (max-width:1365px){.content-map .container:before{content:"";position:absolute;width:100%;height:100%;top:0;left:0;background-color:rgba(0,0,0,.5);z-index:1}
 }
-.hamburger,.page-map .container{position:relative}
+.page-map .container{position:relative;overflow:hidden}
 .page-map .map-aside{max-width:280px;width:100%;position:relative;z-index:2;padding-top:1px;margin-top:-1px}
 .page-map .map-aside:after,.page-map .map-aside:before{content:" ";display:table}
 .page-map .map-aside .h1,.page-map .map-aside h1{color:#000}
@@ -192,7 +192,7 @@ span.yellow{color:#fdd700}
 .popup .popup__body .btn-container-center .btn{margin-top:10px;display:inline-block}
 @media (min-width:768px){.popup .popup__body .btn-container-center .btn{display:inline-block}
 }
-.hamburger{height:22px;width:30px;border:0;margin:25px 0;float:right;background-color:transparent;display:none;z-index:1010}
+.hamburger{position:relative;height:22px;width:30px;border:0;margin:25px 0;float:right;background-color:transparent;display:none;z-index:1010}
 @media screen and (max-width:1199px){.hamburger{display:block}
 }
 .hamburger span{width:100%;display:block;position:absolute;height:4px;background:#ffd42d;border-radius:1px;background-clip:padding-box;opacity:1;left:0;-webkit-transform:rotate(0);transform:rotate(0);-webkit-transition:.25s ease-in-out;transition:.25s ease-in-out}
@@ -238,6 +238,7 @@ span.yellow{color:#fdd700}
 .popup__closer{font-size:49px;width:24px;height:24px;line-height:19px;color:#fdd700;position:absolute;right:-30px;top:-2px;font-weight:200}
 @media (max-width:767px){.popup__closer{right:10px;top:23px}
 }
+body.noscroll{overflow:hidden}
 .done{display:none}
 .popup-authorise{top:70px;margin-top:0}
 .popup-authorise .user-enter{float:none}
@@ -417,13 +418,14 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .user-entered__exit{display:block;margin:0 auto}
 }
 .points-lst>li,.question.question--start .question__time,.question.question--start .question__var{margin-bottom:15px}
-.map-pointers{overflow:hidden;width:1086px;height:100%;margin-left:280px;right:0;background:url(../images/map.1366.jpg) top center no-repeat;background-size:1086px auto}
+.map-pointers{overflow:hidden;width:1086px;height:820px;margin-left:280px;right:0;background:url(../images/map.1366.jpg) top center no-repeat;background-size:1086px auto}
 @media (max-width:1365px){.map-pointers{z-index:0;width:100%}
 .map-pointers .pointer{display:none!important}
 }
 .map-pointers .pointer{display:block;width:20px;height:30px;position:absolute}
 .map-pointers .pointer span{width:0;padding-left:3px;display:inline-block;position:relative;z-index:2;overflow:hidden;background-color:#ffd42d;color:#000;height:30px;line-height:30px;-webkit-transition:.5s width;transition:.5s width}
 .map-pointers .pointer:after,.map-pointers .pointer:before{content:"";position:absolute;left:0}
+.map-pointers .pointer.inactive{touch-events:none}
 .map-pointers .pointer.inactive span{background-color:#999}
 .map-pointers .pointer.inactive:after{border-color:#999}
 @media (min-width:1366px){.map-pointers .pointer:not(.inactive):hover span{width:150px}
