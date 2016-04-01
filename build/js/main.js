@@ -116,7 +116,11 @@ $(function() {
 
             if (answer == 1 ) { // hard-code проверка на правильность
                 window.setTimeout(function(){
-                    dd.resolve({success:true, userAnswer : answer, points : 1}); // имитируем ответ от аякса
+                    dd.resolve({  // имитируем ответ от аякса
+                        success:true, 
+                        userAnswer : answer, 
+                        points : PP.qe.questions[PP.q].points 
+                    }); 
                 }, 400); 
             } else {
                 window.setTimeout(function(){
