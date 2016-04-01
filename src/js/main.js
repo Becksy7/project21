@@ -271,6 +271,10 @@ $(function() {
         }
         
         PP.openPopup = function($caller) {
+            if (typeof QUESTIONS == 'undefined') {
+                return
+            }
+            
             var fader = '<div class="popup__fader"></div>';
 
             PP.qe = QUESTIONS[$caller.data('episode')]; // берем данные из хранилища
