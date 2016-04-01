@@ -115,7 +115,7 @@ $(function() {
             var dd = $.Deferred();
             var answer = PP.$.popup_q.find('.question__opts input[name=opt]:checked').val();
             $.ajax({
-                url     : ApiUrl.userAnswer,
+                url     : 'example.php',//ApiUrl.userAnswer,
                 method  : 'POST',
                 data    : {
                     locationId: PP.qe.locationId,
@@ -124,12 +124,16 @@ $(function() {
                 },
                 dataType : 'json',
                 success  : function(data){
+                    console.log(data);
                     if (data.success) {
                         dd.resolve(data.userAnswerStatus);                     
                     }
                     else {
                         dd.reject();                        
                     }
+                },
+                error : function(data){
+
                 }
             });
             return dd.promise();
@@ -262,8 +266,9 @@ $(function() {
                 .removeClass('popup-question--go')
                 .removeClass('popup-question--start')
                 .addClass('popup-question--share')
-                .parent().addClass('share');
-                
+                .find('.popup__body').addClass('share');
+            PP.$.popup.find('.popup__body').removeClass('beeline natgeo');
+            PP.$.popup.find('.question__img.common').hide();
             PP.$.popup.find('.share-text').show();
         };
         
