@@ -108,6 +108,16 @@
             <div class="popup popup-question popup-question--start" id="question_popup">
                 <a href="#" class="popup__closer" popup-closer>×</a>
                 <div class="popup__body">
+                    <div class="question__img" data-question-image="true"></div>
+                    <script type="text/template" id="question_img_tmpl">
+                        <div class="question__img">
+                            <% if (video !== "") { %>
+                                <iframe width="420" height="315" class="popup-video__iframe" src="<%= video %>?enablejsapi=1"></iframe>
+                                <% } else { %>
+                                    <img src=<%=p ic %>>
+                                    <% } %>
+                        </div>
+                    </script>
                     <div class="question question--start"></div>
                     <script type="text/template" id="start_popup_tmpl">
                         <div class="question__top">
