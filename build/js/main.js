@@ -111,24 +111,28 @@ $(function() {
         }
 
         PP.checkAnswer = function() {
-            // тут будет аякс вместо deferred-объекта
-            // пока вместо аякс-эффекта - простой таймаут на 400мс
             var dd = $.Deferred();
             var answer = PP.$.popup_q.find('.question__opts input[name=opt]:checked').val();
-
-            if (answer == 1 ) { // hard-code проверка на правильность
-                window.setTimeout(function(){
-                    dd.resolve({  // имитируем ответ от аякса
-                        success:true, 
-                        userAnswer : answer, 
-                        points : PP.qe.questions[PP.q].points 
-                    }); 
-                }, 400); 
-            } else {
-                window.setTimeout(function(){
-                    dd.reject({success:false, userAnswer : answer, correctAnswer : 1});
-                }, 400); 
-            }
+            $.ajax({
+                url     : ApiUrl.userAnswer,
+                method  : 'POST',
+                data    : {
+                    locationId: PP.qe.locationId,
+                    questionType: PP.qe.questions[PP.q].type,
+                    answer: answer
+                },
+                dataType : 'json',
+                success  : function(data){
+                    if (data.success)
+                    {
+                        dd.resolve(data);                     
+                    }
+                    else
+                    {
+                        dd.reject(data);
+                    }
+                }
+            });
             return dd.promise();
         }
 
