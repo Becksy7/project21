@@ -437,6 +437,10 @@ span.yellow{color:#fdd700}
 }
 .question__timeout-label{font-weight:500;text-transform:uppercase;padding-top:30px;display:none}
 .question__timeout-label.visible{display:block}
+.question__after-answer{display:none}
+.question__after-answer.visible{display:block}
+.question__before-answer{display:none}
+.question__before-answer.visible{display:block}
 .question.question--start .question__body{padding:0 45px}
 .question.question--start .question__top{padding:20px 10px 0}
 .question.question--start .question__time{float:right}

@@ -39,14 +39,19 @@ question--beeline //-->
 				</div>
 			</div>
 			<div class="question__add">
-				<div class="question__time"><span id="timer_val" class="question__time-sec-value">20</span><span class="question__time-sec-label" id="timer_label">секунд</span> времени</div>
-				<button type="submit" href="#" id="question_btn_answer" class="btn btn-sm question__submit visible" disabled>Ответить</button>
+
+				<div class="question__before-answer visible">
+					<div class="question__time"><span id="timer_val" class="question__time-sec-value">20</span><span class="question__time-sec-label" id="timer_label">секунд</span> времени</div>
+					<button type="submit" href="#" id="question_btn_answer" class="btn btn-sm question__submit visible" disabled>Ответить</button>
+				</div>
+
 				<div class="question__timeout-label">Время вышло</div>
 
-				<!--
-				<div class="question__var">0 баллов</div>
-				<button type="submit" href="#" class="btn btn-sm question__submit visible">Следующий вопрос</button>
-				-->
+				<div class="question__after-answer">
+					<div class="question__var" id="question_result_ball"></div>
+					<button id="question_btn_next" type="submit" href="#" class="btn btn-sm question__submit visible">Следующий вопрос</button>
+				</div>
+				
 			</div>
 		</form>
 	</div>

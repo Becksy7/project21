@@ -116,7 +116,7 @@ $(function() {
 
             if (answer == 1 ) { // hard-code проверка на правильность
                 window.setTimeout(function(){
-                    dd.resolve({success:true, userAnswer : answer});
+                    dd.resolve({success:true, userAnswer : answer, points : 1}); // имитируем ответ от аякса
                 }, 400); 
             } else {
                 window.setTimeout(function(){
@@ -132,6 +132,10 @@ $(function() {
 
             PP.$.popup_q.find('.question__opts label')
                 .eq(data.userAnswer-1).addClass('answer-ok');
+
+            PP.$.after_answer.find('.question__var').text('+' + data.points + ' ' +PP.pointsLabelHelper(data.points));
+            PP.$.before_answer.removeClass('visible');
+            PP.$.after_answer.addClass('visible');
         }
         PP.answerWasInCorrect = function(data) {
             PP.$.popup.addClass('question--answered question--answered-wrong');
@@ -139,6 +143,10 @@ $(function() {
                 .eq(data.correctAnswer-1).addClass('answer-ok');
             PP.$.popup_q.find('.question__opts label')
                 .eq(data.userAnswer-1).addClass('answer-wrong');
+
+            PP.$.after_answer.find('.question__var').text('0 баллов');
+            PP.$.before_answer.removeClass('visible');
+            PP.$.after_answer.addClass('visible');
         }
 
         PP.showQuestion = function() {
@@ -159,6 +167,10 @@ $(function() {
             var tmpl = PP.$.template.html();
             PP.$.popup_q.html( _.template(tmpl)(tmplData) );
             PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
+
+            // reset answered style
+            PP.$.popup.removeClass('question--answered-wrong')
+                      .removeClass('question--answered');
 
             // Change question style by its type
             PP.$.popup_q.removeClass('question--beeline question--natgeo');
@@ -184,6 +196,9 @@ $(function() {
             PP.$.btnStart = $("#popup_btn_start");
             PP.$.submit = $("#question_btn_answer");
             PP.$.timeout_label = $(".question__timeout-label");
+            PP.$.before_answer = $(".question__before-answer");
+            PP.$.after_answer = $(".question__after-answer");
+            PP.$.btnNext = $("#question_btn_next");
         };
 
         PP.pointsLabelHelper = function(points) {
@@ -267,6 +282,15 @@ $(function() {
                     .done(PP.answerWasCorrect)
                     .fail(PP.answerWasInCorrect);
 
+                return false;
+            });
+
+            $(document).on("click", "#question_btn_next", function(){
+                if (PP.q < 2) {
+                    PP.next();
+                } else {
+                    PP.showFinalScreen();
+                }
                 return false;
             });
 
