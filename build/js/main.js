@@ -165,7 +165,9 @@ $(function() {
             var qe = PP.qe;
             var tmplData = {
                 pic : qe.episodePic,
+                video: qe.episodeVideo,
                 author_name : PP.questionTypeHelper(qe.questions[q].type).author,
+                author_org : qe.questions[q].type,
                 author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
                 points   : qe.questions[q].points,
                 points_l : PP.pointsLabelHelper( qe.questions[q].points ),
@@ -254,22 +256,46 @@ $(function() {
 
             if ( !PP.$.callers.length ) return;
             PP.$.callers.on('click',function(e){
-                e.preventDefault();
+                if ( !$(this).hasClass('inactive')) {
+                    e.preventDefault();
 
-                var fader = '<div class="popup__fader"></div>',
-                    $caller = $(this);
+                    var fader = '<div class="popup__fader"></div>',
+                        $caller = $(this);
 
-                PP.qe = QUESTIONS[$caller.data('episode')]; // берем данные из хранилища
+                    PP.qe = QUESTIONS[$caller.data('episode')]; // берем данные из хранилища
+                    var q = PP.q;
+                    var qe = PP.qe;
+                    PP.$.popup = $("#question_popup");
+                    PP.$.popup_q = PP.$.popup.find('.question.question--start');
+                    PP.$.template = $("#start_popup_tmpl");
+                    var tmplData = {
+                        pic: qe.episodePic,
+                        video: qe.episodeVideo,
+                        author_name: PP.questionTypeHelper(qe.questions[q].type).author,
+                        author_org: qe.questions[q].type,
+                        author_pic: PP.questionTypeHelper(qe.questions[q].type).pic,
+                        points: qe.questions[q].points,
+                        points_l: PP.pointsLabelHelper(qe.questions[q].points),
+                        question: qe.questions[q].title,
+                        answer1: qe.questions[q].answers[0],
+                        answer2: qe.questions[q].answers[1],
+                        answer3: qe.questions[q].answers[2],
+                    };
 
-                PP.$.popup.fadeIn(250, function(){
-                    $(this).addClass('active');
-                    if ($caller.attr('data-active')){ // for social authorise popup only
-                        var item = $caller.attr('data-active');
-                        PP.$.popup.find('.active').removeClass('active');
-                        PP.$.popup.find(item).addClass('active');
-                    }
-                });
-                $('body').addClass('noscroll').append(fader);
+                    var tmpl = PP.$.template.html();
+                    PP.$.popup_q.html(_.template(tmpl)(tmplData));
+
+
+                    PP.$.popup.fadeIn(250, function() {
+                        $(this).addClass('active');
+                        if ($caller.attr('data-active')) { // for social authorise popup only
+                            var item = $caller.attr('data-active');
+                            PP.$.popup.find('.active').removeClass('active');
+                            PP.$.popup.find(item).addClass('active');
+                        }
+                    });
+                    $('body').addClass('noscroll').append(fader);
+                }
             });
 
             // Close popup
@@ -508,20 +534,22 @@ $(function() {
 
                 $callers.on('click',function(e){
                     e.preventDefault();
-                    var popup = $(this).attr('href'),
-                        fader = '<div class="popup__fader"></div>',
-                        $caller = $(this);
+                    if (!$(this).hasClass('inactive') && (!$(this).attr('href'))){
+                        var popup = $(this).attr('href'),
+                            fader = '<div class="popup__fader"></div>',
+                            $caller = $(this);
 
-                    $(popup).fadeIn(500,function(){
-                        $(this).addClass('active');
-                        if ($caller.attr('data-active')){ // for social authorise popup only
-                            var item = $caller.attr('data-active');
-                            $(popup).find('.active').removeClass('active');
-                            $(popup).find(item).addClass('active');
-                        }
-                    });
+                        $(popup).fadeIn(500,function(){
+                            $(this).addClass('active');
+                            if ($caller.attr('data-active')){ // for social authorise popup only
+                                var item = $caller.attr('data-active');
+                                $(popup).find('.active').removeClass('active');
+                                $(popup).find(item).addClass('active');
+                            }
+                        });
 
-                    $('body').addClass('noscroll').append(fader);
+                        $('body').addClass('noscroll').append(fader);
+                    }
                 });
                 $(document).on('click', "[popup-closer], .popup__fader", function(e){
                     e.preventDefault();

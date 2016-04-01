@@ -1,7 +1,7 @@
 window.QUESTIONS = {
 '123' : {
   locationId: 123,
-  episodeVideo: 'https://youtu.be/QH2-TGUlwu4',
+  episodeVideo: 'http://www.youtube.com/embed/XGSy3_Czz8k',
   episodePic : 'images/q/q1.jpg',
 
   questions: [
