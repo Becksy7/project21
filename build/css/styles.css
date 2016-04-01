@@ -267,11 +267,12 @@ body.noscroll{overflow:hidden}
 .popup-share.popup .popup__body{padding:10px 10px 0}
 }
 .popup-video__iframe{width:100%;border:0}
-.popup-video__txt{color:#FFF;height:348px;padding:0 20px 20px}
+.popup-video__txt{color:#FFF;height:298px;overflow:auto;padding:0 20px 20px}
 .popup-video.popup{height:644px;margin-top:-322px}
 .popup-video.popup .popup__body{padding:0}
 @media (max-width:767px){.popup-video.popup{height:100%;margin-top:0;top:70px}
 .popup-video.popup .popup__body{overflow:auto;position:absolute;top:0;left:0;width:100%;padding-bottom:70px;height:100%}
+.popup-video__txt{height:auto;overflow:visible}
 .popup-video.popup .popup__closer{right:15px;top:-45px;font-size:55px}
 }
 .reminder-form__ctrl,.reminder-form__submit{border:4px solid #ffd42d;font-size:14px;padding:12px 18px;font-weight:500}
@@ -461,7 +462,7 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .question--answered-wrong .question__opts label.answer-ok:after{content:''}
 .question__left{float:left;width:360px;padding:10px}
 .question__right{float:left;width:220px;padding:10px}
-.question__img{position:relative}
+.question__img{position:relative;overflow:hidden}
 .question__img img{width:100%}
 .question__img:after{content:"";width:115px;height:42px;background:url(../images/header/logo-ng-channel.svg);background-size:cover;position:absolute;top:10px;right:10px}
 .question__top{padding:20px 10px 0}
@@ -518,7 +519,7 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .quote{font-size:23px;line-height:27px;margin-bottom:15px;padding:0}
 .quote:before{content:'«';margin-left:-20px}
 .quote:after{content:'»';vertical-align:middle}
-.popup.popup--question .popup__body.beeline,.popup.popup--question .popup__body.natgeo,.popup.popup--question .popup__body.share{border:20px solid #ffd42d;padding:0}
+.popup.popup-question .popup__body.beeline,.popup.popup-question .popup__body.natgeo,.popup.popup-question .popup__body.share{border:18px solid #ffd42d;padding:0}
 .paging{margin:20px 0 0;padding-bottom:20px;position:relative}
 .paging:after,.paging:before{content:" ";display:table}
 .paging__list{display:inline-block;vertical-align:middle;margin:0;padding:0;font-size:0}
