@@ -124,36 +124,45 @@ $(function() {
                 },
                 dataType : 'json',
                 success  : function(data){
-                    if (data.success)
-                    {
-                        dd.resolve(data);                     
+                    if (data.success) {
+                        dd.resolve(data.userAnswerStatus);                     
                     }
-                    else
-                    {
-                        dd.reject(data);
+                    else {
+                        dd.reject();                        
                     }
                 }
             });
             return dd.promise();
         }
+        
+        PP.answerHandle = function(status) {
+            switch(status){
+                case 'correct':
+                    PP.answerWasCorrect();
+                    break;
+                case 'incorrect':
+                    PP.answerWasInCorrect();
+                    break;
+            }
+        }        
 
-        PP.answerWasCorrect = function(data) {
-            PP.$.popup.removeClass('question--answered-wrong')
+        PP.answerWasCorrect = function() {
+            var $answerLabel = PP.$.popup_q.find('.question__opts input[name=opt]:checked').next();
+            PP.$.popup_q.removeClass('question--answered-wrong')
                       .addClass('question--answered');
 
-            PP.$.popup_q.find('.question__opts label')
-                .eq(data.userAnswer-1).addClass('answer-ok');
+            $answerLabel.addClass('answer-ok');
 
-            PP.$.after_answer.find('.question__var').text('+' + data.points + ' ' +PP.pointsLabelHelper(data.points));
+            PP.$.after_answer.find('.question__var').text('+' +PP.pointsLabelHelper(data.points));
             PP.$.before_answer.removeClass('visible');
             PP.$.after_answer.addClass('visible');
         }
-        PP.answerWasInCorrect = function(data) {
-            PP.$.popup.addClass('question--answered question--answered-wrong');
-            PP.$.popup_q.find('.question__opts label')
-                .eq(data.correctAnswer-1).addClass('answer-ok');
-            PP.$.popup_q.find('.question__opts label')
-                .eq(data.userAnswer-1).addClass('answer-wrong');
+        
+        PP.answerWasInCorrect = function() {
+            var $answerLabel = PP.$.popup_q.find('.question__opts input[name=opt]:checked').next();
+            PP.$.popup_q.addClass('question--answered question--answered-wrong');
+            //PP.$answer.addClass('answer-ok');
+            $answerLabel.addClass('answer-wrong');
 
             PP.$.after_answer.find('.question__var').text('0 баллов');
             PP.$.before_answer.removeClass('visible');
@@ -337,9 +346,11 @@ $(function() {
             $(document).on('click', '#question_btn_answer', function(){
                 Timer.stop();
 
+                PP.answer = $(this);
+                
                 $.when(PP.checkAnswer())
-                    .done(PP.answerWasCorrect)
-                    .fail(PP.answerWasInCorrect);
+                    .done(PP.answerHandle)
+                    .fail();
 
                 return false;
             });
