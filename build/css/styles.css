@@ -424,14 +424,13 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 }
 .map-pointers .pointer{display:block;width:20px;height:30px;position:absolute}
 .map-pointers .pointer span{width:0;padding-left:3px;display:inline-block;position:relative;z-index:2;overflow:hidden;background-color:#ffd42d;color:#000;height:30px;line-height:30px;-webkit-transition:.5s width;transition:.5s width}
-.map-pointers .pointer:after,.map-pointers .pointer:before{content:"";position:absolute;left:0}
 .map-pointers .pointer.inactive{touch-events:none}
 .map-pointers .pointer.inactive span{background-color:#999}
 .map-pointers .pointer.inactive:after{border-color:#999}
 @media (min-width:1366px){.map-pointers .pointer:not(.inactive):hover span{width:150px}
 }
-.map-pointers .pointer:after{top:0;width:100%;height:100%;border:3px solid #ffd42d;box-sizing:border-box;z-index:1}
-.map-pointers .pointer:before{bottom:-17px;z-index:0;width:0;height:0;border-style:solid;border-width:18px 18px 0 0;border-color:#2f2e31 transparent transparent;-webkit-transform:scaleY(1.2);transform:scaleY(1.2)}
+.map-pointers .pointer:after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;border:3px solid #ffd42d;box-sizing:border-box;z-index:1}
+.map-pointers .pointer:before{content:"";position:absolute;bottom:-17px;left:0;z-index:0;width:0;height:0;border-style:solid;border-width:18px 18px 0 0;border-color:#2f2e31 transparent transparent;-webkit-transform:scaleY(1.2);transform:scaleY(1.2)}
 .points-lst{display:none;color:#FFF;padding:0}
 .points-lst>li>a{color:#FFF}
 .points-lst>li:hover>a{color:#ffd42d}
@@ -453,12 +452,12 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .question--answered .question__opts label{color:#999}
 .question--answered .question__opts label.answer-ok:before,.question--answered .question__opts label.answer-wrong:before{visibility:visible;background:0 0;font-weight:400;text-decoration:inherit;text-transform:none;line-height:1em;display:inline-block;text-align:center;font-family:icons;font-style:normal;speak:none;font-variant:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .question--answered .question__opts label.answer-ok{color:#FFF}
-.question--answered .question__opts label.answer-ok:after{content:"ПРАВИЛЬНО";display:inline-block;vertical-align:middle;margin-left:4px;color:#ffd42d}
+.question--answered .question__opts label.answer-ok:after{content:"ПРАВИЛЬНО";display:inline-block;vertical-align:middle;margin-left:4px;color:#ffd42d;position:absolute}
 .question--answered .question__opts label.answer-ok:before{color:#ffd42d;content:'\e805'}
 .question--answered .question__opts label.answer-wrong{color:#ff4b2f}
 .question--answered .question__opts label.answer-wrong:before{color:#ff4b2f;content:'\e804'}
 .question-author__name,.question-author__points,.question-sharings__head,.question__tl,.question__txt .yellow{text-transform:uppercase}
-.question--answered .question__opts label.answer-wrong:after{content:"НЕПРАВИЛЬНО";display:inline-block;vertical-align:middle;margin-left:4px}
+.question--answered .question__opts label.answer-wrong:after{content:"НЕПРАВИЛЬНО";display:inline-block;vertical-align:middle;margin-left:4px;position:absolute}
 .question--answered-wrong .question__opts label.answer-ok:after{content:''}
 .question__left{float:left;width:360px;padding:10px}
 .question__right{float:left;width:220px;padding:10px}
@@ -479,10 +478,10 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .question-author__img,.question-author__info{display:table-cell;vertical-align:middle}
 .question-author__name{display:inline-block}
 .question-author__points{display:inline-block;color:#999;margin-left:4px}
-.question__item{float:left;width:60%;margin-top:15px}
+.question__item{float:left;width:70%;margin-top:15px}
 @media (max-width:767px){.question__item{float:none;padding-right:0;width:auto}
 }
-.question__add{float:left;width:40%}
+.question__add{float:left;width:30%}
 @media (min-width:768px){.question__add .question__time{margin-top:-20px}
 }
 @media (max-width:767px){.question__add{float:none;width:auto}
