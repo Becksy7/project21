@@ -477,6 +477,7 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .question__state li.active{background-color:#ffd42d;color:#000}
 .question-author{display:table;font-weight:500}
 .question-author__img,.question-author__info{display:table-cell;vertical-align:middle}
+.question-author__img img{height:60px}
 .question-author__name{display:inline-block}
 .question-author__points{display:inline-block;color:#999;margin-left:4px}
 .question__item{float:left;width:70%;margin-top:15px}
@@ -488,7 +489,7 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 @media (max-width:767px){.question__add{float:none;width:auto}
 }
 .question__add .question__var{font-size:36px;text-transform:uppercase;margin-top:10px;margin-bottom:30px}
-.question__submit.btn{margin-top:10px;width:auto;padding-left:20px;padding-right:20px;display:inline-block}
+.question__submit.btn{margin-top:10px;width:100%;padding-left:10px;padding-right:10px;display:inline-block;text-align:center}
 .question__submit.btn:disabled{color:#999;border-color:#fff}
 .question__opts input{display:none}
 .question__opts input:checked+label:before{color:#ffd42d}
@@ -504,8 +505,8 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 }
 .question--beeline,.question--natgeo,.question--share{margin:-20px;border:20px solid #ffd42d}
 .question--beeline .question__img:after,.question--natgeo .question__img:after,.question--share .question__img:after{top:auto;bottom:18px}
-.question--beeline{background-color:#000}
-.question--beeline .question-author__img img,.question--natgeo .question-author__img img{height:60px}
+.question .beeline,.question--beeline{background-color:#000}
+.question .beeline .question-author__img img,.question .natgeo .question-author__img img,.question--beeline .question-author__img img,.question--natgeo .question-author__img img{height:60px}
 @media (max-width:767px){.question--beeline,.question--natgeo,.question--share{margin:0 -10px -10px;border-width:10px}
 .question--beeline .question__img,.question--natgeo .question__img,.question--share .question__img{margin:0}
 .question--beeline,.question--natgeo{margin:0 -10px}
@@ -519,7 +520,7 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .quote{font-size:23px;line-height:27px;margin-bottom:15px;padding:0}
 .quote:before{content:'«';margin-left:-20px}
 .quote:after{content:'»';vertical-align:middle}
-.popup.popup-question .popup__body.beeline,.popup.popup-question .popup__body.natgeo,.popup.popup-question .popup__body.share{border:18px solid #ffd42d;padding:0}
+.popup.popup-question .popup__body.beeline,.popup.popup-question .popup__body.natgeo,.popup.popup-question .popup__body.share{border:20px solid #ffd42d;padding:0}
 .paging{margin:20px 0 0;padding-bottom:20px;position:relative}
 .paging:after,.paging:before{content:" ";display:table}
 .paging__list{display:inline-block;vertical-align:middle;margin:0;padding:0;font-size:0}

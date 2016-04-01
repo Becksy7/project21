@@ -190,6 +190,9 @@
             display: table-cell;
             vertical-align: middle;
             padding-right: 10px;
+            img{
+                height: 60px;
+            }
         }
         &__info{
             display: table-cell;
@@ -238,10 +241,11 @@
     }
     &__submit.btn{
         margin-top: 10px;
-        width: auto;
-        padding-left: 20px;
-        padding-right: 20px;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
         display: inline-block;
+        text-align: center;
 
         &:disabled {
             color : #999;
@@ -322,14 +326,14 @@
             }
         }
     }
-    &--beeline{
+    &--beeline, .beeline{
         background-color: @black;
 
         .question-author__img img {
             height : 60px;
         }
     }
-    &--natgeo {
+    &--natgeo, .natgeo {
         .question-author__img img {
             height : 60px;
         }
@@ -391,7 +395,7 @@
 .popup.popup-question {
     .popup__body {
         &.beeline, &.share, &.natgeo {
-            border: 18px solid @yellow;
+            border: 20px solid @yellow;
             padding: 0;
         }
     }
