@@ -177,8 +177,7 @@ $(function() {
                 answer3  : qe.questions[q].answers[2],
             };
 
-            var tmpl = PP.$.template.html();
-            PP.$.popup_q.html( _.template(tmpl)(tmplData) );
+            PP.compileQuestionsTemplate(tmplData);
             PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
 
             // reset answered style
@@ -203,9 +202,13 @@ $(function() {
         PP.cacheElems = function() {
             PP.$ = {};
             PP.$.popup = $("#question_popup");
+            PP.$.popup_start = PP.$.popup.find('.question.question--start');
             PP.$.popup_q = PP.$.popup.find('.question.question--go');
+            PP.$.popup_img = PP.$.popup.find('[data-question-image]');
             PP.$.callers = $('.popup__caller');
-            PP.$.template = $("#question_popup_tmpl");
+            PP.$.questionTemplate = $("#question_popup_tmpl");
+            PP.$.startTemplate = $("#start_popup_tmpl");
+            PP.$.popupImageTemplate = $("#question_img_tmpl");
             PP.$.btnStart = $("#popup_btn_start");
             PP.$.submit = $("#question_btn_answer");
             PP.$.timeout_label = $(".question__timeout-label");
@@ -251,6 +254,64 @@ $(function() {
                 .removeClass('popup-question--start')
                 .addClass('popup-question--share');
         };
+        
+        PP.compileAllTemplates = function(tmplData) {
+            var tmpl = PP.$.popupImageTemplate.html();
+            PP.$.popup_img.html(_.template(tmpl)(tmplData));
+            
+            var tmpl = PP.$.startTemplate.html();
+            PP.$.popup_start.html(_.template(tmpl)(tmplData));
+            
+            PP.compileQuestionsTemplate(tmplData);
+        }
+        
+        PP.compileQuestionsTemplate = function(tmplData) {
+            var tmpl = PP.$.questionTemplate.html();
+            PP.$.popup_q.html(_.template(tmpl)(tmplData));                        
+        }
+        
+        PP.openPopup = function($caller) {
+            var fader = '<div class="popup__fader"></div>';
+
+            PP.qe = QUESTIONS[$caller.data('episode')]; // берем данные из хранилища
+            var q = PP.q;
+            var qe = PP.qe;
+            var tmplData = {
+                pic: qe.episodePic,
+                video: qe.episodeVideo,
+                author_name: PP.questionTypeHelper(qe.questions[q].type).author,
+                author_org: qe.questions[q].type,
+                author_pic: PP.questionTypeHelper(qe.questions[q].type).pic,
+                points: qe.questions[q].points,
+                points_l: PP.pointsLabelHelper(qe.questions[q].points),
+                question: qe.questions[q].title,
+                answer1: qe.questions[q].answers[0],
+                answer2: qe.questions[q].answers[1],
+                answer3: qe.questions[q].answers[2],
+            };
+            
+            PP.compileAllTemplates(tmplData);
+
+            PP.$.popup.fadeIn(250, function() {
+                $(this).addClass('active');
+                if ($caller.attr('data-active')) { // for social authorise popup only
+                    var item = $caller.attr('data-active');
+                    PP.$.popup.find('.active').removeClass('active');
+                    PP.$.popup.find(item).addClass('active');
+                }
+            });
+            $('body').addClass('noscroll').append(fader);
+        }
+        
+        PP.closePopup = function() {
+            $('.popup.active').fadeOut(200,function(){
+                $(this).removeClass('active');
+                $('body').removeClass('noscroll');
+                if ($('.popup__fader').length){
+                    $('.popup__fader').remove();
+                }
+            });            
+        }
 
         PP.bindEvents = function() {
 
@@ -258,57 +319,14 @@ $(function() {
             PP.$.callers.on('click',function(e){
                 if ( !$(this).hasClass('inactive')) {
                     e.preventDefault();
-
-                    var fader = '<div class="popup__fader"></div>',
-                        $caller = $(this);
-
-                    PP.qe = QUESTIONS[$caller.data('episode')]; // берем данные из хранилища
-                    var q = PP.q;
-                    var qe = PP.qe;
-                    PP.$.popup = $("#question_popup");
-                    PP.$.popup_q = PP.$.popup.find('.question.question--start');
-                    PP.$.template = $("#start_popup_tmpl");
-                    var tmplData = {
-                        pic: qe.episodePic,
-                        video: qe.episodeVideo,
-                        author_name: PP.questionTypeHelper(qe.questions[q].type).author,
-                        author_org: qe.questions[q].type,
-                        author_pic: PP.questionTypeHelper(qe.questions[q].type).pic,
-                        points: qe.questions[q].points,
-                        points_l: PP.pointsLabelHelper(qe.questions[q].points),
-                        question: qe.questions[q].title,
-                        answer1: qe.questions[q].answers[0],
-                        answer2: qe.questions[q].answers[1],
-                        answer3: qe.questions[q].answers[2],
-                    };
-
-                    var tmpl = PP.$.template.html();
-                    PP.$.popup_q.html(_.template(tmpl)(tmplData));
-
-
-                    PP.$.popup.fadeIn(250, function() {
-                        $(this).addClass('active');
-                        if ($caller.attr('data-active')) { // for social authorise popup only
-                            var item = $caller.attr('data-active');
-                            PP.$.popup.find('.active').removeClass('active');
-                            PP.$.popup.find(item).addClass('active');
-                        }
-                    });
-                    $('body').addClass('noscroll').append(fader);
+                    PP.openPopup($(this));
                 }
             });
 
             // Close popup
             $(document).on('click', "[popup-closer], .popup__fader", function(e){
                 e.preventDefault();
-
-                $('.popup.active').fadeOut(200,function(){
-                    $(this).removeClass('active');
-                    $('body').removeClass('noscroll');
-                    if ($('.popup__fader').length){
-                        $('.popup__fader').remove();
-                    }
-                });
+                PP.closePopup();
             });
 
            
@@ -336,10 +354,10 @@ $(function() {
                 PP.$.submit.prop('disabled', false);
             });
 
-            PP.$.btnStart.on('click', function() {
-                $(this).parents('.popup-question--start')
-                       .removeClass('popup-question--start')
-                       .addClass('popup-question--go');
+            $(document).on('click', '#popup_btn_start', function() {
+                $('.popup-question--start')
+                   .removeClass('popup-question--start')
+                   .addClass('popup-question--go');
 
                 // 1-ый вопрос по умолчанию при старте
                 PP.q = 0;
