@@ -449,12 +449,13 @@ span.yellow{color:#fdd700}
 .question--answered .question__opts label{color:#999}
 .question--answered .question__opts label.answer-ok:before,.question--answered .question__opts label.answer-wrong:before{visibility:visible;background:0 0;font-weight:400;text-decoration:inherit;text-transform:none;line-height:1em;display:inline-block;text-align:center;font-family:icons;font-style:normal;speak:none;font-variant:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .question--answered .question__opts label.answer-ok{color:#FFF}
-.question--answered .question__opts label.answer-ok:before:after{content:"ПРАВИЛЬНО";display:inline-block;vertical-align:middle;margin-left:4px}
+.question--answered .question__opts label.answer-ok:after{content:"ПРАВИЛЬНО";display:inline-block;vertical-align:middle;margin-left:4px;color:#ffd42d}
 .question--answered .question__opts label.answer-ok:before{color:#ffd42d;content:'\e805'}
 .question--answered .question__opts label.answer-wrong{color:#ff4b2f}
 .question--answered .question__opts label.answer-wrong:before{color:#ff4b2f;content:'\e804'}
 .question-author__name,.question-author__points,.question-sharings__head,.question__tl,.question__txt .yellow{text-transform:uppercase}
 .question--answered .question__opts label.answer-wrong:after{content:"НЕПРАВИЛЬНО";display:inline-block;vertical-align:middle;margin-left:4px}
+.question--answered-wrong .question__opts label.answer-ok:after{content:''}
 .question__left{float:left;width:360px;padding:10px}
 .question__right{float:left;width:220px;padding:10px}
 .question__img{position:relative}

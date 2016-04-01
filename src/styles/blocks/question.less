@@ -42,7 +42,7 @@
         }
 
     }
-    &--answered{
+    &--answered {
         .question__opts {
             label {
                 color: @gray;
@@ -56,12 +56,13 @@
                     visibility: visible;
                     color: @yellow;
                     background: @transparent;
-                    &:after{
-                        content: "ПРАВИЛЬНО";
-                        display: inline-block;
-                        vertical-align: middle;
-                        margin-left: 4px;
-                    }
+                }
+                &:after{
+                    content: "ПРАВИЛЬНО";
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 4px;
+                    color : @yellow;
                 }
                 .icon;
                 .icon-tick;
@@ -88,7 +89,9 @@
     &--answered-wrong{
         .question__opts {
             label.answer-ok {
-
+                &:after {
+                    content : '';
+                }
             }
         }
     }
