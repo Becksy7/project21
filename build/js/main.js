@@ -334,8 +334,8 @@ $(function() {
 
             if ( !PP.$.callers.length ) return;
             PP.$.callers.on('click',function(e){
-                if ( !$(this).hasClass('inactive')) {
-                    e.preventDefault();
+                e.preventDefault();
+                if ((typeof($(this).attr('data-quiz-caller')) !== 'undefined') && ( !$(this).hasClass('inactive'))) {
                     PP.openPopup($(this));
                 }
             });
@@ -571,7 +571,9 @@ $(function() {
 
                 $callers.on('click',function(e){
                     e.preventDefault();
-                    if (!$(this).hasClass('inactive') && (!$(this).attr('href'))){
+                    if ((!$(this).hasClass('inactive')) &&
+                        ($(this).attr('href')) &&
+                        (typeof($(this).attr('data-quiz-caller')) == 'undefined') ){
                         var popup = $(this).attr('href'),
                             fader = '<div class="popup__fader"></div>',
                             $caller = $(this);
