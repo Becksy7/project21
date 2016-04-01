@@ -106,6 +106,8 @@ $(function() {
         PP.timeout = function() {
             PP.$.submit.removeClass('visible');
             PP.$.timeout_label.addClass('visible');
+
+            PP.$.popup_q.find('.question__opts input[name=opt]').prop('disabled', true);
         }
 
         PP.checkAnswer = function() {
