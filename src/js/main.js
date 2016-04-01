@@ -153,7 +153,7 @@ $(function() {
 
             $answerLabel.addClass('answer-ok');
 
-            PP.$.after_answer.find('.question__var').text('+' +PP.pointsLabelHelper(data.points));
+            PP.$.after_answer.find('.question__var').text('+' + PP.qe.questions[PP.q].points + ' ' + PP.pointsLabelHelper(PP.qe.questions[PP.q].points));
             PP.$.before_answer.removeClass('visible');
             PP.$.after_answer.addClass('visible');
         }
@@ -190,7 +190,7 @@ $(function() {
             PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
 
             // reset answered style
-            PP.$.popup.removeClass('question--answered-wrong')
+            PP.$.popup_q.removeClass('question--answered-wrong')
                       .removeClass('question--answered');
 
             // Change question style by its type
