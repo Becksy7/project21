@@ -109,6 +109,7 @@
     }
     &__img{
         position: relative;
+        overflow: hidden;
         img{
             width: 100%;
         }
@@ -386,4 +387,12 @@
     }
 
     padding: 0;
+}
+.popup.popup-question {
+    .popup__body {
+        &.beeline, &.share, &.natgeo {
+            border: 18px solid @yellow;
+            padding: 0;
+        }
+    }
 }

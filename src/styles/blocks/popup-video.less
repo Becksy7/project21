@@ -5,7 +5,8 @@
     }
     &__txt{
         color: @white;
-        height: 348px;
+        height: 298px;
+        overflow: auto;
         padding: 0 20px 20px;
     }
     &.popup{
@@ -37,6 +38,10 @@
               height: 100%;
           }
       }
+        &__txt{
+            height: auto;
+            overflow: visible;
+        }
     }
     &.popup .popup__closer{
         @media (max-width: 767px) {
