@@ -11,6 +11,7 @@ $(function() {
                 BtnFilter.init();
                 Timer.init();
                 DefaultPopups.init();
+                FlexFallback.init();
             }
         }
     })()
@@ -538,7 +539,15 @@ $(function() {
             }
         }
     })()
-
+        ,FlexFallback = (function(){
+            return {
+                init : function() {
+                    if (!Modernizr.flexbox) {
+                        $('body').addClass('no-flex')
+                    }
+                }
+            }
+        })()
     /**
      * Dummy Module Example
      */
