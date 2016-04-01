@@ -11,6 +11,7 @@ $(function() {
                 BtnFilter.init();
                 Timer.init();
                 DefaultPopups.init();
+                FlexFallback.init();
             }
         }
     })()
@@ -523,6 +524,11 @@ $(function() {
 
                     $('.popup.active').fadeOut(500,function(){
                         $(this).removeClass('active');
+                        var $videoplayer = $(this).find('.popup-video__iframe');
+                        if ( $videoplayer.length ){
+                            //stop video when close
+                            $videoplayer[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+                        }
                         $('body').removeClass('noscroll');
                         if ($('.popup__fader').length){
                             $('.popup__fader').remove();
@@ -533,7 +539,15 @@ $(function() {
             }
         }
     })()
-
+        ,FlexFallback = (function(){
+            return {
+                init : function() {
+                    if (!Modernizr.flexbox) {
+                        $('body').addClass('no-flex')
+                    }
+                }
+            }
+        })()
     /**
      * Dummy Module Example
      */
