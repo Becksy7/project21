@@ -572,23 +572,23 @@ $(function() {
 
                 $callers.on('click',function(e){
                     e.preventDefault();
-                    if ((!$(this).hasClass('inactive')) &&
-                        ($(this).attr('href')) &&
+                    if (($(this).attr('href')) &&
                         (typeof($(this).attr('data-quiz-caller')) == 'undefined') ){
                         var popup = $(this).attr('href'),
                             fader = '<div class="popup__fader"></div>',
                             $caller = $(this);
+                        if (popup.length){
+                            $(popup).fadeIn(500,function(){
+                                $(this).addClass('active');
+                                if ($caller.attr('data-active')){ // for social authorise popup only
+                                    var item = $caller.attr('data-active');
+                                    $(popup).find('.active').removeClass('active');
+                                    $(popup).find(item).addClass('active');
+                                }
+                            });
 
-                        $(popup).fadeIn(500,function(){
-                            $(this).addClass('active');
-                            if ($caller.attr('data-active')){ // for social authorise popup only
-                                var item = $caller.attr('data-active');
-                                $(popup).find('.active').removeClass('active');
-                                $(popup).find(item).addClass('active');
-                            }
-                        });
-
-                        $('body').addClass('noscroll').append(fader);
+                            $('body').addClass('noscroll').append(fader);
+                        }
                     }
                 });
                 $(document).on('click', "[popup-closer], .popup__fader", function(e){

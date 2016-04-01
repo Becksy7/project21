@@ -183,7 +183,7 @@ span.yellow{color:#fdd700}
 .btn-filter .btn.active,.btn-filter .btn:hover{border-color:#ffd42d;background-color:#ffd42d}
 .btn-filter .btn-date{text-transform:none;font-weight:500;color:#666;display:inline-block;margin-left:5px}
 .btn-filter .btn.inactive{color:#999;border-color:#666}
-.btn-filter .btn.inactive:hover{border-color:#666;background-color:#666;color:#000}
+.btn-filter .btn.inactive:hover{color:#999;border-color:#666;background-color:transparent}
 @media (max-width:1365px){.btn-filter .btn.inactive{border-color:#c4c4c4;color:#c4c4c4}
 .btn-filter .btn.inactive:hover{border-color:#c4c4c4;background-color:#c4c4c4;color:#000}
 .btn-filter .btn:not(.inactive){color:#FFF}
