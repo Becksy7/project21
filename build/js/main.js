@@ -270,6 +270,11 @@ $(function() {
                 return false;
             });
 
+            // enable button when click on radio button
+            $(document).on('click', '.question__opts input', function(){
+                PP.$.submit.prop('disabled', false);
+            });
+
             PP.$.btnStart.on('click', function() {
                 $(this).parents('.popup-question--start')
                        .removeClass('popup-question--start')

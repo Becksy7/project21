@@ -480,6 +480,7 @@ span.yellow{color:#fdd700}
 }
 .question__add .question__var{font-size:36px;text-transform:uppercase;margin-top:10px;margin-bottom:30px}
 .question__submit.btn{margin-top:10px;width:auto;padding-left:20px;padding-right:20px;display:inline-block}
+.question__submit.btn:disabled{color:#999;border-color:#fff}
 .question__opts input{display:none}
 .question__opts input:checked+label:before{color:#ffd42d}
 .question__opts label{margin:0 0 10px;display:block}
