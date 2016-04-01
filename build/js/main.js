@@ -262,6 +262,8 @@ $(function() {
                 .removeClass('popup-question--go')
                 .removeClass('popup-question--start')
                 .addClass('popup-question--share');
+                
+            PP.$.popup.find('.share-text').show();
         };
         
         PP.compileAllTemplates = function(tmplData) {
@@ -302,9 +304,11 @@ $(function() {
                 answer2: qe.questions[q].answers[1],
                 answer3: qe.questions[q].answers[2],
             };
-
+            
             PP.compileAllTemplates(tmplData);
 
+            PP.$.popup.find('.share-text').hide();
+            
             PP.$.popup.fadeIn(250, function() {
                 $(this).addClass('active');
                 if ($caller.attr('data-active')) { // for social authorise popup only
@@ -330,8 +334,8 @@ $(function() {
 
             if ( !PP.$.callers.length ) return;
             PP.$.callers.on('click',function(e){
-                e.preventDefault();
-                if ((typeof($(this).attr('data-quiz-caller')) !== 'undefined') && ( !$(this).hasClass('inactive'))) {
+                if ( !$(this).hasClass('inactive')) {
+                    e.preventDefault();
                     PP.openPopup($(this));
                 }
             });
@@ -567,10 +571,7 @@ $(function() {
 
                 $callers.on('click',function(e){
                     e.preventDefault();
-
-                    if ((!$(this).hasClass('inactive')) &&
-                        ($(this).attr('href')) &&
-                        (typeof($(this).attr('data-quiz-caller')) == 'undefined') ){
+                    if (!$(this).hasClass('inactive') && (!$(this).attr('href'))){
                         var popup = $(this).attr('href'),
                             fader = '<div class="popup__fader"></div>',
                             $caller = $(this);
