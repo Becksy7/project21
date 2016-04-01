@@ -518,6 +518,7 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .quote{font-size:23px;line-height:27px;margin-bottom:15px;padding:0}
 .quote:before{content:'«';margin-left:-20px}
 .quote:after{content:'»';vertical-align:middle}
+.popup.popup--question .popup__body.beeline,.popup.popup--question .popup__body.natgeo,.popup.popup--question .popup__body.share{border:20px solid #ffd42d;padding:0}
 .paging{margin:20px 0 0;padding-bottom:20px;position:relative}
 .paging:after,.paging:before{content:" ";display:table}
 .paging__list{display:inline-block;vertical-align:middle;margin:0;padding:0;font-size:0}
