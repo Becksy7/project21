@@ -115,7 +115,7 @@ $(function() {
             var dd = $.Deferred();
             var answer = PP.$.popup_q.find('.question__opts input[name=opt]:checked').val();
             $.ajax({
-                url     : 'example.php',//ApiUrl.userAnswer,
+                url     : ApiUrl.userAnswer,
                 method  : 'POST',
                 data    : {
                     locationId: PP.qe.locationId,
