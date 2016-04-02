@@ -291,10 +291,10 @@ $(function() {
             if (typeof QUESTIONS == 'undefined') {
                 return
             }
-            
+
             var fader = '<div class="popup__fader"></div>';
 
-            PP.qe = QUESTIONS[$caller.data('episode')]; // берем данные из хранилища
+            PP.qe = QUESTIONS[$caller.data('location')]; // берем данные из хранилища
             var q = PP.q;
             var qe = PP.qe;
             var tmplData = {
@@ -339,6 +339,7 @@ $(function() {
         PP.bindEvents = function() {
 
             if ( !PP.$.callers.length ) return;
+            
             PP.$.callers.on('click',function(e){
                 e.preventDefault();
                 if ((typeof($(this).attr('data-quiz-caller')) !== 'undefined') && ( !$(this).hasClass('inactive'))) {
@@ -390,7 +391,7 @@ $(function() {
                 return false;
             });
         };
-
+        
         PP.init = function() {
             PP.cacheElems();
             PP.bindEvents();
@@ -557,11 +558,11 @@ $(function() {
                     var id = $(this).attr('id');
 
                     if (id == 'all'){
-                        $('[data-episode]').fadeIn();
+                        $('[data-location]').fadeIn();
 
                     } else {
-                        $('[data-episode]').fadeOut();
-                        $('[data-episode="' + id + '"]').fadeIn(500);
+                        $('[data-location]').fadeOut();
+                        $('[data-location="' + id + '"]').fadeIn(500);
                     }
                     $('[data-id]').fadeOut();
                     $('[data-id="' + id + '"]').fadeIn(500);
@@ -572,9 +573,18 @@ $(function() {
 
     DefaultPopups = (function(){
         return {
-            init: function(){
-                var $callers = $('.popup__caller');
+            callerPopupIdAttribute: 'caller-popup-id',
+            lastPopupCookieName: 'story_of_god_last_popup',
 
+            init: function(){
+                this.bindEvents();
+                this.checkLastPopup();
+            },
+            
+            bindEvents: function() {
+                var self = this,
+                    $callers = $('.popup__caller');
+                    
                 $callers.on('click',function(e){
                     e.preventDefault();
                     if (($(this).attr('href')) &&
@@ -595,6 +605,13 @@ $(function() {
                             $('body').addClass('noscroll').append(fader);
                         }
                     }
+                    
+                    if (typeof $(this).data(self.callerPopupIdAttribute) != 'undefined') {
+                        $.cookie(self.lastPopupCookieName, $(this).data(self.callerPopupIdAttribute));
+                    }
+                    else {
+                        $.removeCookie(self.lastPopupCookieName);
+                    }
                 });
                 $(document).on('click', "[popup-closer], .popup__fader", function(e){
                     e.preventDefault();
@@ -612,7 +629,15 @@ $(function() {
                         }
                     });
 
+                    $.removeCookie(self.lastPopupCookieName);
                 });
+            },
+            
+            checkLastPopup: function() {
+                var lastPopupId = $.cookie(this.lastPopupCookieName);
+                if (lastPopupId){
+                    $('[data-' + this.callerPopupIdAttribute + '="' + lastPopupId + '"]').click();
+                }
             }
         }
     })()
