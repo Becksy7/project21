@@ -558,11 +558,11 @@ $(function() {
                     var id = $(this).attr('id');
 
                     if (id == 'all'){
-                        $('[data-location]').fadeIn();
+                        $('[data-episode]').fadeIn();
 
                     } else {
-                        $('[data-location]').fadeOut();
-                        $('[data-location="' + id + '"]').fadeIn(500);
+                        $('[data-episode]').fadeOut();
+                        $('[data-episode="' + id + '"]').fadeIn(500);
                     }
                     $('[data-id]').fadeOut();
                     $('[data-id="' + id + '"]').fadeIn(500);
