@@ -295,15 +295,13 @@ body.noscroll{overflow:hidden}
 .reminder-form__ctrl::-moz-placeholder{color:#FFF;text-transform:uppercase}
 .reminder-form__ctrl:-moz-placeholder{color:#FFF;text-transform:uppercase}
 .reminder-form__submit{background-color:#ffd42d;float:right;color:#000;text-transform:uppercase;width:153px}
-.about-img,.about-img-sm{width:100%;max-width:100%}
-.about{background-color:rgba(0,0,0,.7);padding:25px 30px 10px;color:#FFF}
-@media (min-width:1366px){.about{width:100%}
-}
+.about{background-color:rgba(0,0,0,.7);padding:25px 30px 10px;color:#FFF;width:100%}
 .about .h1,.about h1{font-size:23px;font-weight:500;padding:0 10px;margin:0 0 25px;text-transform:uppercase}
+.about-img{width:100%;max-width:100%}
 @media (min-width:768px){.popup-video{max-height:618px}
 .about-img{display:none}
 }
-.about-img-sm{display:none}
+.about-img-sm{width:100%;max-width:100%;display:none}
 @media (min-width:768px) and (max-width:1023px){.about-img-sm{display:block}
 }
 .about__caption{display:table-cell}
