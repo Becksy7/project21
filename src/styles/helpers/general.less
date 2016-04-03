@@ -59,15 +59,17 @@ html {
 html, body{
     height:100%;
 }
-.layout-wrapper{
-    display:table;
-    width:100%;
-}
-.layout-header, .layout-footer, .layout-main{
-    display:table-row;
-}
-.layout-header, .layout-footer{
-    height:1px;
+body:not(.page-about){
+    .layout-wrapper{
+        display:table;
+        width:100%;
+    }
+    .layout-header, .layout-footer, .layout-main{
+        display:table-row;
+    }
+    .layout-header, .layout-footer{
+        height:70px;
+    }
 }
 .layout-main{
     position: relative;

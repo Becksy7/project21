@@ -39,5 +39,12 @@ window.QUESTIONS = {
         userAnswerStatus: null
      }
   ],
+    onCompleteText: 'Я ПОБЫВАЛ В ИЕРУСАЛИМЕ<br/>ВМЕСТЕ С МОРГАНОМ ФРИМАНОМ',
+    sharing: {
+        title: 'Заголовок для шэринга',
+        url: 'http://someurl.ru/',
+        description: 'Описание для шэринга',
+        image: 'http://cs631218.vk.me/v631218557/2647/EpD9XqztfPI.jpg'
+    }
 }
 };

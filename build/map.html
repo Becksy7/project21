@@ -1,7 +1,7 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang=""><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang=""><![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="">
 <!--<![endif]-->
@@ -15,16 +15,14 @@
     <link rel="stylesheet" href="vendor/ytp/jquery.mb.YTPlayer.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/after.css">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <script>window.html5 || document.write('<script src="vendor/html5shiv.min.js"><\/script>')</script>
-<![endif]-->
+    <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script>window.html5 || document.write('<script src="vendor/html5shiv.min.js"><\/script>')</script><![endif]-->
 </head>
 <body class="page page-map">
     <div class="layout-wrapper">
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+        <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
         <header class="layout-header">
             <div class="container">
                 <ul class="logo-list">
@@ -81,7 +79,7 @@
                     <div class="btn-filter">
                         <a href="#" class="btn" id="all">Все серии</a>
                         <ul class="points-lst" data-id="all">
-                            <li><a href="#" data-quiz-caller class="popup__caller">Иерусалим, Израиль</a></li>
+                            <li><a href="#" data-quiz-caller data-location="123" class="pointer popup__caller">Иерусалим, Израиль</a></li>
                             <li><a href="#" data-quiz-caller class="popup__caller">Матхура, Индия</a></li>
                             <li><a href="#" data-quiz-caller class="popup__caller">Иерусалим, Израиль</a></li>
                             <li><a href="#" data-quiz-caller class="popup__caller">Матхура, Индия</a></li>
@@ -200,13 +198,13 @@
                             </form>
                         </div>
                     </script>
-                    <div class="question question--share">
+                    <div class="question question--share"></div>
+                    <script type="text/template" id="share_popup_tmpl">
                         <div class="question__img">
-                            <img src="images/q/q1.jpg">
+                            <img src=<%=s haring.image %>>
                             <div class="share-text">
                                 <div class="quote">
-                                    Я побывал в Иерусалиме
-                                    <br>вместе с Морганом Фриманом
+                                    <%= onCompleteText %>
                                 </div>
                                 <div class="share-text__sub">
                                     Морган Фриман. ИсториИ О БогЕ
@@ -215,19 +213,21 @@
                         </div>
                         <div class="question-sharings">
                             <span class="question-sharings__head">рассказать друзьям</span>
-                            <ul class="social-list social-list--sharings">
-                                <li class="social-list__i">
-                                    <a href="#" class="social-list__lk"><i class="icon icon-facebook"></i></a>
-                                </li>
-                                <li class="social-list__i">
-                                    <a href="#" class="social-list__lk"><i class="icon icon-vkontakte"></i></a>
-                                </li>
-                                <li class="social-list__i">
-                                    <a href="#" class="social-list__lk"><i class="icon icon-twitter"></i></a>
-                                </li>
-                            </ul>
+                            <div class="ya-share2" id="my-share" data-services="vkontakte,facebook,twitter"></div>
+                            <!--		<ul class="social-list social-list--sharings">-->
+                            <!--			<li class="social-list__i">-->
+                            <!--				<a href="http://www.facebook.com/sharer.php?s=100&p[url]=<%= sharing.url %>&p[title]=<%= sharing.title %>&p[summary]=<%= sharing.description %>&p[images][0]=<%= sharing.image %>" onclick="window.open(this.href, this.title, 'toolbar=0, status=0, width=548, height=325'); return false" title="Поделиться ссылкой на Фейсбук" target="_parent"class="social-list__lk">-->
+                            <!--					<i class="icon icon-facebook"></i></a>-->
+                            <!--			</li>-->
+                            <!--			<li class="social-list__i">-->
+                            <!--				<a href="#" class="social-list__lk"><i class="icon icon-vkontakte"></i></a>-->
+                            <!--			</li>-->
+                            <!--			<li class="social-list__i">-->
+                            <!--				<a href="#" class="social-list__lk"><i class="icon icon-twitter"></i></a>-->
+                            <!--			</li>-->
+                            <!--		</ul>-->
                         </div>
-                    </div>
+                    </script>
                 </div>
             </div>
             <div class="popup popup-authorise" id="popup-authorise">
