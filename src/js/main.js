@@ -644,7 +644,7 @@ $(function() {
                         $('[data-episode]').fadeIn();
 
                     } else {
-                        $('[data-episode]').not('[data-id="' + id + '"]').fadeOut();
+                        $('[data-episode]').not('[data-episode="' + id + '"]').fadeOut();
                     }
                     $('[data-id]').fadeOut();
                     $('[data-id="' + id + '"]').fadeIn(500);
