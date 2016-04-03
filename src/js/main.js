@@ -143,6 +143,17 @@ $(function() {
             PP.$.timeout_label.addClass('visible');
 
             PP.$.popup_q.find('.question__opts input[name=opt]').prop('disabled', true);
+            
+            $.ajax({
+                url     : ApiUrl.userAnswer,
+                method  : 'POST',
+                data    : {
+                    locationId: PP.qe.locationId,
+                    questionType: PP.qe.questions[PP.q].type,
+                    userAnswerStatus: 'timeout'
+                }
+            });
+            
         }
 
         PP.checkAnswer = function() {
