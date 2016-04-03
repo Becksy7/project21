@@ -14,7 +14,7 @@ window.QUESTIONS = {
             'Ничего не случится',
         ],
         points: '1',
-        userAnswerStatus: 'correct'
+        userAnswerStatus: null
      },
      {
         title: 'Второй вопрос',
@@ -25,7 +25,7 @@ window.QUESTIONS = {
             'Вариант 3',
         ],
         points: '2',
-        userAnswerStatus: 'incorrect'
+        userAnswerStatus: null
      },
      {
         title: 'Третий вопрос',

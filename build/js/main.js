@@ -160,7 +160,7 @@ $(function() {
             var dd = $.Deferred();
             var answer = PP.$.popup_q.find('.question__opts input[name=opt]:checked').val();
             $.ajax({
-                url     : ApiUrl.userAnswer,
+                url     : 'example.php',//ApiUrl.userAnswer,
                 method  : 'POST',
                 data    : {
                     locationId: PP.qe.locationId,
@@ -202,8 +202,9 @@ $(function() {
             errorPlaceholder.after($error);
         }
 
-        PP.answerWasCorrect = function() {
+        PP.answerWasCorrect = function(n) {
             var $answerLabel = PP.$.popup_q.find('.question__opts input[name=opt]:checked').next();
+
             PP.$.popup_q.removeClass('question--answered-wrong')
                       .addClass('question--answered');
 
@@ -216,6 +217,7 @@ $(function() {
         
         PP.answerWasInCorrect = function() {
             var $answerLabel = PP.$.popup_q.find('.question__opts input[name=opt]:checked').next();
+
             PP.$.popup_q.addClass('question--answered question--answered-wrong');
             //PP.$answer.addClass('answer-ok');
             $answerLabel.addClass('answer-wrong');
@@ -244,7 +246,12 @@ $(function() {
                 sharing: qe.sharing,
             };
 
+            //refresh last state
+            PP.$.popup_q.find('.question__opts').show();
+            PP.$.popup_q.find('#laststat').hide();
+
             PP.compileQuestionsTemplate(tmplData);
+
             PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
 
             // reset answered style
@@ -262,6 +269,60 @@ $(function() {
 
             Timer.start();
             Popups.saveState({'currentQuestion' : q, 'locationId' : qe.locationId});
+
+            // recache elems
+            PP.cacheElems();
+        };
+        PP.showLastState = function(n) {
+            PP.q = n-1;//go to previous button 'next'
+            var q = PP.q;
+            var qe = PP.qe;
+            var tmplData = {
+                pic : qe.episodePic,
+                video: qe.episodeVideo,
+                author_name : PP.questionTypeHelper(qe.questions[q].type).author,
+                author_org : qe.questions[q].type,
+                author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
+                points   : qe.questions[q].points,
+                points_l : PP.pointsLabelHelper( qe.questions[q].points ),
+                question : qe.questions[q].title,
+                answer1  : qe.questions[q].answers[0],
+                answer2  : qe.questions[q].answers[1],
+                answer3  : qe.questions[q].answers[2],
+                onCompleteText: qe.onCompleteText,
+                sharing: qe.sharing,
+            };
+            PP.compileQuestionsTemplate(tmplData);
+            PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
+
+            // reset answered style
+            PP.$.popup_q.removeClass('question--answered-wrong')
+                .removeClass('question--answered');
+
+            // Change question style by its type
+            PP.$.popup_q.parent().removeClass('beeline natgeo');
+            if (qe.questions[q].type == 'fromBeeline') {
+                PP.$.popup_q.parent().addClass('beeline');
+            }
+            if (qe.questions[q].type == 'fromNatgeo') {
+                PP.$.popup_q.parent().addClass('natgeo');
+            }
+            //load prev question state
+            PP.$.popup_q.find('.question__opts').hide();
+            PP.$.popup_q.find('.question__before-answer.visible').removeClass('visible');
+            PP.$.popup_q.find('.question__after-answer').addClass('visible');
+            $('#question_result_ball').text(qe.questions[q].points +' '+ PP.pointsLabelHelper(qe.questions[q].points));
+            //PP.$.popup_q.find('#laststat').hide();
+            var statusEl = $('<span id="laststat"></span>');
+            console.log(PP.qe.questions[q].userAnswerStatus);
+            if (PP.qe.questions[q].userAnswerStatus == "correct"){
+                statusEl.text('Вы ВЕРНО ответили на ' + n + 'вопрос');
+            } else if (PP.qe.questions[q].userAnswerStatus == "incorrect"){
+                statusEl.text('Вы НЕВЕРНО ответили на ' + n + 'вопрос');
+            } else {
+                statusEl.text('Произошла ошибка загрузки статуса');
+            }
+            PP.$.popup_q.find('.question__opts').after(statusEl);
 
             // recache elems
             PP.cacheElems();
@@ -392,15 +453,43 @@ $(function() {
             PP.compileAllTemplates(tmplData);
 
             PP.$.popup.find('.share-text').hide();
-
+            //check current State
             if (locationId == PP.state.locationId) {
+                if (true){ //проверка на наличие таймера, вместо true надо поставить условие "если таймера нет", то....
+                    if (qe.questions[0].userAnswerStatus == null) {
+                        //1 неотвечен
+                        $('.popup-question--start')
+                            .removeClass('popup-question--start')
+                            .addClass('popup-question--go');
+                    } else if (qe.questions[1].userAnswerStatus == null) {
+                        //2 неотвечен
+                        $('.popup-question--start')
+                            .removeClass('popup-question--start')
+                            .addClass('popup-question--go');
+                        PP.showLastState(1);
 
-                $('.popup-question--start')
-                    .removeClass('popup-question--start')
-                    .addClass('popup-question--go');
+                    } else if (qe.questions[2].userAnswerStatus == null) {
+                        //3 неотвечен
+                        $('.popup-question--start')
+                            .removeClass('popup-question--start')
+                            .addClass('popup-question--go');
+                        PP.showLastState(2);
+                    } else {
+                        //показываем шаринги
+                        PP.showFinalScreen();
+                    }
+                } else {
+                    //таймер есть, надо присвоить PP.q = n (номер текущего вопроса) и
+                    PP.q = n;
+                    PP.showQuestion();
+                    $('.popup-question--start')
+                        .removeClass('popup-question--start')
+                        .addClass('popup-question--go');
 
-                Timer.resume( PP.state.time );  
+                    Timer.resume( PP.state.time );
+                }
             }
+
             
             PP.$.popup.fadeIn(250, function() {
                 $(this).addClass('active');
