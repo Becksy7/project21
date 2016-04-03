@@ -20,6 +20,7 @@ $(function() {
         var T = {};
         T.timer = null;
         T.amount = 20;
+        T.started = false;
         T.cacheElems = function() {
             T.$ = {};
             T.$.instance = $(".question__time");
@@ -58,18 +59,30 @@ $(function() {
             T.cacheElems(); // one more time (template was redrawn)
             T.timer = window.setInterval(function(){
                 T.set(--T.amount);
+                Popups.saveState({'time' : T.amount});
                 if (T.amount <= 0) {
                     Popups.timeout();                    
                     T.stop();
                 }
             }, 1000);
+            T.started = true;
+            T.paused = false;
+        }
+
+        T.resume = function( amount ){
+            T.amount = amount ? amount : 20;
+            T.start();
         }
 
         T.pause = function(){
             clearTimeout(T.timer);
+            T.started = false;
+            T.paused = true;
         }
+
         T.stop = function() {
             T.pause();
+            T.paused = false;
             T.amount = 20;
         }
 
@@ -96,8 +109,29 @@ $(function() {
 
         var PP = {};
 
+        PP.state = {};
+
         PP.q = 0;
         PP.qe = null;
+
+        PP.loadState = function() {
+            var emptyState = {};
+            emptyState.currentQuestion = null;
+            emptyState.time = null;
+            emptyState.locationId = null;
+
+            if ( Cookies.get('qstate') ) {
+                PP.state = JSON.parse( Cookies.get('qstate') );
+            } else {
+                PP.state = emptyState;
+            }
+        }
+
+        PP.saveState = function(newstate) {
+            var s = PP.state;
+            PP.state = $.extend(s, newstate);
+            Cookies.set('qstate', PP.state); 
+        }
 
         PP.next = function(){
             PP.q++;
@@ -216,6 +250,7 @@ $(function() {
             }
 
             Timer.start();
+            Popups.saveState({'currentQuestion' : q, 'locationId' : qe.locationId});
 
             // recache elems
             PP.cacheElems();
@@ -322,8 +357,9 @@ $(function() {
             }
 
             var fader = '<div class="popup__fader"></div>';
+            var locationId = $caller.data('location');
 
-            PP.qe = QUESTIONS[$caller.data('location')]; // берем данные из хранилища
+            PP.qe = QUESTIONS[locationId]; // берем данные из хранилища
             var q = PP.q;
             var qe = PP.qe;
             var tmplData = {
@@ -345,6 +381,15 @@ $(function() {
             PP.compileAllTemplates(tmplData);
 
             PP.$.popup.find('.share-text').hide();
+
+            if (locationId == PP.state.locationId) {
+
+                $('.popup-question--start')
+                    .removeClass('popup-question--start')
+                    .addClass('popup-question--go');
+
+                Timer.resume( PP.state.time );  
+            }
             
             PP.$.popup.fadeIn(250, function() {
                 $(this).addClass('active');
@@ -358,6 +403,12 @@ $(function() {
         }
         
         PP.closePopup = function() {
+            if ( Timer.started ) {
+                Timer.pause();
+
+                PP.saveState({'time' : Timer.amount});
+            }
+
             $('.popup.active').fadeOut(200,function(){
                 $(this).removeClass('active');
                 $('body').removeClass('noscroll');
@@ -408,7 +459,7 @@ $(function() {
 
             // enable button when click on radio button
             $(document).on('click', '.question__opts input', function(){
-                PP.$.submit.prop('disabled', false);
+                $("#question_btn_answer").prop('disabled', false);
             });
 
             $(document).on('click', '#popup_btn_start', function() {
@@ -426,6 +477,7 @@ $(function() {
         PP.init = function() {
             PP.cacheElems();
             PP.bindEvents();
+            PP.loadState();
         };
 
         return PP;
@@ -637,10 +689,10 @@ $(function() {
                     }
                     
                     if (typeof $(this).data(self.callerPopupIdAttribute) != 'undefined') {
-                        $.cookie(self.lastPopupCookieName, $(this).data(self.callerPopupIdAttribute));
+                        Cookies.set(self.lastPopupCookieName, $(this).data(self.callerPopupIdAttribute));
                     }
                     else {
-                        $.removeCookie(self.lastPopupCookieName);
+                        Cookies.remove(self.lastPopupCookieName);
                     }
                 });
                 $(document).on('click', "[popup-closer], .popup__fader", function(e){
@@ -659,12 +711,12 @@ $(function() {
                         }
                     });
 
-                    $.removeCookie(self.lastPopupCookieName);
+                    Cookies.remove(self.lastPopupCookieName);
                 });
             },
             
             checkLastPopup: function() {
-                var lastPopupId = $.cookie(this.lastPopupCookieName);
+                var lastPopupId = Cookies.get(this.lastPopupCookieName);
                 if (lastPopupId){
                     $('[data-' + this.callerPopupIdAttribute + '="' + lastPopupId + '"]').click();
                 }
