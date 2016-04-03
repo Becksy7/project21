@@ -124,16 +124,15 @@ $(function() {
                 },
                 dataType : 'json',
                 success  : function(data){
-                    console.log(data);
                     if (data.success) {
                         dd.resolve(data.userAnswerStatus);                     
                     }
                     else {
-                        dd.reject();                        
+                        dd.reject(data.errorState);
                     }
                 },
                 error : function(data){
-
+                    dd.reject(data.errorState);
                 }
             });
             return dd.promise();
@@ -148,7 +147,15 @@ $(function() {
                     PP.answerWasInCorrect();
                     break;
             }
-        }        
+        }
+
+        PP.sayError = function(error) {
+            var errorPlaceholder = PP.$.popup_q.find('.question__add');
+            var defaultMsg = 'Викторина не может быть продолжена. Пожалуйста, обновите страницу';
+            var error = error ? (error + defaultMsg) : ('Произошла ошибка. '+ defaultMsg);
+            var $error = $('#plxerr').length ? $('#plxerr').text(error) : '<div id="plxerr">'+ error +'</div>';
+            errorPlaceholder.after($error);
+        }
 
         PP.answerWasCorrect = function() {
             var $answerLabel = PP.$.popup_q.find('.question__opts input[name=opt]:checked').next();
@@ -188,6 +195,8 @@ $(function() {
                 answer1  : qe.questions[q].answers[0],
                 answer2  : qe.questions[q].answers[1],
                 answer3  : qe.questions[q].answers[2],
+                onCompleteText: qe.onCompleteText,
+                sharing: qe.sharing,
             };
 
             PP.compileQuestionsTemplate(tmplData);
@@ -218,10 +227,12 @@ $(function() {
             PP.$.popup_start = PP.$.popup.find('.question.question--start');
             PP.$.popup_q = PP.$.popup.find('.question.question--go');
             PP.$.popup_img = PP.$.popup.find('[data-question-image]');
+            PP.$.popup_share = PP.$.popup.find('.question.question--share');
             PP.$.callers = $('.popup__caller');
             PP.$.questionTemplate = $("#question_popup_tmpl");
             PP.$.startTemplate = $("#start_popup_tmpl");
             PP.$.popupImageTemplate = $("#question_img_tmpl");
+            PP.$.sharingTemplate = $('#share_popup_tmpl');
             PP.$.btnStart = $("#popup_btn_start");
             PP.$.submit = $("#question_btn_answer");
             PP.$.timeout_label = $(".question__timeout-label");
@@ -269,6 +280,21 @@ $(function() {
                 .find('.popup__body').addClass('share');
             PP.$.popup.find('.popup__body').removeClass('beeline natgeo');
             PP.$.popup.find('.question__img.common').hide();
+            //yandex Share
+
+            var sd = PP.qe.sharing;
+
+            var myShare = document.getElementById('my-share');
+
+            var share = Ya.share2(myShare, {
+                content: {
+                    url: sd.url,
+                    title: sd.title,
+                    description: sd.description,
+                    image: sd.image,
+                }
+            });
+
             PP.$.popup.find('.share-text').show();
         };
         
@@ -278,6 +304,9 @@ $(function() {
             
             var tmpl = PP.$.startTemplate.html();
             PP.$.popup_start.html(_.template(tmpl)(tmplData));
+
+            var tmpl = PP.$.sharingTemplate.html();
+            PP.$.popup_share.html(_.template(tmpl)(tmplData));
             
             PP.compileQuestionsTemplate(tmplData);
         }
@@ -309,6 +338,8 @@ $(function() {
                 answer1: qe.questions[q].answers[0],
                 answer2: qe.questions[q].answers[1],
                 answer3: qe.questions[q].answers[2],
+                onCompleteText: qe.onCompleteText,
+                sharing: qe.sharing,
             };
             
             PP.compileAllTemplates(tmplData);
@@ -361,7 +392,7 @@ $(function() {
                 
                 $.when(PP.checkAnswer())
                     .done(PP.answerHandle)
-                    .fail();
+                    .fail(PP.sayError);
 
                 return false;
             });

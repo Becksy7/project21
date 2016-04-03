@@ -64,3 +64,38 @@
         }
     }
 }
+.ya-share2{
+    display: inline-block;
+    height: 40px;
+    vertical-align: middle;
+    .ya-share2__list_direction_horizontal > .ya-share2__item{
+        margin-left: 25px;
+    }
+    .ya-share2__container_size_m .ya-share2__icon{
+        height: 40px;
+        width: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 24px;
+        background: none;
+        &:before{
+            line-height: 40px;
+            color: @white;
+        }
+    }
+    .ya-share2 .ya-share2__container_size_m .ya-share2__item_service_vkontakte .ya-share2__icon{
+        background-color: @vkcolor;
+        .icon;
+        .icon-vkontakte;
+    }
+    .ya-share2 .ya-share2__container_size_m .ya-share2__item_service_facebook .ya-share2__icon{
+        background-color: @fbcolor;
+        .icon;
+        .icon-facebook;
+    }
+    .ya-share2 .ya-share2__container_size_m .ya-share2__item_service_twitter .ya-share2__icon{
+        background-color: @twcolor;
+        .icon;
+        .icon-twitter;
+    }
+}
