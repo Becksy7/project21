@@ -1,7 +1,8 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 .content-table,table{border-collapse:collapse}
 .icon:before,button,select{text-transform:none}
-.container button:focus,.container input:focus,.hamburger,.hamburger:focus,:active,a:active,a:hover{outline:0}
+.btn:focus,.container button:focus,.container input:focus,.hamburger,.hamburger:focus,:active,a:active,a:hover{outline:0}
+.layout-wrapper,body,html{height:100%}
 .container>*,.layout-main,.layout-wrapper,sub,sup{position:relative}
 .clearfix:after,.page-map .map-aside:after,.prizes:after{clear:both}
 .invisible,.question--answered .question__opts label:before{visibility:hidden}
@@ -76,10 +77,9 @@ html body{background-size:cover;font-family:'PF DinDisplay Pro',arial,sans-serif
 }
 @media (max-width:639px){.container{padding:0 10px}
 }
-.layout-wrapper{height:100%;display:table;width:100%}
-body,html{height:100%}
-.layout-footer,.layout-header,.layout-main{display:table-row}
-.layout-footer,.layout-header{height:1px}
+body:not(.page-about) .layout-wrapper{display:table;width:100%}
+body:not(.page-about) .layout-footer,body:not(.page-about) .layout-header,body:not(.page-about) .layout-main{display:table-row}
+body:not(.page-about) .layout-footer,body:not(.page-about) .layout-header{height:1px}
 .client-style *{font-family:Arial,sans-serif}
 .client-style ul.clean,.client-style ul.clean li{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}
 .client-style .utility-text-left{text-align:left!important}

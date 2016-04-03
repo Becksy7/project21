@@ -487,7 +487,7 @@ $(function() {
                     }
                 }
 
-                var ch = $mainContent.height();
+                var ch = ph - 70;
                 cnth = $mainContent.find('.container').outerHeight();
                 if (ch > cnth) {
                     $mainContent.find('.container').css('height', ch);
@@ -561,8 +561,7 @@ $(function() {
                         $('[data-episode]').fadeIn();
 
                     } else {
-                        $('[data-episode]').fadeOut();
-                        $('[data-episode="' + id + '"]').fadeIn(500);
+                        $('[data-episode]').not('[data-id="' + id + '"]').fadeOut();
                     }
                     $('[data-id]').fadeOut();
                     $('[data-id="' + id + '"]').fadeIn(500);
