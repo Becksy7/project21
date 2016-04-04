@@ -398,6 +398,9 @@
         &.beeline, &.share, &.natgeo {
             border: 20px solid @yellow;
             padding: 0;
+            @media (max-width: 767px) {
+                padding-bottom: 80px;
+            }
         }
         &.beeline{
             background-color: @black;
@@ -405,8 +408,11 @@
     }
 }
 .question--go{
-    height: 279px;
-    overflow: auto;
+
+    @media (min-width: 768px) {
+        height: 279px;
+        overflow: auto;
+    }
 }
 #plxerr{
     overflow: hidden;
