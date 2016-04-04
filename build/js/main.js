@@ -125,7 +125,7 @@ $(function() {
     })()
 
     ,Quiz = (function(){
-
+            
         var QP = {};
 
         QP.stmp = null;
@@ -238,6 +238,7 @@ $(function() {
                     QP.$.afterAnswer.removeClass('visible');
                     
                     QP.$.popup.find('.question__timeout-label').addClass('invisible');
+                    
                     break;
                 case 'correct':
                     $('.popup-question--start')
@@ -379,6 +380,12 @@ $(function() {
         QP.showQuestion = function() {
             QP.redrawQuestionsTemplate();
             QP.setMode('quiz');
+            if (QP.currentQuestion == 2) {
+                $('#question_btn_next').text($('#question_btn_next').data('end'));
+            }
+            else {
+                $('#question_btn_next').text($('#question_btn_next').data('next'));                        
+            }
             QP.Timer[QP.quizId].start();
         };
         
@@ -489,10 +496,7 @@ $(function() {
         }
         
         QP.openPopup = function($caller) {
-            if (typeof QUESTIONS == 'undefined') {
-                return
-            }
-    
+
             QP.resetState();
             
             QP.quizId = $caller.data('location');
@@ -613,6 +617,10 @@ $(function() {
         };
         
         QP.init = function() {
+            if (typeof QUESTIONS == 'undefined' || typeof BX_USER_ID == 'undefined') {
+                return;
+            }
+            QP.localStorageName += BX_USER_ID;
             QP.cacheElements();
             QP.bindEvents();
         };
