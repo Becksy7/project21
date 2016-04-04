@@ -738,7 +738,7 @@ $(function() {
         };
         PL.init = function() {
 
-            $(window).on('resize load',PL.fitContainerHeight);
+            $(window).on('resize load changefilter',PL.fitContainerHeight);
 
             if (!isMobile.any) {
                 if (typeof $.fn.mb_YTPlayer != "undefined") {
@@ -795,7 +795,9 @@ $(function() {
                         $('[data-episode]').not('[data-episode="' + id + '"]').fadeOut();
                     }
                     $('[data-id]').fadeOut();
-                    $('[data-id="' + id + '"]').fadeIn(500);
+                    $('[data-id="' + id + '"]').fadeIn(500, function(){
+                        $(window).trigger('changefilter');
+                    });
                 });
             }
         }
