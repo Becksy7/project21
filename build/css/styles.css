@@ -249,7 +249,7 @@ span.yellow{color:#fdd700}
 .popup__closer{font-size:49px;width:24px;height:24px;line-height:19px;color:#fdd700;position:absolute;right:-30px;top:-2px;font-weight:200;text-decoration:none}
 @media (max-width:767px){.popup__closer{right:10px;top:23px}
 }
-body.noscroll{overflow:hidden}
+body.noscroll,body.noscroll .container{overflow:hidden}
 .done{display:none}
 .done .h1,.done h1{text-align:center}
 .popup-authorise{top:70px;margin-top:0}
