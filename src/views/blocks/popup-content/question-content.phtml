@@ -16,17 +16,17 @@ question--beeline //-->
 
 		<div class="question-author">
 			<div class="question-author__img"><img  src="
-			<% if (author_org == 'fromMorgan') { %>
+			<% if (authorName == 'fromMorgan') { %>
 				<?= publicdir("images/q/freeman.png")?>
-				<% } else if (author_org == 'fromBeeline') {%>
+				<% } else if (authorName == 'fromBeeline') {%>
 				<?= publicdir("images/q/beeline.svg")?>
-				<% } else if (author_org == 'fromNatgeo') {%>
+				<% } else if (authorName == 'fromNatgeo') {%>
 				<?= publicdir("images/q/natgeo.svg")?>
 				<% } %>
 			"></div>
 			<div class="question-author__info">
-				<div class="question-author__name"><%= author_name %></div>
-				<div class="question-author__points"><%= points + ' ' + points_l %></div>
+				<div class="question-author__name"><%= authorName %></div>
+				<div class="question-author__points"><%= points + ' ' + pointUnits %></div>
 			</div>
 		</div>
 	</div>
@@ -38,9 +38,9 @@ question--beeline //-->
 					<span class="yellow">ВОПРОС</span> <%= question %>
 				</div>
 				<div class="question__opts">
-					<input type="radio" name="opt" id="option1" value="1"><label for="option1"><%= answer1 %></label>
-					<input type="radio" name="opt" id="option2" value="2"><label for="option2"><%= answer2 %></label>
-					<input type="radio" name="opt" id="option3" value="3"><label for="option3"><%= answer3 %></label>
+					<input type="radio" name="opt" id="option1" value="1"><label for="option1"><%= answers[0] %></label>
+					<input type="radio" name="opt" id="option2" value="2"><label for="option2"><%= answers[1] %></label>
+					<input type="radio" name="opt" id="option3" value="3"><label for="option3"><%= answers[2] %></label>
 				</div>
 			</div>
 			<div class="question__add">
