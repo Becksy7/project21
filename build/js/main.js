@@ -5,35 +5,30 @@ $(function() {
         return {
             init : function() {
                 MenuCollapse.init();
-                Popups.init();
+                Quiz.init();
                 PopupForm.init();
                 Player.init();
                 BtnFilter.init();
-                Timer.init();
-                DefaultPopups.init();
+                Popups.init();
                 FlexFallback.init();
             }
         }
     })()
 
-    ,Timer = (function(){
-        var T = {};
-        T.timer = null;
-        T.amount = 20;
-        T.started = false;
-        T.cacheElems = function() {
-            T.$ = {};
-            T.$.instance = $(".question__time");
-            T.$.label = $("#timer_label");
-            T.$.value = $("#timer_val");
+    ,Timer = function(){
+        this.timer = null;
+        this.amount = 20;
+        this.started = false;
+        this.cacheElements = function() {
+            this.$ = {};
+            this.$.instance = $(".question__time");
+            this.$.label = $("#timer_label");
+            this.$.value = $("#timer_val");
         };
-
-        T.bindEvents = function() {};
-
-        T.set = function(amount) {
+        this.set = function(amount) {
             // на будущее данная функция работает 
             // с числами больше 20
-            T.$.value.text(amount);
+            this.$.value.text(amount);
 
             var lastDigit = (amount % 10);
             var label = '';
@@ -52,47 +47,71 @@ $(function() {
                 label = 'секунд';
             }
 
-            T.$.label.text(label);
+            this.$.label.text(label);
         }
 
-        T.start = function() {
-            T.cacheElems(); // one more time (template was redrawn)
-            T.timer = window.setInterval(function(){
-                T.set(--T.amount);
-                Popups.saveState({'time' : T.amount});
-                if (T.amount <= 0) {
-                    Popups.timeout();                    
-                    T.stop();
+        this.start = function() {
+            var self = this;
+            this.cacheElements(); // one more time (template was redrawn)
+            this.loadAmount();
+            
+            if (this.amount <= 0) {
+                Quiz.timeout();
+                this.stop();
+                return;
+            }
+            
+            this.timer = window.setInterval(function(){
+                self.set(--self.amount);
+                if (self.amount <= 0) {
+                    Quiz.timeout();
+                    self.stop();
                 }
             }, 1000);
-            T.started = true;
-            T.paused = false;
+            this.started = true;
+            this.paused = false;
+        }
+        
+        this.loadAmount = function() {
+            var now = Math.round((new Date().getTime()) / 1000);
+                
+            if (!Quiz.stmp) {
+                Quiz.stmp = now;
+                Quiz.saveState();
+            }
+            else {
+                var stmpEnd = Math.max(Quiz.stmp + this.amount - now, 0);
+                this.amount = Math.min(this.amount, stmpEnd);
+                this.set(this.amount);
+            }
         }
 
-        T.resume = function( amount ){
-            T.amount = amount ? amount : 20;
-            T.start();
+        this.resume = function( amount ){
+            this.amount = amount ? amount : 20;
+            this.start();
         }
 
-        T.pause = function(){
-            clearTimeout(T.timer);
-            T.started = false;
-            T.paused = true;
+        this.pause = function(){
+            clearTimeout(this.timer);
+            this.started = false;
+            this.paused = true;
         }
 
-        T.stop = function() {
-            T.pause();
-            T.paused = false;
-            T.amount = 20;
+        this.stop = function() {
+            this.pause();
+            this.paused = false;
+            this.amount = 20;
         }
 
-        T.init = function() {
-            T.cacheElems();
-            T.bindEvents();
+        this.init = function() {
+            this.cacheElements();
+            this.bindEvents();
         };
+    }
 
-        return T;
-    })()
+
+
+    
 
     ,MenuCollapse = (function(){
         return {
@@ -105,66 +124,207 @@ $(function() {
         }
     })()
 
-    ,Popups = (function(){
+    ,Quiz = (function(){
 
-        var PP = {};
+        var QP = {};
 
-        PP.state = {};
+        QP.stmp = null;
+        QP.currentQuestion = 0;
+        QP.location = null;
+        QP.quizId = null;
+        QP.localStorageName = 'story_of_god_gamedata';
+        QP.mode = null;
+        QP.Timer = {};
 
-        PP.q = 0;
-        PP.qe = null;
+        QP.cacheElements = function() {
+            QP.$ = {};
+            QP.$.popup = $("#question_popup");
+            QP.$.popupStart = QP.$.popup.find('.question.question--start');
+            QP.$.popupQuiz = QP.$.popup.find('.question.question--go');
+            QP.$.popupImage = QP.$.popup.find('[data-question-image]');
+            QP.$.popupShare = QP.$.popup.find('.question.question--share');
+            QP.$.callers = $('.popup__caller[data-quiz-caller]');
+            QP.$.questionTemplate = $("#question_popup_tmpl");
+            QP.$.startTemplate = $("#start_popup_tmpl");
+            QP.$.popupImageTemplate = $("#question_img_tmpl");
+            QP.$.sharingTemplate = $('#share_popup_tmpl');
+            QP.$.btnStart = $("#popup_btn_start");
+            QP.$.timeoutMessage = $(".question__timeout-label");
+            QP.$.message = $(".question__message");
+            QP.$.beforeAnswer = $(".question__before-answer");
+            QP.$.afterAnswer = $(".question__after-answer");
+            QP.$.btnNext = $("#question_btn_next");
+        };
 
-        PP.loadState = function() {
-            var emptyState = {};
-            emptyState.currentQuestion = null;
-            emptyState.time = null;
-            emptyState.locationId = null;
-
-            if ( Cookies.get('qstate') ) {
-                PP.state = JSON.parse( Cookies.get('qstate') );
-            } else {
-                PP.state = emptyState;
+        QP.resetState = function() {
+            QP.stmp = null;
+            QP.currentQuestion = 0;
+            QP.mode = null;
+            QP.quizId = null;
+            QP.location = null;
+        }
+        
+        QP.loadState = function() {
+            var statesStr = localStorage[QP.localStorageName];
+            if ( statesStr ) {
+                states = $.parseJSON(statesStr);
+                if (states && states[QP.quizId]) {
+                    QP.currentQuestion = states[QP.quizId].currentQuestion;
+                    QP.stmp = states[QP.quizId].stmp;
+                }
             }
         }
 
-        PP.saveState = function(newstate) {
-            var s = PP.state;
-            PP.state = $.extend(s, newstate);
-            Cookies.set('qstate', PP.state); 
+        QP.saveState = function() {
+            var statesStr = localStorage[QP.localStorageName],
+                states = {};
+            if (statesStr)
+                states = $.parseJSON(statesStr);
+            states[QP.quizId] = {
+                currentQuestion: QP.currentQuestion,
+                stmp: QP.stmp
+            };
+            localStorage[QP.localStorageName] = JSON.stringify(states);
         }
-
-        PP.next = function(){
-            PP.q++;
-            PP.showQuestion();
+        
+        QP.next = function(){
+            QP.currentQuestion++;
+            QP.showQuestion();
+            QP.saveState();
         };
 
-        PP.timeout = function() {
-            PP.$.submit.removeClass('visible');
-            PP.$.timeout_label.addClass('visible');
+        QP.timeout = function() {
+            QP.setMode('timeout');
+            QP.location.questions[QP.currentQuestion].userAnswerStatus = 'timeout';
 
-            PP.$.popup_q.find('.question__opts input[name=opt]').prop('disabled', true);
-            
             $.ajax({
                 url     : ApiUrl.userAnswer,
                 method  : 'POST',
                 data    : {
-                    locationId: PP.qe.locationId,
-                    questionType: PP.qe.questions[PP.q].type,
+                    locationId: QP.location.locationId,
+                    questionType: QP.location.questions[QP.currentQuestion].type,
                     userAnswerStatus: 'timeout'
                 }
             });
             
         }
 
-        PP.checkAnswer = function() {
+        QP.setMode = function(mode) {
+            QP.mode = mode;
+            switch(mode) {
+                case 'start':
+                    QP.$.popup
+                        .addClass('popup-question--start')
+                        .removeClass('popup-question--go')
+                        .removeClass('popup-question--share');
+                    QP.$.popup.find('.share-text').hide();
+                    QP.$.popup.find('.question__timeout-label').addClass('invisible');
+                    QP.$.popup.find('.popup__body').removeClass('beeline natgeo share');
+                    QP.$.popup.find('.question__img.common').show();
+                    break;
+                case 'quiz':
+                    
+                    QP.$.popup.find('.share-text').hide();
+
+                    $('.popup-question--start')
+                        .removeClass('popup-question--start')
+                        .addClass('popup-question--go');
+                    // reset answered style
+                    QP.$.popupQuiz
+                        .removeClass('question--answered-wrong')
+                        .removeClass('question--answered');
+                        
+                    QP.$.beforeAnswer.addClass('visible');
+                    QP.$.afterAnswer.removeClass('visible');
+                    
+                    QP.$.popup.find('.question__timeout-label').addClass('invisible');
+                    break;
+                case 'correct':
+                    $('.popup-question--start')
+                        .removeClass('popup-question--start')
+                        .addClass('popup-question--go');
+                    var $answerLabel = QP.$.popupQuiz.find('.question__opts input[name=opt]:checked').next();
+                    $answerLabel.addClass('answer-ok');
+                    
+                    QP.$.popup.find('.share-text').hide();
+                    
+                    QP.$.popupQuiz
+                        .removeClass('question--answered-wrong')
+                        .addClass('question--answered');
+                    
+                    QP.$.beforeAnswer.removeClass('visible');
+                    QP.$.afterAnswer.addClass('visible');
+                    
+                    QP.$.popup.find('.question__timeout-label').addClass('invisible');
+                    QP.stmp = 0;
+                    Quiz.saveState();
+                    Quiz.syncQuestions();
+                    break;
+                case 'incorrect':
+                    $('.popup-question--start')
+                        .removeClass('popup-question--start')
+                        .addClass('popup-question--go');
+                    var $answerLabel = QP.$.popupQuiz.find('.question__opts input[name=opt]:checked').next();
+                    $answerLabel.addClass('answer-wrong');
+                    
+                    QP.$.popup.find('.share-text').hide();
+
+                    QP.$.popupQuiz.addClass('question--answered question--answered-wrong');
+                    
+                    QP.$.beforeAnswer.removeClass('visible');
+                    QP.$.afterAnswer.addClass('visible');
+                    
+                    QP.$.popup.find('.question__timeout-label').addClass('invisible');
+                    QP.stmp = 0;
+                    Quiz.saveState();
+                    Quiz.syncQuestions();
+                    break;
+                case 'timeout':
+                    $('.popup-question--start')
+                        .removeClass('popup-question--start')
+                        .addClass('popup-question--go');
+                        
+                    QP.$.popupQuiz.addClass('question--answered');
+
+                    QP.$.popup.find('.share-text').hide();
+                    QP.$.timeoutMessage.addClass('visible');
+                    QP.$.popupQuiz.find('.question__opts input[name=opt]').prop('disabled', true);
+
+                    QP.$.beforeAnswer.removeClass('visible');
+                    QP.$.afterAnswer.addClass('visible');
+                    
+                    QP.$.popup.find('.question__timeout-label').removeClass('invisible');
+                    QP.stmp = 0;
+                    Quiz.saveState();
+                    Quiz.syncQuestions();
+                    break;
+                case 'final':
+                    QP.$.popup
+                        .removeClass('popup-question--go')
+                        .removeClass('popup-question--start')
+                        .addClass('popup-question--share')
+                        .find('.popup__body')
+                            .addClass('share');
+                    QP.$.popup.find('.popup__body').removeClass('beeline natgeo');
+                    QP.$.popup.find('.question__img.common').hide();
+                    QP.$.popup.find('.share-text').show();
+                    QP.stmp = 0;
+                    Quiz.saveState();
+                    break;
+            }
+            QP.actualizeQuestionStyleByType();
+            QP.actualizeActiveQuestionHighlight();
+        }
+        
+        QP.checkAnswer = function() {
             var dd = $.Deferred();
-            var answer = PP.$.popup_q.find('.question__opts input[name=opt]:checked').val();
+            var answer = QP.$.popupQuiz.find('.question__opts input[name=opt]:checked').val();
             $.ajax({
-                url     : 'example.php',//ApiUrl.userAnswer,
+                url     : ApiUrl.userAnswer,
                 method  : 'POST',
                 data    : {
-                    locationId: PP.qe.locationId,
-                    questionType: PP.qe.questions[PP.q].type,
+                    locationId: QP.location.locationId,
+                    questionType: QP.location.questions[QP.currentQuestion].type,
                     answer: answer
                 },
                 dataType : 'json',
@@ -183,332 +343,216 @@ $(function() {
             return dd.promise();
         }
         
-        PP.answerHandle = function(status) {
+        QP.answerHandle = function(status) {
             switch(status){
                 case 'correct':
-                    PP.answerWasCorrect();
+                    QP.answerWasCorrect();
                     break;
                 case 'incorrect':
-                    PP.answerWasInCorrect();
+                    QP.answerWasInCorrect();
                     break;
             }
         }
 
-        PP.sayError = function(error) {
-            var errorPlaceholder = PP.$.popup_q.find('.question__add');
+        QP.sayError = function(error) {
+            var errorPlaceholder = QP.$.popupQuiz.find('.question__add');
             var defaultMsg = 'Викторина не может быть продолжена. Пожалуйста, обновите страницу';
             var error = error ? (error + defaultMsg) : ('Произошла ошибка. '+ defaultMsg);
             var $error = $('#plxerr').length ? $('#plxerr').text(error) : '<div id="plxerr">'+ error +'</div>';
             errorPlaceholder.after($error);
         }
 
-        PP.answerWasCorrect = function(n) {
-            var $answerLabel = PP.$.popup_q.find('.question__opts input[name=opt]:checked').next();
-
-            PP.$.popup_q.removeClass('question--answered-wrong')
-                      .addClass('question--answered');
-
-            $answerLabel.addClass('answer-ok');
-
-            PP.$.after_answer.find('.question__var').text('+' + PP.qe.questions[PP.q].points + ' ' + PP.pointsLabelHelper(PP.qe.questions[PP.q].points));
-            PP.$.before_answer.removeClass('visible');
-            PP.$.after_answer.addClass('visible');
+        QP.answerWasCorrect = function() {
+            QP.setMode('correct');
+            QP.$.afterAnswer.find('.question__var').text('+' + QP.location.questions[QP.currentQuestion].points + ' ' + QP.pointUnitsHelper(QP.location.questions[QP.currentQuestion].points));
+            QP.location.questions[QP.currentQuestion].userAnswerStatus = 'correct';
+            QP.location.questions[QP.currentQuestion].userAnswerVariant = QP.$.popupQuiz.find('.question__opts input[name=opt]:checked').val();
         }
         
-        PP.answerWasInCorrect = function() {
-            var $answerLabel = PP.$.popup_q.find('.question__opts input[name=opt]:checked').next();
-
-            PP.$.popup_q.addClass('question--answered question--answered-wrong');
-            //PP.$answer.addClass('answer-ok');
-            $answerLabel.addClass('answer-wrong');
-
-            PP.$.after_answer.find('.question__var').text('0 баллов');
-            PP.$.before_answer.removeClass('visible');
-            PP.$.after_answer.addClass('visible');
+        QP.answerWasInCorrect = function() {
+            QP.$.afterAnswer.find('.question__var').text('0 баллов');
+            QP.setMode('incorrect');
+            QP.location.questions[QP.currentQuestion].userAnswerStatus = 'incorrect';
+            QP.location.questions[QP.currentQuestion].userAnswerVariant = QP.$.popupQuiz.find('.question__opts input[name=opt]:checked').val();
         }
 
-        PP.showQuestion = function() {
-            var q = PP.q;
-            var qe = PP.qe;
-            var tmplData = {
-                pic : qe.episodePic,
-                video: qe.episodeVideo,
-                author_name : PP.questionTypeHelper(qe.questions[q].type).author,
-                author_org : qe.questions[q].type,
-                author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
-                points   : qe.questions[q].points,
-                points_l : PP.pointsLabelHelper( qe.questions[q].points ),
-                question : qe.questions[q].title,
-                answer1  : qe.questions[q].answers[0],
-                answer2  : qe.questions[q].answers[1],
-                answer3  : qe.questions[q].answers[2],
-                onCompleteText: qe.onCompleteText,
-                sharing: qe.sharing,
-            };
-
-            //refresh last state
-            PP.$.popup_q.find('.question__opts').show();
-            PP.$.popup_q.find('#laststat').hide();
-
-            PP.compileQuestionsTemplate(tmplData);
-
-            PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
-
-            // reset answered style
-            PP.$.popup_q.removeClass('question--answered-wrong')
-                      .removeClass('question--answered');
-
+        QP.showQuestion = function() {
+            QP.redrawQuestionsTemplate();
+            QP.setMode('quiz');
+            QP.Timer[QP.quizId].start();
+        };
+        
+        QP.actualizeQuestionStyleByType = function() {
             // Change question style by its type
-            PP.$.popup_q.parent().removeClass('beeline natgeo');
-            if (qe.questions[q].type == 'fromBeeline') {
-                PP.$.popup_q.parent().addClass('beeline');
+            QP.$.popupQuiz.parent().removeClass('beeline natgeo');
+            var cssClass;
+            switch(QP.location.questions[QP.currentQuestion].type) {
+                case 'fromBeeline':
+                    cssClass = 'beeline';
+                    break;
+                case 'fromNatgeo':
+                    cssClass = 'natgeo';
+                    break;
             }
-            if (qe.questions[q].type == 'fromNatgeo') {
-                PP.$.popup_q.parent().addClass('natgeo');
+            QP.$.popupQuiz.parent().addClass(cssClass);
+        }
+        
+        QP.actualizeActiveQuestionHighlight = function() {
+            QP.$.popupQuiz.find('.question__state').show().find('li').eq(QP.currentQuestion).addClass('active');
+        }
+        
+        QP.showState = function(question) {
+            QP.currentQuestion = question;
+            
+            var question = QP.location.questions[QP.currentQuestion];
+            if (question.userAnswerVariant) {
+                QP.$.popupQuiz.find('.question__opts  input[name=opt]').eq(parseInt(question.userAnswerVariant) - 1)
+                    .prop('checked', 'checked')
+                    .prop('disabled', true);
+                QP.setMode('quiz');
             }
-
-            Timer.start();
-            Popups.saveState({'currentQuestion' : q, 'locationId' : qe.locationId});
-
-            // recache elems
-            PP.cacheElems();
-        };
-        PP.showLastState = function(n) {
-            PP.q = n-1;//go to previous button 'next'
-            var q = PP.q;
-            var qe = PP.qe;
-            var tmplData = {
-                pic : qe.episodePic,
-                video: qe.episodeVideo,
-                author_name : PP.questionTypeHelper(qe.questions[q].type).author,
-                author_org : qe.questions[q].type,
-                author_pic : PP.questionTypeHelper(qe.questions[q].type).pic,
-                points   : qe.questions[q].points,
-                points_l : PP.pointsLabelHelper( qe.questions[q].points ),
-                question : qe.questions[q].title,
-                answer1  : qe.questions[q].answers[0],
-                answer2  : qe.questions[q].answers[1],
-                answer3  : qe.questions[q].answers[2],
-                onCompleteText: qe.onCompleteText,
-                sharing: qe.sharing,
-            };
-            PP.compileQuestionsTemplate(tmplData);
-            PP.$.popup_q.find('.question__state').find('li').eq(PP.q).addClass('active');
-
-            // reset answered style
-            PP.$.popup_q.removeClass('question--answered-wrong')
-                .removeClass('question--answered');
-
-            // Change question style by its type
-            PP.$.popup_q.parent().removeClass('beeline natgeo');
-            if (qe.questions[q].type == 'fromBeeline') {
-                PP.$.popup_q.parent().addClass('beeline');
+            switch (question.userAnswerStatus) {
+                case 'correct':
+                    QP.answerWasCorrect();
+                    break;
+                case 'incorrect':
+                    QP.answerWasInCorrect();
+                    break;
+                case 'timeout':
+                    QP.setMode('timeout');
+                    break;
             }
-            if (qe.questions[q].type == 'fromNatgeo') {
-                PP.$.popup_q.parent().addClass('natgeo');
-            }
-            //load prev question state
-            PP.$.popup_q.find('.question__opts').hide();
-            PP.$.popup_q.find('.question__before-answer.visible').removeClass('visible');
-            PP.$.popup_q.find('.question__after-answer').addClass('visible');
-            $('#question_result_ball').text(qe.questions[q].points +' '+ PP.pointsLabelHelper(qe.questions[q].points));
-            //PP.$.popup_q.find('#laststat').hide();
-            var statusEl = $('<span id="laststat"></span>');
-            console.log(PP.qe.questions[q].userAnswerStatus);
-            if (PP.qe.questions[q].userAnswerStatus == "correct"){
-                statusEl.text('Вы ВЕРНО ответили на ' + n + 'вопрос');
-            } else if (PP.qe.questions[q].userAnswerStatus == "incorrect"){
-                statusEl.text('Вы НЕВЕРНО ответили на ' + n + 'вопрос');
-            } else {
-                statusEl.text('Произошла ошибка загрузки статуса');
-            }
-            PP.$.popup_q.find('.question__opts').after(statusEl);
-
-            // recache elems
-            PP.cacheElems();
         };
 
-        PP.cacheElems = function() {
-            PP.$ = {};
-            PP.$.popup = $("#question_popup");
-            PP.$.popup_start = PP.$.popup.find('.question.question--start');
-            PP.$.popup_q = PP.$.popup.find('.question.question--go');
-            PP.$.popup_img = PP.$.popup.find('[data-question-image]');
-            PP.$.popup_share = PP.$.popup.find('.question.question--share');
-            PP.$.callers = $('.popup__caller');
-            PP.$.questionTemplate = $("#question_popup_tmpl");
-            PP.$.startTemplate = $("#start_popup_tmpl");
-            PP.$.popupImageTemplate = $("#question_img_tmpl");
-            PP.$.sharingTemplate = $('#share_popup_tmpl');
-            PP.$.btnStart = $("#popup_btn_start");
-            PP.$.submit = $("#question_btn_answer");
-            PP.$.timeout_label = $(".question__timeout-label");
-            PP.$.before_answer = $(".question__before-answer");
-            PP.$.after_answer = $(".question__after-answer");
-            PP.$.btnNext = $("#question_btn_next");
-        };
-
-        PP.pointsLabelHelper = function(points) {
+        QP.pointUnitsHelper = function(points) {
             // тут больше 10 баллов наврядли будет за вопрос
             // поэтому делаем очень просто
-            if (points == 0 ) {
-                return 'баллов';
-            } else if (points == 1){
-                return 'балл';
-            } else if (points <= 4){
-                return 'балла';
-            } else {
-                return 'баллов';
-            }
+            if (points == 0 )     return 'баллов';
+            else if (points == 1) return 'балл';
+            else if (points <= 4) return 'балла';
+            else                  return 'баллов';
         }
 
-        PP.questionTypeHelper = function(type) {
-            var R = {};
-            R.pic = '#';
-            R.author = '';
-
-            if (type == 'fromMorgan') {
-                R.pic = 'images/q/freeman.png';
-                R.author = 'Морган Фриман'
-            } else if ( type == 'fromBeeline' ) {
-                R.pic = 'images/q/beeline.svg';
-            } else if ( type == 'fromNatgeo' ) {
-                R.pic = 'images/q/natgeo.svg';
-            }
-
-            return R;
+        QP.getQuestionAuthor = function(type) {
+            return type == 'fromMorgan' ? 'Морган Фриман' : '';
         };
 
-        PP.showFinalScreen = function() {
-            PP.$.popup
-                .removeClass('popup-question--go')
-                .removeClass('popup-question--start')
-                .addClass('popup-question--share')
-                .find('.popup__body').addClass('share');
-            PP.$.popup.find('.popup__body').removeClass('beeline natgeo');
-            PP.$.popup.find('.question__img.common').hide();
-            //yandex Share
+        QP.showFinalScreen = function() {
+            QP.setMode('final');
 
-            var sd = PP.qe.sharing;
-
-            var myShare = document.getElementById('my-share');
-
-            var share = Ya.share2(myShare, {
-                content: {
-                    url: sd.url,
-                    title: sd.title,
-                    description: sd.description,
-                    image: sd.image,
-                }
+            Ya.share2(document.getElementById('my-share'), {
+                content: QP.location.sharing
             });
 
-            PP.$.popup.find('.share-text').show();
+            QP.$.popup.find('.share-text').show();
         };
         
-        PP.compileAllTemplates = function(tmplData) {
-            var tmpl = PP.$.popupImageTemplate.html();
-            PP.$.popup_img.html(_.template(tmpl)(tmplData));
+        QP.getTemplateData = function() {
+            var currentQuestionNumber = QP.currentQuestion,
+                currentQuestion = QP.location.questions[currentQuestionNumber];
+            return {
+                pic:            QP.location.episodePic,
+                video:          QP.location.episodeVideo,
+                authorName:     QP.getQuestionAuthor(currentQuestion.type),
+                questionType:   currentQuestion.type,
+                points:         currentQuestion.points,
+                pointUnits:     QP.pointUnitsHelper(currentQuestion.points),
+                question:       currentQuestion.title,
+                answers:        currentQuestion.answers,
+                onCompleteText: QP.location.onCompleteText,
+                sharing:        QP.location.sharing,
+            };
+        }
+        
+        QP.redrawAllTemplates = function() {
+            var tmpl = QP.$.popupImageTemplate.html();
+            QP.$.popupImage.html(_.template(tmpl)(QP.getTemplateData()));
             
-            var tmpl = PP.$.startTemplate.html();
-            PP.$.popup_start.html(_.template(tmpl)(tmplData));
+            var tmpl = QP.$.startTemplate.html();
+            QP.$.popupStart.html(_.template(tmpl)(QP.getTemplateData()));
 
-            var tmpl = PP.$.sharingTemplate.html();
-            PP.$.popup_share.html(_.template(tmpl)(tmplData));
+            var tmpl = QP.$.sharingTemplate.html();
+            QP.$.popupShare.html(_.template(tmpl)(QP.getTemplateData()));
             
-            PP.compileQuestionsTemplate(tmplData);
+            QP.redrawQuestionsTemplate();
+            QP.cacheElements();
         }
         
-        PP.compileQuestionsTemplate = function(tmplData) {
-            var tmpl = PP.$.questionTemplate.html();
-            PP.$.popup_q.html(_.template(tmpl)(tmplData));                        
+        QP.redrawQuestionsTemplate = function() {
+            var tmpl = QP.$.questionTemplate.html();
+            QP.$.popupQuiz.html(_.template(tmpl)(QP.getTemplateData()));
+            QP.cacheElements();
         }
         
-        PP.openPopup = function($caller) {
+        QP.syncQuestions = function () {
+            QUESTIONS[QP.quizId] = QP.location;
+        }
+        
+        QP.openPopup = function($caller) {
             if (typeof QUESTIONS == 'undefined') {
                 return
             }
-
-            var fader = '<div class="popup__fader"></div>';
-            var locationId = $caller.data('location');
-
-            PP.qe = QUESTIONS[locationId]; // берем данные из хранилища
-            var q = PP.q;
-            var qe = PP.qe;
-            var tmplData = {
-                pic: qe.episodePic,
-                video: qe.episodeVideo,
-                author_name: PP.questionTypeHelper(qe.questions[q].type).author,
-                author_org: qe.questions[q].type,
-                author_pic: PP.questionTypeHelper(qe.questions[q].type).pic,
-                points: qe.questions[q].points,
-                points_l: PP.pointsLabelHelper(qe.questions[q].points),
-                question: qe.questions[q].title,
-                answer1: qe.questions[q].answers[0],
-                answer2: qe.questions[q].answers[1],
-                answer3: qe.questions[q].answers[2],
-                onCompleteText: qe.onCompleteText,
-                sharing: qe.sharing,
-            };
+    
+            QP.resetState();
             
-            PP.compileAllTemplates(tmplData);
-
-            PP.$.popup.find('.share-text').hide();
-            //check current State
-            if (locationId == PP.state.locationId) {
-                if (true){ //проверка на наличие таймера, вместо true надо поставить условие "если таймера нет", то....
-                    if (qe.questions[0].userAnswerStatus == null) {
-                        //1 неотвечен
-                        $('.popup-question--start')
-                            .removeClass('popup-question--start')
-                            .addClass('popup-question--go');
-                    } else if (qe.questions[1].userAnswerStatus == null) {
-                        //2 неотвечен
-                        $('.popup-question--start')
-                            .removeClass('popup-question--start')
-                            .addClass('popup-question--go');
-                        PP.showLastState(1);
-
-                    } else if (qe.questions[2].userAnswerStatus == null) {
-                        //3 неотвечен
-                        $('.popup-question--start')
-                            .removeClass('popup-question--start')
-                            .addClass('popup-question--go');
-                        PP.showLastState(2);
-                    } else {
-                        //показываем шаринги
-                        PP.showFinalScreen();
-                    }
-                } else {
-                    //таймер есть, надо присвоить PP.q = n (номер текущего вопроса) и
-                    PP.q = n;
-                    PP.showQuestion();
-                    $('.popup-question--start')
-                        .removeClass('popup-question--start')
-                        .addClass('popup-question--go');
-
-                    Timer.resume( PP.state.time );
-                }
-            }
-
+            QP.quizId = $caller.data('location');
+            QP.location = QUESTIONS[QP.quizId];
+            QP.Timer[QP.quizId] = new Timer();
             
-            PP.$.popup.fadeIn(250, function() {
+            QP.loadState();
+            
+            QP.redrawAllTemplates();
+
+            QP.setMode('start');
+
+            QP.checkStates();
+            
+            QP.$.popup.fadeIn(250, function() {
                 $(this).addClass('active');
                 if ($caller.attr('data-active')) { // for social authorise popup only
                     var item = $caller.attr('data-active');
-                    PP.$.popup.find('.active').removeClass('active');
-                    PP.$.popup.find(item).addClass('active');
+                    QP.$.popup.find('.active').removeClass('active');
+                    QP.$.popup.find(item).addClass('active');
                 }
             });
+            var fader = '<div class="popup__fader"></div>';
             $('body').addClass('noscroll').append(fader);
         }
         
-        PP.closePopup = function() {
-            if ( Timer.started ) {
-                Timer.pause();
-
-                PP.saveState({'time' : Timer.amount});
+        QP.getLastAnsweredQuestion = function() {
+            var lastAnsweredQuestion = null;
+            for (i in QP.location.questions) {
+                var question = QP.location.questions[i].userAnswerStatus;
+                if (question) {
+                    lastAnsweredQuestion = i;
+                }
+            }
+            return lastAnsweredQuestion;
+        }
+        
+        QP.checkStates = function() {
+            if (QP.stmp) {
+                QP.showQuestion();
+                return;
             }
 
+            var lastAnsweredQuestion = QP.getLastAnsweredQuestion();
+            if (!lastAnsweredQuestion)
+                return;
+            
+            lastAnsweredQuestion = parseInt(lastAnsweredQuestion);
+            switch (lastAnsweredQuestion) {
+                case 0:
+                case 1:
+                    QP.showState(lastAnsweredQuestion);
+                    break;
+                case 2:
+                    QP.showFinalScreen();
+                    break;
+            }
+        }
+        
+        QP.closePopup = function() {
             $('.popup.active').fadeOut(200,function(){
                 $(this).removeClass('active');
                 $('body').removeClass('noscroll');
@@ -518,41 +562,41 @@ $(function() {
             });            
         }
 
-        PP.bindEvents = function() {
+        QP.bindEvents = function() {
 
-            if ( !PP.$.callers.length ) return;
+            if ( !QP.$.callers.length ) return;
             
-            PP.$.callers.on('click',function(e){
+            QP.$.callers.on('click',function(e){
                 e.preventDefault();
-                if ((typeof($(this).attr('data-quiz-caller')) !== 'undefined') && ( !$(this).hasClass('inactive'))) {
-                    PP.openPopup($(this));
+                if (!$(this).hasClass('inactive')) {
+                    QP.openPopup($(this));
                 }
             });
 
             // Close popup
             $(document).on('click', "[popup-closer], .popup__fader", function(e){
                 e.preventDefault();
-                PP.closePopup();
+                QP.closePopup();
             });
 
            
             $(document).on('click', '#question_btn_answer', function(){
-                Timer.stop();
+                QP.Timer[QP.quizId].stop();
 
-                PP.answer = $(this);
+                QP.answer = $(this);
                 
-                $.when(PP.checkAnswer())
-                    .done(PP.answerHandle)
-                    .fail(PP.sayError);
+                $.when(QP.checkAnswer())
+                    .done(QP.answerHandle)
+                    .fail(QP.sayError);
 
                 return false;
             });
 
             $(document).on("click", "#question_btn_next", function(){
-                if (PP.q < 2) {
-                    PP.next();
+                if (QP.currentQuestion < 2) {
+                    QP.next();
                 } else {
-                    PP.showFinalScreen();
+                    QP.showFinalScreen();
                 }
                 return false;
             });
@@ -563,24 +607,17 @@ $(function() {
             });
 
             $(document).on('click', '#popup_btn_start', function() {
-                $('.popup-question--start')
-                   .removeClass('popup-question--start')
-                   .addClass('popup-question--go');
-
-                // 1-ый вопрос по умолчанию при старте
-                PP.q = 0;
-                PP.showQuestion();
+                QP.showQuestion();
                 return false;
             });
         };
         
-        PP.init = function() {
-            PP.cacheElems();
-            PP.bindEvents();
-            PP.loadState();
+        QP.init = function() {
+            QP.cacheElements();
+            QP.bindEvents();
         };
 
-        return PP;
+        return QP;
     })()
 
     ,PopupForm = (function(){
@@ -753,7 +790,7 @@ $(function() {
         }
     })(),
 
-    DefaultPopups = (function(){
+    Popups = (function(){
         return {
             callerPopupIdAttribute: 'caller-popup-id',
             lastPopupCookieName: 'story_of_god_last_popup',
