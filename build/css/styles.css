@@ -244,7 +244,7 @@ span.yellow{color:#fdd700}
 @media (min-width:768px){.popup__body .btn:not(.visible){display:none}
 .popup-question{max-height:618px}
 }
-.popup__fader{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.5);z-index:1012}
+.popup__fader{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.8);z-index:1012}
 .popup-authorise .user-enter-lst__i:not(.active) .icon,.popup-authorise .user-enter-lst__i:not(.active) a:hover .icon,.reminder-form__ctrl{background-color:transparent}
 .popup__closer{font-size:49px;width:24px;height:24px;line-height:19px;color:#fdd700;position:absolute;right:-30px;top:-2px;font-weight:200;text-decoration:none}
 @media (max-width:767px){.popup__closer{right:10px;top:23px}
@@ -252,7 +252,7 @@ span.yellow{color:#fdd700}
 body.noscroll,body.noscroll .container{overflow:hidden}
 .done{display:none}
 .done .h1,.done h1{text-align:center}
-.popup-authorise{top:70px;margin-top:0}
+.popup-authorise{top:70px;margin-top:0;height:235px}
 .popup-authorise .user-enter{float:none;text-align:center}
 .popup-authorise .user-enter__head{display:block;font-weight:500;font-size:23px;line-height:normal;margin-bottom:20px}
 .popup-authorise .user-enter-lst__i .icon{width:80px;height:80px;line-height:80px}
