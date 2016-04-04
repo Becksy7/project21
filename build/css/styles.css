@@ -264,7 +264,7 @@ body.noscroll,body.noscroll .container{overflow:hidden}
 @media (min-width:768px) and (max-height:700px){.popup-question{top:24px}
 }
 .popup-question.popup .popup__body{padding:20px}
-@media (max-width:767px){.popup-question.popup .popup__body{padding-left:10px;padding-right:10px;overflow:auto;position:absolute;top:0;left:0;width:100%;padding-bottom:70px;height:100%}
+@media (max-width:767px){.popup-question.popup .popup__body{padding-left:10px;padding-right:10px;overflow:auto;position:absolute;top:0;left:0;width:100%;padding-bottom:80px;height:100%}
 .popup-question{height:100%}
 .popup-question.popup .popup__closer{right:15px;top:-45px;font-size:55px}
 }
@@ -532,8 +532,11 @@ body.no-flex .episodes__i{display:inline-block;vertical-align:top}
 .quote:before{content:'«';margin-left:-20px}
 .quote:after{content:'»';vertical-align:middle}
 .popup.popup-question .popup__body.beeline,.popup.popup-question .popup__body.natgeo,.popup.popup-question .popup__body.share{border:20px solid #ffd42d;padding:0}
+@media (max-width:767px){.popup.popup-question .popup__body.beeline,.popup.popup-question .popup__body.natgeo,.popup.popup-question .popup__body.share{padding-bottom:80px}
+}
 .popup.popup-question .popup__body.beeline{background-color:#000}
-.question--go{height:279px;overflow:auto}
+@media (min-width:768px){.question--go{height:279px;overflow:auto}
+}
 #plxerr{overflow:hidden;padding-top:4px}
 .paging{margin:20px 0 0;padding-bottom:20px;position:relative}
 .paging:after,.paging:before{content:" ";display:table}
