@@ -147,17 +147,17 @@
                             </ul>
                             <div class="question-author">
                                 <div class="question-author__img"><img src="
-			<% if (author_org == 'fromMorgan') { %>
-				images/q/freeman.png				<% } else if (author_org == 'fromBeeline') {%>
-				images/q/beeline.svg				<% } else if (author_org == 'fromNatgeo') {%>
+			<% if (authorName == 'fromMorgan') { %>
+				images/q/freeman.png				<% } else if (authorName == 'fromBeeline') {%>
+				images/q/beeline.svg				<% } else if (authorName == 'fromNatgeo') {%>
 				images/q/natgeo.svg				<% } %>
 			"></div>
                                 <div class="question-author__info">
                                     <div class="question-author__name">
-                                        <%= author_name %>
+                                        <%= authorName %>
                                     </div>
                                     <div class="question-author__points">
-                                        <%= points + ' ' + points_l %>
+                                        <%= points + ' ' + pointUnits %>
                                     </div>
                                 </div>
                             </div>
@@ -172,15 +172,15 @@
                                     <div class="question__opts">
                                         <input type="radio" name="opt" id="option1" value="1">
                                         <label for="option1">
-                                            <%= answer1 %>
+                                            <%= answers[0] %>
                                         </label>
                                         <input type="radio" name="opt" id="option2" value="2">
                                         <label for="option2">
-                                            <%= answer2 %>
+                                            <%= answers[1] %>
                                         </label>
                                         <input type="radio" name="opt" id="option3" value="3">
                                         <label for="option3">
-                                            <%= answer3 %>
+                                            <%= answers[2] %>
                                         </label>
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 $(function() {
+    var ApiUrl= {userAnswer : 'example.php'};
 
     var App = (function(){
 
@@ -11,6 +12,7 @@ $(function() {
                 BtnFilter.init();
                 Popups.init();
                 FlexFallback.init();
+                NiceScrolling.init();
             }
         }
     })()
@@ -879,6 +881,14 @@ $(function() {
                 }
             }
         })()
+        ,NiceScrolling = (function(){
+            return {
+                init : function() {
+                    $('.popup-question.popup .popup__body').niceScroll({'cursorcolor':'#000'});
+                }
+            }
+        })()
+
     /**
      * Dummy Module Example
      */
