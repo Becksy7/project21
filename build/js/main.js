@@ -1,6 +1,4 @@
 $(function() {
-    var ApiUrl= {userAnswer : 'example.php'};
-
     var App = (function(){
 
         return {
